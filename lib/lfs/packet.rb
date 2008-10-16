@@ -2,8 +2,8 @@ require 'lfs/packet_enums.rb'
 
 module LFS
   module Parser
-    # Basic Types
     module Type
+      # Basic
       class Char < ::BinData::SingleValue
         string :char, :trim_value => true, :read_length => :length
 
@@ -16,10 +16,27 @@ module LFS
       end
 
       class Byte < ::BinData::SingleValue
-        uint8 :byte, :length => 1
+        endian :little
+        uint8 :byte
 
         def get; self.byte end
         def set(v); self.byte = v end
+      end
+
+      class Word < ::BinData::SingleValue
+        endian :little
+        uint16 :word
+
+        def get; self.word end
+        def set(v); self.word = v end
+      end
+
+      class Short < ::BinData::SingleValue
+        endian :little
+        int16 :short
+
+        def get; self.short end
+        def set(v); self.short = v end
       end
     
       class Unsigned < ::BinData::SingleValue
@@ -30,13 +47,23 @@ module LFS
         def set(v); self.unsigned = v end
       end
 
-      class Word < ::BinData::SingleValue
-        string :word, :length => 2
+      class Int < ::BinData::SingleValue
+        endian :little
+        int32 :int, :length => 1
 
-        def get; self.word end
-        def set(v); self.word = v end
+        def get; self.int end
+        def set(v); self.int = v end
       end
 
+      class Float < ::BinData::SingleValue
+        endian :little
+        float :float, :length => 1
+
+        def get; self.float end
+        def set(v); self.float = v end
+      end
+
+      # Complex
       class Time < ::BinData::SingleValue
         unsigned :milliseconds
 
