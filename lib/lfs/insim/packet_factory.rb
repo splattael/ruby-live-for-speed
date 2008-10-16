@@ -28,7 +28,7 @@ module LFS
 
       @packet_classes = {}
       def self.register(packet_type, packet_class)
-        puts "registering #{packet_class} (#{packet_type.inspect})"
+        puts "registering #{packet_class} (#{packet_type.inspect})" if $DEBUG
         enum = packet_type_enum_for(packet_type)
         @packet_classes[enum] = packet_class
       end

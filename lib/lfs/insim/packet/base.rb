@@ -21,7 +21,6 @@ module LFS
               # TODO ugly hack
               subclass.packet_type = packet_type
               subclass.packet_size = packet_size
-              # puts "inherited by #{subclass} => #{packet_size}/#{packet_type}"
               ::LFS::Parser::Packet.register(packet_type, subclass)
             end
           end
