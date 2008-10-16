@@ -179,5 +179,30 @@ module LFS
         :ERR     # 255  # Receive : An error number
       )
     end
+
+    Tiny = ::Enum.new(
+      :NONE,		#  0					: see "maintaining the connection"
+      :VER,		#  1 - info request	: get version
+      :CLOSE,		#  2 - instruction		: close insim
+      :PING,		#  3 - ping request	: external progam requesting a reply
+      :REPLY,		#  4 - ping reply		: reply to a ping request
+      :VTC,		#  5 - info			: vote cancelled
+      :SCP,		#  6 - info request	: send camera pos
+      :SST,		#  7 - info request	: send state info
+      :GTH,		#  8 - info request	: get time in hundredths (i.e. SMALL_RTP)
+      :MPE,		#  9 - info			: multi player end
+      :ISM,		# 10 - info request	: get multiplayer info (i.e. ISP_ISM)
+      :REN,		# 11 - info			: race end (return to game setup screen)
+      :CLR,		# 12 - info			: all players cleared from race
+      :NCN,		# 13 - info			: get all connections
+      :NPL,		# 14 - info			: get all players
+      :RES,		# 15 - info			: get all results
+      :NLP,		# 16 - info request	: send an IS_NLP
+      :MCI,		# 17 - info request	: send an IS_MCI
+      :REO,		# 18 - info request	: send an IS_REO
+      :RST,		# 19 - info request	: send an IS_RST
+      :AXI,		# 20 - info request	: send an IS_AXI
+      :AXC		# 21 - info			: autocross cleared
+    )
   end
 end

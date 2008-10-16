@@ -21,12 +21,46 @@ module LFS
         def get; self.byte end
         def set(v); self.byte = v end
       end
+    
+      class Unsigned < ::BinData::SingleValue
+        endian :little
+        uint32 :unsigned, :length => 1
+
+        def get; self.unsigned end
+        def set(v); self.unsigned = v end
+      end
 
       class Word < ::BinData::SingleValue
         string :word, :length => 2
 
         def get; self.word end
         def set(v); self.word = v end
+      end
+
+      class Time < ::BinData::SingleValue
+        unsigned :milliseconds
+
+        def get; self.milliseconds end
+        def set(v); self.milliseconds = v end
+
+        def to_s
+          human_time(milliseconds)
+        end
+        alias :inspect :to_s
+
+        private
+        def human_time(time, show_sign=false)
+          return "-" unless time
+
+          sign = "-" if time < 0
+          sign = "+" if time > 0 && show_sign
+          time = time.abs
+          if (time / 1000) / 60 > 59 then
+            "#{sign}%02d:%02d:%02d.%03d" % [ (time / 1000) / 60 / 60, (time / 1000) / 60 % 60, (time / 1000) % 60, time % 1000 ]
+          else
+            "#{sign}%02d:%02d.%03d" % [ (time / 1000) / 60, (time / 1000) % 60, time % 1000 ]
+          end
+        end
       end
     end
 
@@ -51,7 +85,7 @@ module LFS
           packet = packet_class.new
           packet.header = @header
           packet.read(io)
-          puts ">>> #{packet.inspect}"
+          puts ">>> #{packet.inspect}" if $DEBUG
           packet
         end
       end
@@ -182,15 +216,22 @@ module LFS
       # tiny
       class Tiny < ::BinData::MultiValue
         def subtype
-          # TODO
-          first_byte
+          ::LFS::Parser::Enum::Tiny[first_byte]
+        end
+
+        def subtype=(type)
+          self.first_byte = ::LFS::Parser::Enum::Tiny[first_byte].to_i
+        end
+
+        def subtyped?(type)
+          subtype == ::LFS::Parser::Enum::Tiny[first_byte]
         end
       end
 
       # init
       class InSimInit < Packet(:ISI, 44)
         word :udpport
-        word :flags, :initial_value => 32
+        word :flags, :initial_value => 32 # TODO
         byte :spare0
         byte :host_message_prefix
         word :interval, :initial_value => 100
@@ -208,7 +249,7 @@ module LFS
       class HostInfo < ::BinData::MultiValue
         char :hostname, :length => 32
         char :track, :length => 6
-        byte :flags
+        byte :flags # TODO
         byte :connections
       end
 
@@ -233,6 +274,33 @@ module LFS
         def error
           ::LFS::Parser::Enum::RelayError[first_byte]
         end
+      end
+
+      # race
+      module PlayerId
+        def player_id; first_byte end
+      end
+
+      class Lap < Packet(:LAP, 20)
+        include PlayerId
+        time :lap_time
+        time :total_time
+        word :laps_done
+        word :flags # TODO
+        byte :spare0
+        byte :penalty # TODO
+        byte :pit_stops
+        byte :spare1
+      end
+
+      class Split < Packet(:SPX, 16)
+        include PlayerId
+        time :lap_time
+        time :total_time
+        byte :split
+        byte :penalty # TODO
+        byte :pit_stops
+        byte :spare1
       end
     end
   end

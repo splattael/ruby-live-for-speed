@@ -63,16 +63,23 @@ module LFS
     end
 
     def close
-      @connected = false
-      @socket.close if @socket
+      if @connected
+        send_tiny(:CLOSE)
+        @connected = false
+        @socket.close if @socket
+      end
     end
 
     alias :stop :close
 
     def send(packet_type, args={})
       packet = ::LFS::Parser::Packet.create(packet_type, args)
-      puts "<<< #{packet.inspect}"
+      puts "<<< #{packet.inspect}" if $DEBUG
       packet.write(@socket)
+    end
+
+    def send_tiny(subtype)
+      send(:TINY, :subtype => subtype)
     end
 
     def break_loop
@@ -84,7 +91,9 @@ module LFS
     end
 
     def parse_packet
-      @packet_factory.read(@socket)
+      packet = @packet_factory.read(@socket)
+      handle_packet(packet)
+      packet
     end
 
     def parse(&block)
@@ -92,6 +101,18 @@ module LFS
         packet = parse_packet
         break_loop unless packet
         yield(packet) if block_given?
+      end
+    end
+
+    def handle_packet(packet)
+      case packet.packet_type
+      when :TINY
+        p packet
+        case packet.subtype
+        when :NONE
+          puts "sending pong"
+          send_tiny(:NONE)
+        end
       end
     end
 

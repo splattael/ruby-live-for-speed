@@ -33,6 +33,17 @@ class Enum < Module
       @index <=> other.index
     end
 
+    def ===(index_or_symbol)
+      index_or_symbol == case index_or_symbol
+      when Enum: self
+      when Numeric: index
+      when Symbol:  symbol
+      else
+        raise ArgumentError, "#{index_or_symbol.class} not supported"
+      end
+
+    end
+
     include Comparable
   end
 
