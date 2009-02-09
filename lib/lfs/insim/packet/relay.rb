@@ -9,24 +9,24 @@ module LFS
         byte :connections
       end
 
-      class HostListRequest < Packet(:HLR, 4)
+      define_packet :HLR, 4 do
       end
 
-      class HostListResponse < Packet(:HOS)
-        array :host_infos, :type => :host_info, :read_until => proc { index + 1 >= number_of_hosts }
+      define_packet :HOS do
+        array :host_infos, :type => :host_info, :read_until => lambda {|v| index + 1 >= header.first_byte }
 
         def number_of_hosts
           header.first_byte
         end
       end
 
-      class SelectRelayHost < Packet(:SEL, 68)
+      define_packet :SEL, 68 do
         string :hostname, :length => 32
         string :admin_password, :length => 16
         string :spectator_password, :length => 16
       end
 
-      class RelayError < Packet(:ERR, 4)
+      define_packet :ERR, 4 do
         def error
           ::LFS::Parser::Enum::RelayError[first_byte]
         end

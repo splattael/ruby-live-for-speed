@@ -6,7 +6,7 @@ module LFS
       class Char < ::BinData::SingleValue
         string :char, :trim_value => true, :read_length => :length
 
-        mandatory_parameter :length
+        bindata_mandatory_parameter :length
 
         def length; @params[:length] end
 

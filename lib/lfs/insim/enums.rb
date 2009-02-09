@@ -178,7 +178,7 @@ module LFS
         :SEL,    # 254 # Send : To select a host
         :ERR     # 255  # Receive : An error number
       )
-    end
+    end # Enum
 
     Tiny = ::Enum.new(
       :NONE,		#  0					: see "maintaining the connection"

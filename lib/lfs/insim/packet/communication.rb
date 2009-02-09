@@ -2,7 +2,7 @@ module LFS
   module Parser
     module Packet
       # Initialize InSim connection
-      class InSimInit < Packet(:ISI, 44)
+      define_packet :ISI, 44 do
         word :udpport
         word :flags, :initial_value => 32 # TODO
         byte :spare0
@@ -12,7 +12,7 @@ module LFS
         char :program_name, :length => 16
       end
 
-      class InSimVersion < Packet(:VER, 20)
+      define_packet :VER, 20 do
         char :version, :length => 8
         char :product, :length => 6
         word :insim_version

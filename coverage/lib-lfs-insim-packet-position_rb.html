@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>lib/lfs/insim/complex_types.rb - C0 code coverage information</title>
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>lib/lfs/insim/packet/position.rb - C0 code coverage information</title>
     <style type='text/css'>body { background-color: rgb(240, 240, 245); }</style>
     <style type='text/css'>span.cross-ref-title {
  font-size: 140%;
@@ -569,26 +569,26 @@ span.run100 {
       <td class='heading'>Code coverage</td>
       </tr>
     </thead>
-  <tbody><tr class='light'><td><a href='lib-lfs-insim-complex_types_rb.html'>lib/lfs/insim/complex_types.rb</a>
+  <tbody><tr class='light'><td><a href='lib-lfs-insim-packet-position_rb.html'>lib/lfs/insim/packet/position.rb</a>
         </td>
-      <td class='lines_total'><tt>32</tt>
+      <td class='lines_total'><tt>30</tt>
         </td>
       <td class='lines_code'><tt>27</tt>
         </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>46.9%</tt>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>80.0%</tt>
               &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='47'/>
-                  <td class='uncovered' width='53'/>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='80'/>
+                  <td class='uncovered' width='20'/>
                   </tr>
                 </table>
               </td>
             </tr>
           </table>
         </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>40.7%</tt>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>77.8%</tt>
               &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='41'/>
-                  <td class='uncovered' width='59'/>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='78'/>
+                  <td class='uncovered' width='22'/>
                   </tr>
                 </table>
               </td>
@@ -598,38 +598,36 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked0"><a name="line1"></a> 1 module LFS
-</span><span class="marked1"><a name="line2"></a> 2   module Parser
-</span><span class="marked0"><a name="line3"></a> 3     module Types
-</span><span class="inferred1"><a name="line4"></a> 4       # Complex
-</span><span class="marked0"><a name="line5"></a> 5       class Time &lt; ::BinData::SingleValue
-</span><span class="marked1"><a name="line6"></a> 6         unsigned :milliseconds
-</span><span class="inferred0"><a name="line7"></a> 7 
-</span><span class="marked1"><a name="line8"></a> 8         def get; self.milliseconds end
-</span><span class="marked0"><a name="line9"></a> 9         def set(v); self.milliseconds = v end
-</span><span class="inferred1"><a name="line10"></a>10 
-</span><span class="marked0"><a name="line11"></a>11         def to_s
-</span><span class="uncovered1"><a name="line12"></a>12           human_time(milliseconds)
-</span><span class="uncovered0"><a name="line13"></a>13         end
-</span><span class="marked1"><a name="line14"></a>14         alias :inspect :to_s
-</span><span class="inferred0"><a name="line15"></a>15 
-</span><span class="marked1"><a name="line16"></a>16         private
-</span><span class="marked0"><a name="line17"></a>17         def human_time(time, show_sign=false)
-</span><span class="uncovered1"><a name="line18"></a>18           return &quot;-&quot; unless time
-</span><span class="uncovered0"><a name="line19"></a>19 
-</span><span class="uncovered1"><a name="line20"></a>20           sign = &quot;-&quot; if time &lt; 0
-</span><span class="uncovered0"><a name="line21"></a>21           sign = &quot;+&quot; if time &gt; 0 &amp;&amp; show_sign
-</span><span class="uncovered1"><a name="line22"></a>22           time = time.abs
-</span><span class="uncovered0"><a name="line23"></a>23           if (time / 1000) / 60 &gt; 59 then
-</span><span class="uncovered1"><a name="line24"></a>24             &quot;#{sign}%02d:%02d:%02d.%03d&quot; % [ (time / 1000) / 60 / 60, (time / 1000) / 60 % 60, (time / 1000) % 60, time % 1000 ]
-</span><span class="uncovered0"><a name="line25"></a>25           else
-</span><span class="uncovered1"><a name="line26"></a>26             &quot;#{sign}%02d:%02d.%03d&quot; % [ (time / 1000) / 60, (time / 1000) % 60, time % 1000 ]
-</span><span class="uncovered0"><a name="line27"></a>27           end
-</span><span class="uncovered1"><a name="line28"></a>28         end
-</span><span class="uncovered0"><a name="line29"></a>29       end
-</span><span class="uncovered1"><a name="line30"></a>30     end
-</span><span class="uncovered0"><a name="line31"></a>31   end
-</span><span class="uncovered1"><a name="line32"></a>32 end
+<pre><span class="marked1"><a name="line1"></a> 1 module LFS
+</span><span class="marked0"><a name="line2"></a> 2   module Parser
+</span><span class="marked1"><a name="line3"></a> 3     module Packet
+</span><span class="inferred0"><a name="line4"></a> 4 
+</span><span class="marked1"><a name="line5"></a> 5       class CompCar &lt; ::BinData::MultiValue
+</span><span class="marked0"><a name="line6"></a> 6         word :node
+</span><span class="marked1"><a name="line7"></a> 7         word :lap
+</span><span class="marked0"><a name="line8"></a> 8         byte :player_id
+</span><span class="marked1"><a name="line9"></a> 9         byte :position
+</span><span class="marked0"><a name="line10"></a>10         byte :info
+</span><span class="marked1"><a name="line11"></a>11         byte :spare_1
+</span><span class="marked0"><a name="line12"></a>12         int  :x
+</span><span class="marked1"><a name="line13"></a>13         int  :y
+</span><span class="marked0"><a name="line14"></a>14         int  :z
+</span><span class="marked1"><a name="line15"></a>15         word :speed
+</span><span class="marked0"><a name="line16"></a>16         word :direction
+</span><span class="marked1"><a name="line17"></a>17         word :heading
+</span><span class="marked0"><a name="line18"></a>18         short :angle_vel
+</span><span class="inferred1"><a name="line19"></a>19       end
+</span><span class="inferred0"><a name="line20"></a>20 
+</span><span class="marked1"><a name="line21"></a>21       define_packet :MCI do
+</span><span class="marked0"><a name="line22"></a>22         array :cars, :type =&gt; :comp_car, :initial_length =&gt; lambda { valid_cars }
+</span><span class="inferred1"><a name="line23"></a>23 
+</span><span class="marked0"><a name="line24"></a>24         def valid_cars
+</span><span class="uncovered1"><a name="line25"></a>25           first_byte
+</span><span class="uncovered0"><a name="line26"></a>26         end
+</span><span class="uncovered1"><a name="line27"></a>27       end
+</span><span class="uncovered0"><a name="line28"></a>28     end
+</span><span class="uncovered1"><a name="line29"></a>29   end
+</span><span class="uncovered0"><a name="line30"></a>30 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

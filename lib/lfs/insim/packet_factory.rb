@@ -5,20 +5,17 @@ module LFS
       class Factory
         def initialize
           @header = Header.new
+          @cache = {}
         end
 
         def read(io)
-          bytes = io.read(Header::SIZE).unpack("C4")
-          @header.packet_size = bytes[0]
-          @header.packet_type = bytes[1]
-          @header.request = bytes[2]
-          @header.first_byte = bytes[3]
+          @header.read(io)
           read_packet(io)
         end
 
         def read_packet(io)
-          packet_class = Packet.lookup(@header.packet_type) || Unknown
-          packet = packet_class.new
+          packet_class = Packet.lookup(@header.packet_type) || Packet.lookup(:UNKN)
+          packet = (@cache[packet_class] ||= packet_class.new)
           packet.header = @header
           packet.read(io)
           puts ">>> #{packet.inspect}" if $DEBUG
@@ -31,6 +28,12 @@ module LFS
         puts "registering #{packet_class} (#{packet_type.inspect})" if $DEBUG
         enum = packet_type_enum_for(packet_type)
         @packet_classes[enum] = packet_class
+      end
+
+      def self.unregister(*packet_types)
+        packet_types.map do |type|
+          @packet_classes.delete(packet_type_enum_for(type))
+        end
       end
 
       def self.packet_type_enum_for(thingy)

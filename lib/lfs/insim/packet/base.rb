@@ -1,11 +1,16 @@
 module LFS
   module Parser
     module Packet
-      def self.Packet(type=nil, size=nil)
-        # TODO really?
-        klass = Class.new(Base)
+      def self.define_packet(type, size = nil, &block)
+        klass = Class.new(Base) do
+          def self.name
+            packet_type
+          end
+        end
+        klass.class_eval(&block) if block
         klass.packet_type = type
         klass.packet_size = size
+        ::LFS::Parser::Packet.register(type, klass)
         klass
       end
 
@@ -16,15 +21,6 @@ module LFS
         endian :little
 
         class << self
-          def inherited(subclass)
-            if packet_type
-              # TODO ugly hack
-              subclass.packet_type = packet_type
-              subclass.packet_size = packet_size
-              ::LFS::Parser::Packet.register(packet_type, subclass)
-            end
-          end
-
           attr_accessor :packet_type
           attr_accessor :packet_size
         end
@@ -50,16 +46,19 @@ module LFS
           self.header = Header.new
           self.header.packet_size = self.class.packet_size
           self.header.packet_type = ::LFS::Parser::Enum::PacketType[self.class.packet_type].to_i
-          self.header.request = 1
+          self.header.request = args[:request] || 1
           propagate_values(args)
         end
 
         def inspect_header
-          ""
+          $DEBUG ? header.inspect : ""
         end
 
         def inspect_fields
         end
+
+        def first_byte; header.first_byte end
+        def request; header.request end
 
         def inspect
           enum = 
@@ -74,6 +73,7 @@ module LFS
         end
 
         private
+
         def propagate_values(args={})
           args.each do |key, value|
             method = :"#{key}="
@@ -92,26 +92,26 @@ module LFS
       end
 
       # Unknown, raw packet
-      class Unknown < Packet(:UNKN)
+      define_packet :UNKN do
         string :data, :length => proc { packet_size - 4 }
 
         def inspect_header
-          header.snapshot.inspect
+          header.inspect
         end
       end
 
       # tiny
-      class Tiny < ::BinData::MultiValue
+      define_packet :TINY, 4 do
         def subtype
-          ::LFS::Parser::Enum::Tiny[first_byte]
+          ::LFS::Parser::Tiny[first_byte]
         end
 
         def subtype=(type)
-          self.first_byte = ::LFS::Parser::Enum::Tiny[first_byte].to_i
+          self.header.first_byte = ::LFS::Parser::Tiny[first_byte].to_i
         end
 
         def subtyped?(type)
-          subtype == ::LFS::Parser::Enum::Tiny[first_byte]
+          subtype == ::LFS::Parser::Tiny[first_byte]
         end
       end
 

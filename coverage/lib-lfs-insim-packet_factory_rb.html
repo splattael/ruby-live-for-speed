@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Thu Oct 16 22:51:12 +0200 2008 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Feb 09 17:41:01 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,24 +571,24 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='lib-lfs-insim-packet_factory_rb.html'>lib/lfs/insim/packet_factory.rb</a>
         </td>
-      <td class='lines_total'><tt>53</tt>
+      <td class='lines_total'><tt>56</tt>
         </td>
-      <td class='lines_code'><tt>46</tt>
+      <td class='lines_code'><tt>48</tt>
         </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>47.2%</tt>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>48.2%</tt>
               &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='47'/>
-                  <td class='uncovered' width='53'/>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='48'/>
+                  <td class='uncovered' width='52'/>
                   </tr>
                 </table>
               </td>
             </tr>
           </table>
         </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>39.1%</tt>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>39.6%</tt>
               &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='39'/>
-                  <td class='uncovered' width='61'/>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='40'/>
+                  <td class='uncovered' width='60'/>
                   </tr>
                 </table>
               </td>
@@ -605,52 +605,55 @@ span.run100 {
 </span><span class="marked0"><a name="line5"></a> 5       class Factory
 </span><span class="marked1"><a name="line6"></a> 6         def initialize
 </span><span class="uncovered0"><a name="line7"></a> 7           @header = Header.new
-</span><span class="uncovered1"><a name="line8"></a> 8         end
-</span><span class="inferred0"><a name="line9"></a> 9 
-</span><span class="marked1"><a name="line10"></a>10         def read(io)
-</span><span class="uncovered0"><a name="line11"></a>11           bytes = io.read(Header::SIZE).unpack(&quot;C4&quot;)
-</span><span class="uncovered1"><a name="line12"></a>12           @header.packet_size = bytes[0]
-</span><span class="uncovered0"><a name="line13"></a>13           @header.packet_type = bytes[1]
-</span><span class="uncovered1"><a name="line14"></a>14           @header.request = bytes[2]
-</span><span class="uncovered0"><a name="line15"></a>15           @header.first_byte = bytes[3]
-</span><span class="uncovered1"><a name="line16"></a>16           read_packet(io)
-</span><span class="uncovered0"><a name="line17"></a>17         end
-</span><span class="inferred1"><a name="line18"></a>18 
-</span><span class="marked0"><a name="line19"></a>19         def read_packet(io)
-</span><span class="uncovered1"><a name="line20"></a>20           packet_class = Packet.lookup(@header.packet_type) || Unknown
-</span><span class="uncovered0"><a name="line21"></a>21           packet = packet_class.new
-</span><span class="uncovered1"><a name="line22"></a>22           packet.header = @header
-</span><span class="uncovered0"><a name="line23"></a>23           packet.read(io)
-</span><span class="uncovered1"><a name="line24"></a>24           puts &quot;&gt;&gt;&gt; #{packet.inspect}&quot; if $DEBUG
-</span><span class="uncovered0"><a name="line25"></a>25           packet
-</span><span class="uncovered1"><a name="line26"></a>26         end
-</span><span class="uncovered0"><a name="line27"></a>27       end
-</span><span class="inferred1"><a name="line28"></a>28 
-</span><span class="marked0"><a name="line29"></a>29       @packet_classes = {}
-</span><span class="marked1"><a name="line30"></a>30       def self.register(packet_type, packet_class)
-</span><span class="marked0"><a name="line31"></a>31         puts &quot;registering #{packet_class} (#{packet_type.inspect})&quot; if $DEBUG
-</span><span class="marked1"><a name="line32"></a>32         enum = packet_type_enum_for(packet_type)
-</span><span class="marked0"><a name="line33"></a>33         @packet_classes[enum] = packet_class
-</span><span class="inferred1"><a name="line34"></a>34       end
-</span><span class="inferred0"><a name="line35"></a>35 
-</span><span class="marked1"><a name="line36"></a>36       def self.packet_type_enum_for(thingy)
-</span><span class="marked0"><a name="line37"></a>37         ::LFS::Parser::Enum::PacketType[thingy]
-</span><span class="marked1"><a name="line38"></a>38       end
-</span><span class="inferred0"><a name="line39"></a>39 
-</span><span class="marked1"><a name="line40"></a>40       def self.lookup(packet_type)
-</span><span class="uncovered0"><a name="line41"></a>41         enum = packet_type_enum_for(packet_type)
-</span><span class="uncovered1"><a name="line42"></a>42         @packet_classes[enum]
-</span><span class="uncovered0"><a name="line43"></a>43       end
-</span><span class="inferred1"><a name="line44"></a>44 
-</span><span class="marked0"><a name="line45"></a>45       def self.create(packet_type, args={})
-</span><span class="uncovered1"><a name="line46"></a>46         packet_class = lookup(packet_type) or raise &quot;unknown #{packet_type}(#{args.inspect})&quot;
-</span><span class="uncovered0"><a name="line47"></a>47         packet = packet_class.new
-</span><span class="uncovered1"><a name="line48"></a>48         packet.prepare_to_write(args)
-</span><span class="uncovered0"><a name="line49"></a>49         packet
-</span><span class="uncovered1"><a name="line50"></a>50       end
-</span><span class="uncovered0"><a name="line51"></a>51     end
-</span><span class="uncovered1"><a name="line52"></a>52   end
-</span><span class="uncovered0"><a name="line53"></a>53 end
+</span><span class="uncovered1"><a name="line8"></a> 8           @cache = {}
+</span><span class="uncovered0"><a name="line9"></a> 9         end
+</span><span class="inferred1"><a name="line10"></a>10 
+</span><span class="marked0"><a name="line11"></a>11         def read(io)
+</span><span class="uncovered1"><a name="line12"></a>12           @header.read(io)
+</span><span class="uncovered0"><a name="line13"></a>13           read_packet(io)
+</span><span class="uncovered1"><a name="line14"></a>14         end
+</span><span class="inferred0"><a name="line15"></a>15 
+</span><span class="marked1"><a name="line16"></a>16         def read_packet(io)
+</span><span class="uncovered0"><a name="line17"></a>17           packet_class = Packet.lookup(@header.packet_type) || Packet.lookup(:UNKN)
+</span><span class="uncovered1"><a name="line18"></a>18           packet = (@cache[packet_class] ||= packet_class.new)
+</span><span class="uncovered0"><a name="line19"></a>19           packet.header = @header
+</span><span class="uncovered1"><a name="line20"></a>20           packet.read(io)
+</span><span class="uncovered0"><a name="line21"></a>21           puts &quot;&gt;&gt;&gt; #{packet.inspect}&quot; if $DEBUG
+</span><span class="uncovered1"><a name="line22"></a>22           packet
+</span><span class="uncovered0"><a name="line23"></a>23         end
+</span><span class="uncovered1"><a name="line24"></a>24       end
+</span><span class="inferred0"><a name="line25"></a>25 
+</span><span class="marked1"><a name="line26"></a>26       @packet_classes = {}
+</span><span class="marked0"><a name="line27"></a>27       def self.register(packet_type, packet_class)
+</span><span class="marked1"><a name="line28"></a>28         puts &quot;registering #{packet_class} (#{packet_type.inspect})&quot; if $DEBUG
+</span><span class="marked0"><a name="line29"></a>29         enum = packet_type_enum_for(packet_type)
+</span><span class="marked1"><a name="line30"></a>30         @packet_classes[enum] = packet_class
+</span><span class="inferred0"><a name="line31"></a>31       end
+</span><span class="inferred1"><a name="line32"></a>32 
+</span><span class="marked0"><a name="line33"></a>33       def self.unregister(*packet_types)
+</span><span class="uncovered1"><a name="line34"></a>34         packet_types.map do |type|
+</span><span class="uncovered0"><a name="line35"></a>35           @packet_classes.delete(packet_type_enum_for(type))
+</span><span class="uncovered1"><a name="line36"></a>36         end
+</span><span class="uncovered0"><a name="line37"></a>37       end
+</span><span class="inferred1"><a name="line38"></a>38 
+</span><span class="marked0"><a name="line39"></a>39       def self.packet_type_enum_for(thingy)
+</span><span class="marked1"><a name="line40"></a>40         ::LFS::Parser::Enum::PacketType[thingy]
+</span><span class="marked0"><a name="line41"></a>41       end
+</span><span class="inferred1"><a name="line42"></a>42 
+</span><span class="marked0"><a name="line43"></a>43       def self.lookup(packet_type)
+</span><span class="uncovered1"><a name="line44"></a>44         enum = packet_type_enum_for(packet_type)
+</span><span class="uncovered0"><a name="line45"></a>45         @packet_classes[enum]
+</span><span class="uncovered1"><a name="line46"></a>46       end
+</span><span class="inferred0"><a name="line47"></a>47 
+</span><span class="marked1"><a name="line48"></a>48       def self.create(packet_type, args={})
+</span><span class="uncovered0"><a name="line49"></a>49         packet_class = lookup(packet_type) or raise &quot;unknown #{packet_type}(#{args.inspect})&quot;
+</span><span class="uncovered1"><a name="line50"></a>50         packet = packet_class.new
+</span><span class="uncovered0"><a name="line51"></a>51         packet.prepare_to_write(args)
+</span><span class="uncovered1"><a name="line52"></a>52         packet
+</span><span class="uncovered0"><a name="line53"></a>53       end
+</span><span class="uncovered1"><a name="line54"></a>54     end
+</span><span class="uncovered0"><a name="line55"></a>55   end
+</span><span class="uncovered1"><a name="line56"></a>56 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

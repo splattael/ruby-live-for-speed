@@ -11,7 +11,7 @@ module LFS
     def initialize(host, port)
       @now = nil
       begin
-        @socket = TCPSocket.new(host, port)
+        @socket = ::BinData::IO.new(TCPSocket.new(host, port))
       rescue => e
         raise "Could not connect to #{host}:#{port}: #{e}"
       end
@@ -72,14 +72,14 @@ module LFS
 
     alias :stop :close
 
-    def send(packet_type, args={})
+    def send(packet_type, args = {})
       packet = ::LFS::Parser::Packet.create(packet_type, args)
       puts "<<< #{packet.inspect}" if $DEBUG
       packet.write(@socket)
     end
 
-    def send_tiny(subtype)
-      send(:TINY, :subtype => subtype)
+    def send_tiny(subtype, args = {})
+      send(:TINY, { :subtype => subtype }.merge(args))
     end
 
     def break_loop
@@ -89,11 +89,9 @@ module LFS
     def descriptor
       @socket
     end
-
+    
     def parse_packet
-      packet = @packet_factory.read(@socket)
-      handle_packet(packet)
-      packet
+      @packet_factory.read(@socket)
     end
 
     def parse(&block)
@@ -101,18 +99,6 @@ module LFS
         packet = parse_packet
         break_loop unless packet
         yield(packet) if block_given?
-      end
-    end
-
-    def handle_packet(packet)
-      case packet.packet_type
-      when :TINY
-        p packet
-        case packet.subtype
-        when :NONE
-          puts "sending pong"
-          send_tiny(:NONE)
-        end
       end
     end
 
@@ -148,10 +134,11 @@ module LFS
       hosts = []
       new do |session|
         session.send(:HLR)
+        session.send(:HLR, :request => 23)
         loop do
           packet = session.parse_packet
           # p packet
-          break if packet.nil? || !packet.typed?(:HOS) || packet.host_infos.size != 6
+          break if packet.request == 23
           hosts << packet.host_infos.map {|i| i }
         end
       end

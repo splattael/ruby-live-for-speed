@@ -6,3 +6,4 @@ require 'lfs/insim/packet/base'
 require "lfs/insim/packet/communication"
 require "lfs/insim/packet/relay"
 require "lfs/insim/packet/race"
+require "lfs/insim/packet/position"

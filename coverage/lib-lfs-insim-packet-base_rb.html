@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Thu Oct 16 22:51:12 +0200 2008 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Feb 09 17:41:01 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -573,7 +573,7 @@ span.run100 {
         </td>
       <td class='lines_total'><tt>120</tt>
         </td>
-      <td class='lines_code'><tt>94</tt>
+      <td class='lines_code'><tt>95</tt>
         </td>
       <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>60.8%</tt>
               &nbsp;</td>
@@ -585,10 +585,10 @@ span.run100 {
             </tr>
           </table>
         </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>51.1%</tt>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>51.6%</tt>
               &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='51'/>
-                  <td class='uncovered' width='49'/>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='52'/>
+                  <td class='uncovered' width='48'/>
                   </tr>
                 </table>
               </td>
@@ -598,126 +598,126 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked0"><a name="line1"></a>  1 module LFS
-</span><span class="marked1"><a name="line2"></a>  2   module Parser
-</span><span class="marked0"><a name="line3"></a>  3     module Packet
-</span><span class="marked1"><a name="line4"></a>  4       def self.Packet(type=nil, size=nil)
-</span><span class="inferred0"><a name="line5"></a>  5         # TODO really?
-</span><span class="marked1"><a name="line6"></a>  6         klass = Class.new(Base)
-</span><span class="marked0"><a name="line7"></a>  7         klass.packet_type = type
-</span><span class="marked1"><a name="line8"></a>  8         klass.packet_size = size
-</span><span class="marked0"><a name="line9"></a>  9         klass
-</span><span class="inferred1"><a name="line10"></a> 10       end
-</span><span class="inferred0"><a name="line11"></a> 11 
-</span><span class="inferred1"><a name="line12"></a> 12       # Base
-</span><span class="marked0"><a name="line13"></a> 13       class Base &lt; ::BinData::MultiValue
-</span><span class="marked1"><a name="line14"></a> 14         attr_accessor :header
-</span><span class="inferred0"><a name="line15"></a> 15 
-</span><span class="marked1"><a name="line16"></a> 16         endian :little
-</span><span class="inferred0"><a name="line17"></a> 17 
-</span><span class="marked1"><a name="line18"></a> 18         class &lt;&lt; self
-</span><span class="marked0"><a name="line19"></a> 19           def inherited(subclass)
-</span><span class="marked1"><a name="line20"></a> 20             if packet_type
-</span><span class="inferred0"><a name="line21"></a> 21               # TODO ugly hack
-</span><span class="marked1"><a name="line22"></a> 22               subclass.packet_type = packet_type
-</span><span class="marked0"><a name="line23"></a> 23               subclass.packet_size = packet_size
-</span><span class="marked1"><a name="line24"></a> 24               ::LFS::Parser::Packet.register(packet_type, subclass)
-</span><span class="inferred0"><a name="line25"></a> 25             end
-</span><span class="marked1"><a name="line26"></a> 26           end
-</span><span class="inferred0"><a name="line27"></a> 27 
-</span><span class="marked1"><a name="line28"></a> 28           attr_accessor :packet_type
-</span><span class="marked0"><a name="line29"></a> 29           attr_accessor :packet_size
-</span><span class="inferred1"><a name="line30"></a> 30         end
-</span><span class="inferred0"><a name="line31"></a> 31 
-</span><span class="marked1"><a name="line32"></a> 32         def write(io)
-</span><span class="uncovered0"><a name="line33"></a> 33           header.write(io)
-</span><span class="uncovered1"><a name="line34"></a> 34           super(io)
-</span><span class="uncovered0"><a name="line35"></a> 35         end
-</span><span class="inferred1"><a name="line36"></a> 36 
-</span><span class="marked0"><a name="line37"></a> 37         def packet_size
-</span><span class="uncovered1"><a name="line38"></a> 38           header.packet_size
-</span><span class="uncovered0"><a name="line39"></a> 39         end
-</span><span class="inferred1"><a name="line40"></a> 40 
-</span><span class="marked0"><a name="line41"></a> 41         def packet_type
-</span><span class="uncovered1"><a name="line42"></a> 42           self.class.packet_type
-</span><span class="uncovered0"><a name="line43"></a> 43         end
-</span><span class="inferred1"><a name="line44"></a> 44 
-</span><span class="marked0"><a name="line45"></a> 45         def typed?(symbol)
-</span><span class="uncovered1"><a name="line46"></a> 46           packet_type == symbol
-</span><span class="uncovered0"><a name="line47"></a> 47         end
-</span><span class="inferred1"><a name="line48"></a> 48 
-</span><span class="marked0"><a name="line49"></a> 49         def prepare_to_write(args={})
-</span><span class="uncovered1"><a name="line50"></a> 50           self.header = Header.new
-</span><span class="uncovered0"><a name="line51"></a> 51           self.header.packet_size = self.class.packet_size
-</span><span class="uncovered1"><a name="line52"></a> 52           self.header.packet_type = ::LFS::Parser::Enum::PacketType[self.class.packet_type].to_i
-</span><span class="uncovered0"><a name="line53"></a> 53           self.header.request = 1
-</span><span class="uncovered1"><a name="line54"></a> 54           propagate_values(args)
-</span><span class="uncovered0"><a name="line55"></a> 55         end
-</span><span class="inferred1"><a name="line56"></a> 56 
-</span><span class="marked0"><a name="line57"></a> 57         def inspect_header
-</span><span class="uncovered1"><a name="line58"></a> 58           &quot;&quot;
-</span><span class="uncovered0"><a name="line59"></a> 59         end
-</span><span class="inferred1"><a name="line60"></a> 60 
-</span><span class="marked0"><a name="line61"></a> 61         def inspect_fields
-</span><span class="inferred1"><a name="line62"></a> 62         end
-</span><span class="inferred0"><a name="line63"></a> 63 
-</span><span class="marked1"><a name="line64"></a> 64         def inspect
-</span><span class="uncovered0"><a name="line65"></a> 65           enum = 
-</span><span class="uncovered1"><a name="line66"></a> 66           s = &quot;#&lt;#{packet_type}:&quot;
-</span><span class="uncovered0"><a name="line67"></a> 67           s += inspect_header
-</span><span class="uncovered1"><a name="line68"></a> 68           if inspect_fields
-</span><span class="uncovered0"><a name="line69"></a> 69             s += inspect_fields.inject({}) {|hash, key| hash[key] = send(:&quot;#{key}=&quot;) }.inspect
-</span><span class="uncovered1"><a name="line70"></a> 70           end
-</span><span class="uncovered0"><a name="line71"></a> 71           s += snapshot.inspect
-</span><span class="uncovered1"><a name="line72"></a> 72           s += &quot;&gt;&quot;
-</span><span class="uncovered0"><a name="line73"></a> 73           s 
-</span><span class="uncovered1"><a name="line74"></a> 74         end
-</span><span class="inferred0"><a name="line75"></a> 75 
-</span><span class="marked1"><a name="line76"></a> 76         private
-</span><span class="marked0"><a name="line77"></a> 77         def propagate_values(args={})
-</span><span class="uncovered1"><a name="line78"></a> 78           args.each do |key, value|
-</span><span class="uncovered0"><a name="line79"></a> 79             method = :&quot;#{key}=&quot;
-</span><span class="uncovered1"><a name="line80"></a> 80             send(method, value) if respond_to?(method)
-</span><span class="uncovered0"><a name="line81"></a> 81           end
-</span><span class="uncovered1"><a name="line82"></a> 82         end
-</span><span class="uncovered0"><a name="line83"></a> 83       end
-</span><span class="inferred1"><a name="line84"></a> 84 
-</span><span class="marked0"><a name="line85"></a> 85       class Header &lt; ::BinData::MultiValue
-</span><span class="marked1"><a name="line86"></a> 86         SIZE = 4
-</span><span class="inferred0"><a name="line87"></a> 87 
-</span><span class="marked1"><a name="line88"></a> 88         byte :packet_size
-</span><span class="marked0"><a name="line89"></a> 89         byte :packet_type
-</span><span class="marked1"><a name="line90"></a> 90         byte :request
-</span><span class="marked0"><a name="line91"></a> 91         byte :first_byte
-</span><span class="inferred1"><a name="line92"></a> 92       end
-</span><span class="inferred0"><a name="line93"></a> 93 
-</span><span class="inferred1"><a name="line94"></a> 94       # Unknown, raw packet
-</span><span class="marked0"><a name="line95"></a> 95       class Unknown &lt; Packet(:UNKN)
-</span><span class="marked1"><a name="line96"></a> 96         string :data, :length =&gt; proc { packet_size - 4 }
-</span><span class="inferred0"><a name="line97"></a> 97 
-</span><span class="marked1"><a name="line98"></a> 98         def inspect_header
-</span><span class="uncovered0"><a name="line99"></a> 99           header.snapshot.inspect
-</span><span class="uncovered1"><a name="line100"></a>100         end
-</span><span class="uncovered0"><a name="line101"></a>101       end
-</span><span class="inferred1"><a name="line102"></a>102 
-</span><span class="inferred0"><a name="line103"></a>103       # tiny
-</span><span class="marked1"><a name="line104"></a>104       class Tiny &lt; ::BinData::MultiValue
-</span><span class="marked0"><a name="line105"></a>105         def subtype
-</span><span class="uncovered1"><a name="line106"></a>106           ::LFS::Parser::Enum::Tiny[first_byte]
-</span><span class="uncovered0"><a name="line107"></a>107         end
-</span><span class="inferred1"><a name="line108"></a>108 
-</span><span class="marked0"><a name="line109"></a>109         def subtype=(type)
-</span><span class="uncovered1"><a name="line110"></a>110           self.first_byte = ::LFS::Parser::Enum::Tiny[first_byte].to_i
-</span><span class="uncovered0"><a name="line111"></a>111         end
-</span><span class="inferred1"><a name="line112"></a>112 
-</span><span class="marked0"><a name="line113"></a>113         def subtyped?(type)
-</span><span class="uncovered1"><a name="line114"></a>114           subtype == ::LFS::Parser::Enum::Tiny[first_byte]
-</span><span class="uncovered0"><a name="line115"></a>115         end
-</span><span class="uncovered1"><a name="line116"></a>116       end
-</span><span class="uncovered0"><a name="line117"></a>117 
-</span><span class="uncovered1"><a name="line118"></a>118     end
-</span><span class="uncovered0"><a name="line119"></a>119   end
-</span><span class="uncovered1"><a name="line120"></a>120 end
+<pre><span class="marked1"><a name="line1"></a>  1 module LFS
+</span><span class="marked0"><a name="line2"></a>  2   module Parser
+</span><span class="marked1"><a name="line3"></a>  3     module Packet
+</span><span class="marked0"><a name="line4"></a>  4       def self.define_packet(type, size = nil, &amp;block)
+</span><span class="marked1"><a name="line5"></a>  5         klass = Class.new(Base) do
+</span><span class="marked0"><a name="line6"></a>  6           def self.name
+</span><span class="marked1"><a name="line7"></a>  7             packet_type
+</span><span class="marked0"><a name="line8"></a>  8           end
+</span><span class="inferred1"><a name="line9"></a>  9         end
+</span><span class="marked0"><a name="line10"></a> 10         klass.class_eval(&amp;block) if block
+</span><span class="marked1"><a name="line11"></a> 11         klass.packet_type = type
+</span><span class="marked0"><a name="line12"></a> 12         klass.packet_size = size
+</span><span class="marked1"><a name="line13"></a> 13         ::LFS::Parser::Packet.register(type, klass)
+</span><span class="marked0"><a name="line14"></a> 14         klass
+</span><span class="inferred1"><a name="line15"></a> 15       end
+</span><span class="inferred0"><a name="line16"></a> 16 
+</span><span class="inferred1"><a name="line17"></a> 17       # Base
+</span><span class="marked0"><a name="line18"></a> 18       class Base &lt; ::BinData::MultiValue
+</span><span class="marked1"><a name="line19"></a> 19         attr_accessor :header
+</span><span class="inferred0"><a name="line20"></a> 20 
+</span><span class="marked1"><a name="line21"></a> 21         endian :little
+</span><span class="inferred0"><a name="line22"></a> 22 
+</span><span class="marked1"><a name="line23"></a> 23         class &lt;&lt; self
+</span><span class="marked0"><a name="line24"></a> 24           attr_accessor :packet_type
+</span><span class="marked1"><a name="line25"></a> 25           attr_accessor :packet_size
+</span><span class="inferred0"><a name="line26"></a> 26         end
+</span><span class="inferred1"><a name="line27"></a> 27 
+</span><span class="marked0"><a name="line28"></a> 28         def write(io)
+</span><span class="uncovered1"><a name="line29"></a> 29           header.write(io)
+</span><span class="uncovered0"><a name="line30"></a> 30           super(io)
+</span><span class="uncovered1"><a name="line31"></a> 31         end
+</span><span class="inferred0"><a name="line32"></a> 32 
+</span><span class="marked1"><a name="line33"></a> 33         def packet_size
+</span><span class="uncovered0"><a name="line34"></a> 34           header.packet_size
+</span><span class="uncovered1"><a name="line35"></a> 35         end
+</span><span class="inferred0"><a name="line36"></a> 36 
+</span><span class="marked1"><a name="line37"></a> 37         def packet_type
+</span><span class="uncovered0"><a name="line38"></a> 38           self.class.packet_type
+</span><span class="uncovered1"><a name="line39"></a> 39         end
+</span><span class="inferred0"><a name="line40"></a> 40 
+</span><span class="marked1"><a name="line41"></a> 41         def typed?(symbol)
+</span><span class="uncovered0"><a name="line42"></a> 42           packet_type == symbol
+</span><span class="uncovered1"><a name="line43"></a> 43         end
+</span><span class="inferred0"><a name="line44"></a> 44 
+</span><span class="marked1"><a name="line45"></a> 45         def prepare_to_write(args={})
+</span><span class="uncovered0"><a name="line46"></a> 46           self.header = Header.new
+</span><span class="uncovered1"><a name="line47"></a> 47           self.header.packet_size = self.class.packet_size
+</span><span class="uncovered0"><a name="line48"></a> 48           self.header.packet_type = ::LFS::Parser::Enum::PacketType[self.class.packet_type].to_i
+</span><span class="uncovered1"><a name="line49"></a> 49           self.header.request = args[:request] || 1
+</span><span class="uncovered0"><a name="line50"></a> 50           propagate_values(args)
+</span><span class="uncovered1"><a name="line51"></a> 51         end
+</span><span class="inferred0"><a name="line52"></a> 52 
+</span><span class="marked1"><a name="line53"></a> 53         def inspect_header
+</span><span class="uncovered0"><a name="line54"></a> 54           $DEBUG ? header.inspect : &quot;&quot;
+</span><span class="uncovered1"><a name="line55"></a> 55         end
+</span><span class="inferred0"><a name="line56"></a> 56 
+</span><span class="marked1"><a name="line57"></a> 57         def inspect_fields
+</span><span class="inferred0"><a name="line58"></a> 58         end
+</span><span class="inferred1"><a name="line59"></a> 59 
+</span><span class="marked0"><a name="line60"></a> 60         def first_byte; header.first_byte end
+</span><span class="marked1"><a name="line61"></a> 61         def request; header.request end
+</span><span class="inferred0"><a name="line62"></a> 62 
+</span><span class="marked1"><a name="line63"></a> 63         def inspect
+</span><span class="uncovered0"><a name="line64"></a> 64           enum = 
+</span><span class="uncovered1"><a name="line65"></a> 65           s = &quot;#&lt;#{packet_type}:&quot;
+</span><span class="uncovered0"><a name="line66"></a> 66           s += inspect_header
+</span><span class="uncovered1"><a name="line67"></a> 67           if inspect_fields
+</span><span class="uncovered0"><a name="line68"></a> 68             s += inspect_fields.inject({}) {|hash, key| hash[key] = send(:&quot;#{key}=&quot;) }.inspect
+</span><span class="uncovered1"><a name="line69"></a> 69           end
+</span><span class="uncovered0"><a name="line70"></a> 70           s += snapshot.inspect
+</span><span class="uncovered1"><a name="line71"></a> 71           s += &quot;&gt;&quot;
+</span><span class="uncovered0"><a name="line72"></a> 72           s 
+</span><span class="uncovered1"><a name="line73"></a> 73         end
+</span><span class="inferred0"><a name="line74"></a> 74 
+</span><span class="marked1"><a name="line75"></a> 75         private
+</span><span class="inferred0"><a name="line76"></a> 76 
+</span><span class="marked1"><a name="line77"></a> 77         def propagate_values(args={})
+</span><span class="uncovered0"><a name="line78"></a> 78           args.each do |key, value|
+</span><span class="uncovered1"><a name="line79"></a> 79             method = :&quot;#{key}=&quot;
+</span><span class="uncovered0"><a name="line80"></a> 80             send(method, value) if respond_to?(method)
+</span><span class="uncovered1"><a name="line81"></a> 81           end
+</span><span class="uncovered0"><a name="line82"></a> 82         end
+</span><span class="uncovered1"><a name="line83"></a> 83       end
+</span><span class="inferred0"><a name="line84"></a> 84 
+</span><span class="marked1"><a name="line85"></a> 85       class Header &lt; ::BinData::MultiValue
+</span><span class="marked0"><a name="line86"></a> 86         SIZE = 4
+</span><span class="inferred1"><a name="line87"></a> 87 
+</span><span class="marked0"><a name="line88"></a> 88         byte :packet_size
+</span><span class="marked1"><a name="line89"></a> 89         byte :packet_type
+</span><span class="marked0"><a name="line90"></a> 90         byte :request
+</span><span class="marked1"><a name="line91"></a> 91         byte :first_byte
+</span><span class="inferred0"><a name="line92"></a> 92       end
+</span><span class="inferred1"><a name="line93"></a> 93 
+</span><span class="inferred0"><a name="line94"></a> 94       # Unknown, raw packet
+</span><span class="marked1"><a name="line95"></a> 95       define_packet :UNKN do
+</span><span class="marked0"><a name="line96"></a> 96         string :data, :length =&gt; proc { packet_size - 4 }
+</span><span class="inferred1"><a name="line97"></a> 97 
+</span><span class="marked0"><a name="line98"></a> 98         def inspect_header
+</span><span class="uncovered1"><a name="line99"></a> 99           header.inspect
+</span><span class="uncovered0"><a name="line100"></a>100         end
+</span><span class="uncovered1"><a name="line101"></a>101       end
+</span><span class="inferred0"><a name="line102"></a>102 
+</span><span class="inferred1"><a name="line103"></a>103       # tiny
+</span><span class="marked0"><a name="line104"></a>104       define_packet :TINY, 4 do
+</span><span class="marked1"><a name="line105"></a>105         def subtype
+</span><span class="uncovered0"><a name="line106"></a>106           ::LFS::Parser::Tiny[first_byte]
+</span><span class="uncovered1"><a name="line107"></a>107         end
+</span><span class="inferred0"><a name="line108"></a>108 
+</span><span class="marked1"><a name="line109"></a>109         def subtype=(type)
+</span><span class="uncovered0"><a name="line110"></a>110           self.header.first_byte = ::LFS::Parser::Tiny[first_byte].to_i
+</span><span class="uncovered1"><a name="line111"></a>111         end
+</span><span class="inferred0"><a name="line112"></a>112 
+</span><span class="marked1"><a name="line113"></a>113         def subtyped?(type)
+</span><span class="uncovered0"><a name="line114"></a>114           subtype == ::LFS::Parser::Tiny[first_byte]
+</span><span class="uncovered1"><a name="line115"></a>115         end
+</span><span class="uncovered0"><a name="line116"></a>116       end
+</span><span class="uncovered1"><a name="line117"></a>117 
+</span><span class="uncovered0"><a name="line118"></a>118     end
+</span><span class="uncovered1"><a name="line119"></a>119   end
+</span><span class="uncovered0"><a name="line120"></a>120 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

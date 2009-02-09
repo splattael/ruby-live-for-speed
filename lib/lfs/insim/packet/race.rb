@@ -6,7 +6,7 @@ module LFS
         def player_id; first_byte end
       end
 
-      class Lap < Packet(:LAP, 20)
+      define_packet :LAP, 20 do
         include PlayerId
         time :lap_time
         time :total_time
@@ -18,7 +18,7 @@ module LFS
         byte :spare1
       end
 
-      class Split < Packet(:SPX, 16)
+      define_packet :SPX, 16 do
         include PlayerId
         time :lap_time
         time :total_time
@@ -26,6 +26,15 @@ module LFS
         byte :penalty # TODO
         byte :pit_stops
         byte :spare1
+      end
+
+      define_packet :FLG, 8 do
+        include PlayerId
+
+        byte :enabled
+        byte :flag
+        byte :car_behind
+        byte :spare
       end
     end
   end
