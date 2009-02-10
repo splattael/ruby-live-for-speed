@@ -4,7 +4,7 @@ module LFS
     module Type
       # Char type. Variable length, value w/o null byte padding
       class Char < ::BinData::SingleValue
-        string :char, :trim_value => true, :read_length => :length
+        string :char, :trim_value => true, :length => :length
 
         bindata_mandatory_parameter :length
 

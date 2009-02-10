@@ -23,9 +23,16 @@ class Pinger
     @pings = []
     @session = session
     @calc_roundtrip = calc_roundtrip
+    @started = false
+  end
+
+  def started?
+    @started
   end
 
   def start(every = 20.0)
+    return if started?
+
     Thread.new do
       sleep 5
       loop do
@@ -34,6 +41,7 @@ class Pinger
         sleep every
       end
     end
+    @started = true
   end
   
   def dead?
@@ -61,7 +69,15 @@ end
 
 LFS::Parser::Packet.unregister
 
-LFS::RelayedSession.connect(ARGV.first) do |session|
+session_provider, args = if ARGV.first =~ /(\d+\.\d+\.\d+\.\d+):(\d+)/
+  [ LFS::Session, { :hostname => $1, :port => $2.to_i } ]
+else
+  [ LFS::RelayedSession, ARGV.first ]
+end
+
+p session_provider
+
+session_provider.connect(args) do |session|
   pinger = Pinger.new(session)
   pinger.start
 
@@ -74,13 +90,16 @@ LFS::RelayedSession.connect(ARGV.first) do |session|
     diff = Time.now.to_f - started
     print "\b" * prev.size if prev
     prev = "%-5d %.4f p/s" % [ packets, packets / diff ]
-    $stdout.print prev
-    $stdout.flush
+    #$stdout.print prev
+    #$stdout.flush
     packets += 1
-    
-    case packet.packet_type
+
+    case packet
+    when :VER
+      pinger.start
+      p packet
     when :UNKN
-      # warn "UNKN: ##{packet.header.packet_type}"
+      warn "UNKN: ##{packet.header.packet_type}"
     end
   end
 end

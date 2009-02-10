@@ -50,6 +50,10 @@ module LFS
           propagate_values(args)
         end
 
+        def ===(other)
+          super(other) || packet_type == other
+        end
+
         def inspect_header
           $DEBUG ? header.inspect : ""
         end

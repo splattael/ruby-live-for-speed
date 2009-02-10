@@ -8,52 +8,54 @@ module LFS
 
     attr_reader :socket, :version, :packet_factory
 
-    def initialize(host, port)
+    def initialize(host, port, options={})
       @now = nil
       begin
         @socket = ::BinData::IO.new(TCPSocket.new(host, port))
+        #@socket = TCPSocket.new(host, port)
       rescue => e
         raise "Could not connect to #{host}:#{port}: #{e}"
       end
       @connected = false
       @version = nil
+      @options = options
       @packet_factory = ::LFS::Parser::Packet::Factory.new
       yield(self) if block_given?
     end
 
-    def self.connect(args={}, &block)
-      hostname, port = args.delete(:hostname), args.delete(:port)
-      new(hostname, port, args).connect(args, &block)
+    def self.connect(options={}, &block)
+      hostname, port = options.delete(:hostname), options.delete(:port)
+      new(hostname, port, options).connect(options, &block)
     end
 
-    def connect(args={}, &block)
-      start(args, &block)
+    def connect(options={}, &block)
+      start(options, &block)
     ensure
       stop
       self
     end
 
-    def self.local(address, args={})
-      address(address, args)
+    def self.local(address, options={})
+      address(address, options)
     end
 
-    def self.host(address, args={})
-      address(address, args.update(:host => true))
+    def self.host(address, options={})
+      address(address, options.update(:host => true))
     end
 
-    def self.solaris(args={})
-      new("192.168.0.2", 3000, args)
+    def self.solaris(options={})
+      new("192.168.0.2", 3000, options)
     end
 
-    def self.address(address, args={})
+    def self.address(address, options={})
       host, ip = address.to_s.split(/:/)
       ip = "3000" unless ip
-      new(host, ip.to_i, args)
+      new(host, ip.to_i, options)
     end
 
-    def start(args = {}, &block)
-      args = { :version => true, :progname => "lfs_insim" }.update(@options).update(args)
-      send :ISI, args
+    def start(options = {}, &block)
+      options = { :version => true, :program_name => "lfs_insim" }.update(options)
+      send :ISI, options
       yield(self) if block_given?
       self
     end
@@ -72,14 +74,14 @@ module LFS
 
     alias :stop :close
 
-    def send(packet_type, args = {})
-      packet = ::LFS::Parser::Packet.create(packet_type, args)
+    def send(packet_type, options = {})
+      packet = ::LFS::Parser::Packet.create(packet_type, options)
       puts "<<< #{packet.inspect}" if $DEBUG
       packet.write(@socket)
     end
 
-    def send_tiny(subtype, args = {})
-      send(:TINY, { :subtype => subtype }.merge(args))
+    def send_tiny(subtype, options = {})
+      send(:TINY, { :subtype => subtype }.merge(options))
     end
 
     def break_loop
@@ -106,8 +108,8 @@ module LFS
       @now || (Time.now.to_f * 1000).to_i
     end
 
-    def log(*args)
-      $stderr.puts "[%s] %s" % [ Time.now.strftime("%Y-%m-%dT%T"), args.join(' ') ]
+    def log(*msg)
+      $stderr.puts "[%s] %s" % [ Time.now.strftime("%Y-%m-%dT%T"), msg.join(' ') ]
     end
   end
 
