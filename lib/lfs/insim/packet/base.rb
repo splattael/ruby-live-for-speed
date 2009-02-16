@@ -38,10 +38,6 @@ module LFS
           self.class.packet_type
         end
 
-        def typed?(symbol)
-          packet_type == symbol
-        end
-
         def prepare_to_write(args={})
           self.header = Header.new
           self.header.packet_size = self.class.packet_size
@@ -51,7 +47,7 @@ module LFS
         end
 
         def ===(other)
-          super(other) || packet_type == other
+          packet_type == other || super(other)
         end
 
         def inspect_header
@@ -62,7 +58,9 @@ module LFS
         end
 
         def first_byte; header.first_byte end
+        def first_byte=(b); header.first_byte = b end
         def request; header.request end
+        def request=(b); header.request = b end
 
         def inspect
           enum = 
@@ -97,7 +95,7 @@ module LFS
 
       # Unknown, raw packet
       define_packet :UNKN do
-        string :data, :length => proc { packet_size - 4 }
+        string :data, :length => proc { packet_size - Header::SIZE }
 
         def inspect_header
           header.inspect
@@ -106,17 +104,18 @@ module LFS
 
       # tiny
       define_packet :TINY, 4 do
+        def ===(other)
+          :"#{packet_type}_#{subtype.symbol}" == other || super(other)
+        end
+
         def subtype
           ::LFS::Parser::Tiny[first_byte]
         end
 
         def subtype=(type)
-          self.header.first_byte = ::LFS::Parser::Tiny[first_byte].to_i
+          self.first_byte = ::LFS::Parser::Tiny[type].to_i
         end
 
-        def subtyped?(type)
-          subtype == ::LFS::Parser::Tiny[first_byte]
-        end
       end
 
     end

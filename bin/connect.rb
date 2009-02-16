@@ -54,7 +54,7 @@ class Pinger
   end
 
   def handle_packet(packet)
-    if packet.typed?(:TINY) && packet.subtype == :REPLY
+    if packet === :TINY_REPLY
       if @calc_roundtrip
         if pinged_at = @pings.shift
           diff = Time.now - pinged_at

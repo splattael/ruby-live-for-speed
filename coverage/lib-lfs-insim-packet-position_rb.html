@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Mon Feb 09 17:41:01 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Feb 16 16:16:33 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -598,36 +598,36 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked1"><a name="line1"></a> 1 module LFS
-</span><span class="marked0"><a name="line2"></a> 2   module Parser
-</span><span class="marked1"><a name="line3"></a> 3     module Packet
-</span><span class="inferred0"><a name="line4"></a> 4 
-</span><span class="marked1"><a name="line5"></a> 5       class CompCar &lt; ::BinData::MultiValue
-</span><span class="marked0"><a name="line6"></a> 6         word :node
-</span><span class="marked1"><a name="line7"></a> 7         word :lap
-</span><span class="marked0"><a name="line8"></a> 8         byte :player_id
-</span><span class="marked1"><a name="line9"></a> 9         byte :position
-</span><span class="marked0"><a name="line10"></a>10         byte :info
-</span><span class="marked1"><a name="line11"></a>11         byte :spare_1
-</span><span class="marked0"><a name="line12"></a>12         int  :x
-</span><span class="marked1"><a name="line13"></a>13         int  :y
-</span><span class="marked0"><a name="line14"></a>14         int  :z
-</span><span class="marked1"><a name="line15"></a>15         word :speed
-</span><span class="marked0"><a name="line16"></a>16         word :direction
-</span><span class="marked1"><a name="line17"></a>17         word :heading
-</span><span class="marked0"><a name="line18"></a>18         short :angle_vel
-</span><span class="inferred1"><a name="line19"></a>19       end
-</span><span class="inferred0"><a name="line20"></a>20 
-</span><span class="marked1"><a name="line21"></a>21       define_packet :MCI do
-</span><span class="marked0"><a name="line22"></a>22         array :cars, :type =&gt; :comp_car, :initial_length =&gt; lambda { valid_cars }
-</span><span class="inferred1"><a name="line23"></a>23 
-</span><span class="marked0"><a name="line24"></a>24         def valid_cars
-</span><span class="uncovered1"><a name="line25"></a>25           first_byte
-</span><span class="uncovered0"><a name="line26"></a>26         end
-</span><span class="uncovered1"><a name="line27"></a>27       end
-</span><span class="uncovered0"><a name="line28"></a>28     end
-</span><span class="uncovered1"><a name="line29"></a>29   end
-</span><span class="uncovered0"><a name="line30"></a>30 end
+<pre><span class="marked0"><a name="line1"></a> 1 module LFS
+</span><span class="marked1"><a name="line2"></a> 2   module Parser
+</span><span class="marked0"><a name="line3"></a> 3     module Packet
+</span><span class="inferred1"><a name="line4"></a> 4 
+</span><span class="marked0"><a name="line5"></a> 5       class CompCar &lt; ::BinData::MultiValue
+</span><span class="marked1"><a name="line6"></a> 6         word :node
+</span><span class="marked0"><a name="line7"></a> 7         word :lap
+</span><span class="marked1"><a name="line8"></a> 8         byte :player_id
+</span><span class="marked0"><a name="line9"></a> 9         byte :position
+</span><span class="marked1"><a name="line10"></a>10         byte :info
+</span><span class="marked0"><a name="line11"></a>11         byte :_sp1
+</span><span class="marked1"><a name="line12"></a>12         int  :x
+</span><span class="marked0"><a name="line13"></a>13         int  :y
+</span><span class="marked1"><a name="line14"></a>14         int  :z
+</span><span class="marked0"><a name="line15"></a>15         word :speed
+</span><span class="marked1"><a name="line16"></a>16         word :direction
+</span><span class="marked0"><a name="line17"></a>17         word :heading
+</span><span class="marked1"><a name="line18"></a>18         short :angle_vel
+</span><span class="inferred0"><a name="line19"></a>19       end
+</span><span class="inferred1"><a name="line20"></a>20 
+</span><span class="marked0"><a name="line21"></a>21       define_packet :MCI do
+</span><span class="marked1"><a name="line22"></a>22         array :cars, :type =&gt; :comp_car, :initial_length =&gt; lambda { valid_cars }
+</span><span class="inferred0"><a name="line23"></a>23 
+</span><span class="marked1"><a name="line24"></a>24         def valid_cars
+</span><span class="uncovered0"><a name="line25"></a>25           first_byte
+</span><span class="uncovered1"><a name="line26"></a>26         end
+</span><span class="uncovered0"><a name="line27"></a>27       end
+</span><span class="uncovered1"><a name="line28"></a>28     end
+</span><span class="uncovered0"><a name="line29"></a>29   end
+</span><span class="uncovered1"><a name="line30"></a>30 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>
