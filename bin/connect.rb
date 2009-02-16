@@ -69,15 +69,22 @@ end
 
 LFS::Parser::Packet.unregister
 
+options = ARGV[1..-1].inject({}) do |hash, option|
+  key, value = option.split(/=/)
+  hash[key.intern] = value
+  hash
+end
+
 session_provider, args = if ARGV.first =~ /(\d+\.\d+\.\d+\.\d+):(\d+)/
   [ LFS::Session, { :hostname => $1, :port => $2.to_i } ]
 else
-  [ LFS::RelayedSession, ARGV.first ]
+  [ LFS::RelayedSession, { :hostname => ARGV.first } ]
 end
 
 p session_provider
+p options
 
-session_provider.connect(args) do |session|
+session_provider.connect(args.merge(options)) do |session|
   pinger = Pinger.new(session)
   pinger.start
 
@@ -90,8 +97,8 @@ session_provider.connect(args) do |session|
     diff = Time.now.to_f - started
     print "\b" * prev.size if prev
     prev = "%-5d %.4f p/s" % [ packets, packets / diff ]
-    #$stdout.print prev
-    #$stdout.flush
+    $stdout.print prev
+    $stdout.flush
     packets += 1
 
     case packet

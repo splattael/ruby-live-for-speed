@@ -61,8 +61,7 @@ module LFS
 
       # Float
       class Float < ::BinData::SingleValue
-        endian :little
-        float :float, :length => 1
+        float_le :float, :length => 1
 
         def get; self.float end
         def set(v); self.float = v end

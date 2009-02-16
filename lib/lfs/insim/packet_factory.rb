@@ -10,6 +10,7 @@ module LFS
 
         def read(io)
           @header.read(io)
+          p @header if $DEBUG
           read_packet(io)
         end
 

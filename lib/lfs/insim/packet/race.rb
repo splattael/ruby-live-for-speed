@@ -36,6 +36,35 @@ module LFS
         byte :car_behind
         byte :spare
       end
+
+      define_packet :PLA, 8 do
+        byte :fact
+        byte :_sp1
+        byte :_sp2
+        byte :_sp3
+      end
+
+      define_packet :STA, 28 do
+        float :replay_speed
+
+        word :flags
+        byte :cam
+        byte :view_player_id
+
+        byte :in_race
+        byte :connections
+        byte :finished
+        byte :race_in_progress
+
+        byte :qualmins
+        byte :laps
+        byte :_sp1
+        byte :_sp2
+
+        char :track, :length => 6
+        byte :weather
+        byte :wind
+      end
     end
   end
 end

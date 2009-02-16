@@ -121,12 +121,12 @@ module LFS
       super(host, port)
     end
 
-    def self.connect(hostname, &block)
-      new.connect(hostname, &block)
+    def self.connect(options={}, &block)
+      new.connect(options, &block)
     end
 
-    def connect(hostname, &block)
-      send(:SEL, :hostname => hostname)
+    def connect(options={}, &block)
+      send(:SEL, options)
       yield(self) if block_given?
     ensure
       close

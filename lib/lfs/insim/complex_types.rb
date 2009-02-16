@@ -26,6 +26,13 @@ module LFS
             "#{sign}%02d:%02d.%03d" % [ (time / 1000) / 60, (time / 1000) % 60, time % 1000 ]
           end
         end
+
+        class Tyres < ::BinData::MultiValue
+          byte :rear_left
+          byte :rear_right
+          byte :front_left
+          byte :front_right
+        end
       end
     end
   end
