@@ -7,3 +7,7 @@ end
 require 'spec'
 require 'stringio'
 require 'bindata'
+
+$LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
+
+require 'lfs'

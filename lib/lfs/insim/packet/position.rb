@@ -8,7 +8,7 @@ module LFS
         byte :player_id
         byte :position
         byte :info
-        byte :spare_1
+        byte spare
         int  :x
         int  :y
         int  :z

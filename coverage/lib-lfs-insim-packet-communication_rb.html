@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Mon Feb 09 17:41:01 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Feb 16 16:16:33 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,7 +571,7 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='lib-lfs-insim-packet-communication_rb.html'>lib/lfs/insim/packet/communication.rb</a>
         </td>
-      <td class='lines_total'><tt>22</tt>
+      <td class='lines_total'><tt>24</tt>
         </td>
       <td class='lines_code'><tt>20</tt>
         </td>
@@ -598,28 +598,30 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked1"><a name="line1"></a> 1 module LFS
-</span><span class="marked0"><a name="line2"></a> 2   module Parser
-</span><span class="marked1"><a name="line3"></a> 3     module Packet
-</span><span class="inferred0"><a name="line4"></a> 4       # Initialize InSim connection
-</span><span class="marked1"><a name="line5"></a> 5       define_packet :ISI, 44 do
-</span><span class="marked0"><a name="line6"></a> 6         word :udpport
-</span><span class="marked1"><a name="line7"></a> 7         word :flags, :initial_value =&gt; 32 # TODO
-</span><span class="marked0"><a name="line8"></a> 8         byte :spare0
-</span><span class="marked1"><a name="line9"></a> 9         byte :host_message_prefix
-</span><span class="marked0"><a name="line10"></a>10         word :interval, :initial_value =&gt; 100
-</span><span class="marked1"><a name="line11"></a>11         char :admin_password, :length =&gt; 16
-</span><span class="marked0"><a name="line12"></a>12         char :program_name, :length =&gt; 16
-</span><span class="inferred1"><a name="line13"></a>13       end
-</span><span class="inferred0"><a name="line14"></a>14 
-</span><span class="marked1"><a name="line15"></a>15       define_packet :VER, 20 do
-</span><span class="marked0"><a name="line16"></a>16         char :version, :length =&gt; 8
-</span><span class="marked1"><a name="line17"></a>17         char :product, :length =&gt; 6
-</span><span class="marked0"><a name="line18"></a>18         word :insim_version
-</span><span class="inferred1"><a name="line19"></a>19       end
-</span><span class="inferred0"><a name="line20"></a>20     end
-</span><span class="inferred1"><a name="line21"></a>21   end
-</span><span class="inferred0"><a name="line22"></a>22 end
+<pre><span class="marked0"><a name="line1"></a> 1 module LFS
+</span><span class="marked1"><a name="line2"></a> 2   module Parser
+</span><span class="marked0"><a name="line3"></a> 3     module Packet
+</span><span class="inferred1"><a name="line4"></a> 4       # Initialize InSim connection
+</span><span class="marked0"><a name="line5"></a> 5       define_packet :ISI, 44 do
+</span><span class="marked1"><a name="line6"></a> 6         word :udpport
+</span><span class="marked0"><a name="line7"></a> 7         word :flags,                :initial_value =&gt; 32 # TODO
+</span><span class="inferred1"><a name="line8"></a> 8 
+</span><span class="marked0"><a name="line9"></a> 9         byte :_sp1
+</span><span class="marked1"><a name="line10"></a>10         byte :host_message_prefix
+</span><span class="marked0"><a name="line11"></a>11         word :interval,             :initial_value =&gt; 0
+</span><span class="inferred1"><a name="line12"></a>12 
+</span><span class="marked0"><a name="line13"></a>13         char :admin_password,       :length =&gt; 16
+</span><span class="marked1"><a name="line14"></a>14         char :program_name,         :length =&gt; 16
+</span><span class="inferred0"><a name="line15"></a>15       end
+</span><span class="inferred1"><a name="line16"></a>16 
+</span><span class="marked0"><a name="line17"></a>17       define_packet :VER, 20 do
+</span><span class="marked1"><a name="line18"></a>18         char :version, :length =&gt; 8
+</span><span class="marked0"><a name="line19"></a>19         char :product, :length =&gt; 6
+</span><span class="marked1"><a name="line20"></a>20         word :insim_version
+</span><span class="inferred0"><a name="line21"></a>21       end
+</span><span class="inferred1"><a name="line22"></a>22     end
+</span><span class="inferred0"><a name="line23"></a>23   end
+</span><span class="inferred1"><a name="line24"></a>24 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>
