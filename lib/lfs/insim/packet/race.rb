@@ -12,10 +12,10 @@ module LFS
         time :total_time
         word :laps_done
         word :flags # TODO
-        byte :_sp1
+        byte spare
         byte :penalty # TODO
         byte :pit_stops
-        byte :_sp2
+        byte spare
       end
 
       define_packet :SPX, 16 do
@@ -25,7 +25,7 @@ module LFS
         byte :split
         byte :penalty # TODO
         byte :pit_stops
-        byte :_sp1
+        byte spare
       end
 
       define_packet :FLG, 8 do
@@ -34,7 +34,7 @@ module LFS
         byte :enabled
         byte :flag
         byte :car_behind
-        byte :_sp1
+        byte spare
       end
     end
   end

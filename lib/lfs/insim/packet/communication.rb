@@ -6,7 +6,7 @@ module LFS
         word :udpport
         word :flags,                :initial_value => 32 # TODO
 
-        byte :_sp1
+        byte spare
         byte :host_message_prefix
         word :interval,             :initial_value => 0
 

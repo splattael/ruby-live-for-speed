@@ -23,6 +23,11 @@ module LFS
         class << self
           attr_accessor :packet_type
           attr_accessor :packet_size
+
+          def spare
+            @spare ||= 0
+            :"_sp#{@spare += 1}"
+          end
         end
 
         def write(io)
