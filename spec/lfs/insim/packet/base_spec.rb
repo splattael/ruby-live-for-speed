@@ -12,7 +12,7 @@ describe "A" do
           byte spare
           word spare
         end
-        @packet = ::LFS::Parser::Packet.create(:TEST)
+        @packet = :TEST.to_packet
       end
 
       it "has 2 spares" do
@@ -26,7 +26,7 @@ describe "A" do
   describe "tiny packet" do
   
     before do
-      @packet = ::LFS::Parser::Packet.create(:TINY, :subtype => :VER)
+      @packet = :TINY_VER.to_packet
     end
 
     it "is 4 bytes long" do
@@ -36,6 +36,12 @@ describe "A" do
     it "match type correctly" do
       @packet.should === :TINY
       @packet.should === :TINY_VER
+    end
+
+    it "match correct symbol type" do
+      # case statement
+      :TINY.should === @packet
+      :TINY_VER.should === @packet
     end
 
   end

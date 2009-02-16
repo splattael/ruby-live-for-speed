@@ -14,20 +14,32 @@ module LFS
         klass
       end
 
+      module Helper
+
+        def self.included(base)
+          base.extend(ClassMethods)
+        end
+
+        module ClassMethods
+          def spare
+            @spare ||= 0
+            :"_sp#{@spare += 1}"
+          end
+        end
+
+      end
+
       # Base
       class Base < ::BinData::MultiValue
-        attr_accessor :header
+        include Helper
 
+        attr_accessor :header
         endian :little
 
         class << self
           attr_accessor :packet_type
           attr_accessor :packet_size
 
-          def spare
-            @spare ||= 0
-            :"_sp#{@spare += 1}"
-          end
         end
 
         def write(io)

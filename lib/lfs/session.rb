@@ -66,7 +66,7 @@ module LFS
 
     def close
       if @connected
-        send_tiny(:CLOSE)
+        send(:TINY_CLOSE)
         @connected = false
         @socket.close if @socket
       end
@@ -75,13 +75,9 @@ module LFS
     alias :stop :close
 
     def send(packet_type, options = {})
-      packet = ::LFS::Parser::Packet.create(packet_type, options)
+      packet = packet_type.to_packet(options)
       puts "<<< #{packet.inspect}" if $DEBUG
       packet.write(@socket)
-    end
-
-    def send_tiny(subtype, options = {})
-      send(:TINY, { :subtype => subtype }.merge(options))
     end
 
     def break_loop

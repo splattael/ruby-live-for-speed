@@ -3,6 +3,8 @@ module LFS
     module Packet
 
       class CompCar < ::BinData::MultiValue
+        include Helper
+
         word :node
         word :lap
         byte :player_id

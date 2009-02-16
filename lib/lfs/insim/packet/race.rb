@@ -39,9 +39,29 @@ module LFS
 
       define_packet :PLA, 8 do
         byte :fact
-        byte :_sp1
-        byte :_sp2
-        byte :_sp3
+        byte spare
+        byte spare
+        byte spare
+      end
+
+      define_packet :PIT, 24 do
+        word :laps_done
+        word :flags
+
+        byte spare
+        byte :penalty
+        byte :pitstops
+        byte spare
+
+        tyres :tyres
+        
+        unsigned :work
+        unsigned spare
+      end
+
+      define_packet :PSF, 12 do
+        unsigned :stop_time
+        unsigned spare
       end
 
       define_packet :STA, 28 do
@@ -58,8 +78,8 @@ module LFS
 
         byte :qualmins
         byte :laps
-        byte :_sp1
-        byte :_sp2
+        byte spare
+        byte spare
 
         char :track, :length => 6
         byte :weather

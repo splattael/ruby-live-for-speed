@@ -50,7 +50,7 @@ class Pinger
 
   def ping
     @pings << Time.now if @calc_roundtrip
-    @session.send_tiny :PING
+    @session.send :TINY_PING
   end
 
   def handle_packet(packet)
@@ -81,12 +81,8 @@ else
   [ LFS::RelayedSession, { :hostname => ARGV.first } ]
 end
 
-p session_provider
-p options
-
 session_provider.connect(args.merge(options)) do |session|
-  pinger = Pinger.new(session)
-  pinger.start
+  pinger = Pinger.new(session, session_provider == LFS::Session)
 
   started = Time.now.to_f
   packets = 1
@@ -103,12 +99,12 @@ session_provider.connect(args.merge(options)) do |session|
 
     case packet
     when :VER
+      puts "VERSION: #{packet.product} #{packet.version} ##{packet.insim_version}"
       pinger.start
-      p packet
+    when :MCI
+      #
     when :UNKN
-      warn "UNKN: ##{packet.header.packet_type}"
+      warn "UNKN: #{::LFS::Parser::Enum::PacketType[packet.header.packet_type].symbol} (##{packet.header.packet_type})"
     end
   end
 end
-
-
