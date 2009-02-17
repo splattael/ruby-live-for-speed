@@ -64,6 +64,48 @@ module LFS
         unsigned spare
       end
 
+      define_packet :FIN, 20 do
+        unsigned :total_time
+        unsigned :best_lap
+
+        byte spare
+        byte :stops
+        byte :confirm
+        byte spare
+
+        word :laps_done
+        word :flags
+      end
+
+      define_packet :RES, 84 do
+        char :username,     :length => 24
+        char :nickname,     :length => 24
+        char :plate,        :length => 8
+        char :skin_prefix,  :length => 4
+
+        unsigned :total_time
+        unsigned :best_lap
+
+        byte spare
+        byte :stops
+        byte :confirm
+        byte spare
+
+        word :laps_done
+        word :flags
+
+        byte :result_position
+        byte :total_results
+        word :penalty_added
+      end
+
+      define_packet :PEN, 8 do
+        byte :old_penalty
+        byte :new_penalty
+        byte :rease
+        byte spare
+      end
+
       define_packet :STA, 28 do
         float :replay_speed
 
@@ -84,6 +126,13 @@ module LFS
         char :track, :length => 6
         byte :weather
         byte :wind
+      end
+
+      define_packet :VTN, 8 do
+        byte :connection_id
+        byte :action
+        byte spare
+        byte spare
       end
     end
   end

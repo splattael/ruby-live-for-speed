@@ -91,7 +91,7 @@ session_provider.connect(args.merge(options)) do |session|
     pinger.handle_packet(packet)
 
     diff = Time.now.to_f - started
-    print "\b" * prev.size if prev
+    $stdout.print "\b" * prev.size if prev
     prev = "%-5d %.4f p/s" % [ packets, packets / diff ]
     $stdout.print prev
     $stdout.flush
