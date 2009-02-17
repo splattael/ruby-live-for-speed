@@ -135,6 +135,23 @@ module LFS
 
       end
 
+      # small
+      define_packet :SMALL, 8 do
+        unsigned :data
+
+        def ===(other)
+          :"#{packet_type}_#{subtype.symbol}" == other || super(other)
+        end
+
+        def subtype
+          ::LFS::Parser::Small[first_byte]
+        end
+
+        def subtype=(type)
+          self.first_byte = ::LFS::Parser::Small[type].to_i
+        end
+     end
+
     end
   end
 end

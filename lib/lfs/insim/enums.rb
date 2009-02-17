@@ -204,5 +204,17 @@ module LFS
       :AXI,		# 20 - info request	: send an IS_AXI
       :AXC		# 21 - info			: autocross cleared
     )
+
+    Small = ::Enum.new(
+      :NONE,	#  0					: not used
+      :SSP,		#  1 - instruction		: start sending positions
+      :SSG,		#  2 - instruction		: start sending gauges
+      :VTA,		#  3 - report			: vote action
+      :TMS,		#  4 - instruction		: time stop
+      :STP,		#  5 - instruction		: time step
+      :RTP,		#  6 - info			: race time packet (reply to GTH)
+      :NLI		#  7 - instruction		: set node lap interval
+    )
+
   end
 end

@@ -18,55 +18,6 @@ if ARGV.empty?
   exit
 end
 
-class Pinger
-  def initialize(session, calc_roundtrip=false)
-    @pings = []
-    @session = session
-    @calc_roundtrip = calc_roundtrip
-    @started = false
-  end
-
-  def started?
-    @started
-  end
-
-  def start(every = 20.0)
-    return if started?
-
-    Thread.new do
-      sleep 5
-      loop do
-        @session.log "pinging"
-        ping
-        sleep every
-      end
-    end
-    @started = true
-  end
-  
-  def dead?
-    @calc_roundtrip ? @pings.size > 3 : false
-  end
-
-  def ping
-    @pings << Time.now if @calc_roundtrip
-    @session.send :TINY_PING
-  end
-
-  def handle_packet(packet)
-    if packet === :TINY_REPLY
-      if @calc_roundtrip
-        if pinged_at = @pings.shift
-          diff = Time.now - pinged_at
-          @session.log "pong in %.4f" % diff
-        else
-          warn "got REPLY but no PING sent"
-        end
-      end
-    end
-  end
-end
-
 LFS::Parser::Packet.unregister
 
 options = ARGV[1..-1].inject({}) do |hash, option|
@@ -82,13 +33,13 @@ else
 end
 
 session_provider.connect(args.merge(options)) do |session|
-  pinger = Pinger.new(session, session_provider == LFS::Session)
+  pinger = LFS::Pinger.new(session)
 
   started = Time.now.to_f
   packets = 1
   prev = nil
   session.parse do |packet|
-    pinger.handle_packet(packet)
+    pinger.handle(packet)
 
     diff = Time.now.to_f - started
     $stdout.print "\b" * prev.size if prev
@@ -101,6 +52,8 @@ session_provider.connect(args.merge(options)) do |session|
     when :VER
       puts "VERSION: #{packet.product} #{packet.version} ##{packet.insim_version}"
       pinger.start
+    when :TINY, :SMALL
+      p packet.subtype
     when :MCI
       #
     when :UNKN
