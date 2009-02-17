@@ -4,13 +4,14 @@ module LFS
     def initialize(session)
       @session = session
       @pings = []
+      @thread = nil
     end
 
     def started?
       !@thread.nil?
     end
 
-    def start(every = 20.0)
+    def start(every = 30.0)
       return if started?
 
       Thread.abort_on_exception = true
@@ -32,7 +33,7 @@ module LFS
     end
 
     def dead?
-      @calc_roundtrip ? @pings.size > 3 : false
+      @pings.size > 3
     end
 
     def ping

@@ -59,7 +59,7 @@ session_provider.connect(args.merge(options)) do |session|
     when :TINY, :SMALL
       # p packet.subtype
     when :MCI
-      #
+      # p packet
     when :UNKN
       warn "UNKN: #{::LFS::Parser::Enum::PacketType[packet.header.packet_type].symbol} (##{packet.header.packet_type})"
     end
