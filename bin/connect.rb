@@ -36,24 +36,28 @@ session_provider.connect(args.merge(options)) do |session|
   pinger = LFS::Pinger.new(session)
 
   started = Time.now.to_f
-  packets = 1
+  packet_count = 0
+  packet_size = 0
   prev = nil
   session.parse do |packet|
     pinger.handle(packet)
 
     diff = Time.now.to_f - started
     $stdout.print "\b" * prev.size if prev
-    prev = "%-5d %.4f p/s" % [ packets, packets / diff ]
+    prev = "%-5d %.2f p/s (%.2f kB/s) %.2f cpu/p" %
+      [ packet_count, packet_count / diff, packet_size / diff / 1024,
+        Process.times.utime / packet_count ]
     $stdout.print prev
     $stdout.flush
-    packets += 1
+    packet_count += 1
+    packet_size += packet.packet_size
 
     case packet
     when :VER
       puts "VERSION: #{packet.product} #{packet.version} ##{packet.insim_version}"
       pinger.start
     when :TINY, :SMALL
-      p packet.subtype
+      # p packet.subtype
     when :MCI
       #
     when :UNKN
