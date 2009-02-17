@@ -77,6 +77,24 @@ module LFS
         word :flags
       end
 
+      define_packet :RST, 28 do
+        byte :race_laps
+        byte :qual_mins
+        byte :players
+        byte spare
+
+        char :track, :length => 6
+        byte :weather
+        byte :wind
+        
+        word :flags
+        word :nodes
+        word :finish_node
+        word :split1_node
+        word :split2_node
+        word :split3_node
+      end
+
       define_packet :RES, 84 do
         char :username,     :length => 24
         char :nickname,     :length => 24
@@ -97,6 +115,14 @@ module LFS
         byte :result_position
         byte :total_results
         word :penalty_added
+      end
+
+      define_packet :REO, 36 do
+        def number_of_players
+          first_byte
+        end
+
+        array :player_ids, :type => :byte, :initial_length => 32
       end
 
       define_packet :PEN, 8 do
@@ -134,6 +160,12 @@ module LFS
         byte spare
         byte spare
       end
+
+      define_packet :PFL, 8 do
+        word :flags
+        word spare
+      end
+
     end
   end
 end

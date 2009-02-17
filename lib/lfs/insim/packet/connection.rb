@@ -48,6 +48,12 @@ module LFS
 
       define_packet :PLL, 4 do
       end
+
+      define_packet :CPR, 36 do
+        char :new_name, :length => 24
+        char :plate,    :length => 8
+      end
+
     end
   end
 end

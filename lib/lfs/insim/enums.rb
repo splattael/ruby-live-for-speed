@@ -162,8 +162,8 @@ module LFS
         :MSL,    # 40 - instruction   : message to local computer
         :CRS,    # 41 - info      : car reset
         :BFN,    # 42 - both ways   : delete buttons / receive button requests
-        :SPARE_43,    # 43
-        :SPARE_44,    # 44
+        :AXI,    # 43 - info			: autocross layout information
+        :AXO,    # 44 - info			: hit an autocross object
         :BTN,    # 45 - instruction   : show a button on local or remote screen
         :BTC,    # 46 - info      : sent when a user clicks a button
         :BTT     # 47 - info      : sent after typing into a button
