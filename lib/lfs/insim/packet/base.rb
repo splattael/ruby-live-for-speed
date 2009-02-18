@@ -14,21 +14,6 @@ module LFS
         klass
       end
 
-      module Helper
-
-        def self.included(base)
-          base.extend(ClassMethods)
-        end
-
-        module ClassMethods
-          def spare
-            @spare ||= 0
-            :"_sp#{@spare += 1}"
-          end
-        end
-
-      end
-
       # Base
       class Base < ::BinData::MultiValue
         include Helper

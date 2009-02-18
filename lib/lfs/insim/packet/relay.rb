@@ -30,6 +30,10 @@ module LFS
         def error
           ::LFS::Parser::Enum::RelayError[first_byte]
         end
+
+        def inspect
+          error
+        end
       end
     end
   end

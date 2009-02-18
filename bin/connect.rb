@@ -55,13 +55,19 @@ session_provider.connect(args.merge(options)) do |session|
     case packet
     when :VER
       puts "VERSION: #{packet.product} #{packet.version} ##{packet.insim_version}"
+      session.send(:TINY_ISM)
+      session.send(:TINY_SST)
+      session.send(:TINY_NCN)
+      session.send(:TINY_NPL)
+      session.send(:TINY_RES)
+      # last
       pinger.start
-    when :TINY, :SMALL
-      # p packet.subtype
-    when :MCI
-      p packet
     when :UNKN
       warn "UNKN: #{::LFS::Parser::Enum::PacketType[packet.header.packet_type].symbol} (##{packet.header.packet_type})"
+    when :MCI
+      #
+    else
+      # p packet
     end
   end
 end

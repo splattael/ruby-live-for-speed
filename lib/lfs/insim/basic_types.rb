@@ -66,6 +66,20 @@ module LFS
         def get; self.float end
         def set(v); self.float = v end
       end
+
+      # Float Vector
+      class FloatVec < ::BinData::MultiValue
+        float :x
+        float :y
+        float :z
+      end
+
+      # Int Vector
+      class IntVec < ::BinData::MultiValue
+        int :x
+        int :y
+        int :z
+      end
     end
   end
 end
