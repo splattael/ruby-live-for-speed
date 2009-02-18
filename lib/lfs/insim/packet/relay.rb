@@ -1,6 +1,7 @@
 module LFS
   module Parser
     module Packet
+
       # relay
       class HostInfo < ::BinData::MultiValue
         char :hostname, :length => 32

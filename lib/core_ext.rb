@@ -1,6 +1,17 @@
 class Symbol
-  def ===(o)
-    super(o) || o === self
+  # usage:
+  # case packet
+  # when :VER; ...
+  # when :TINY_SMALL; ...
+  # when :TINY; ...
+  # end
+  def ===(other)
+    case other
+    when LFS::Parser::Packet::Base
+      other === self
+    else
+      super(other)
+    end
   end
 
   def to_packet(options = {})
