@@ -86,7 +86,7 @@ module LFS
 
 
       #  // MSg eXtended - like MST but longer (not for commands)
-      define_packet :MSX, 1000 do
+      define_packet :MSX, 100 do
         char       :msg, :length => 96            # last byte must be zero
       end
 
@@ -224,7 +224,7 @@ module LFS
 
 
       #  // Car ReSet
-      define_packet :CRS do
+      define_packet :CRS, 4 do
         first_byte_is :player_id
       end
 
@@ -364,6 +364,7 @@ module LFS
       #  // RESult (qualify or confirmed finish)
       define_packet :RES, 84 do
         first_byte_is :player_id                  # player's unique id (0 = player left before result was sent)
+
         char       :username, :length => 24       # username
         char       :nickname, :length => 24       # nickname
         char       :plate, :length => 8           # number plate - NO ZERO AT END!
@@ -386,7 +387,8 @@ module LFS
       define_packet :REO, 36 do
         first_byte_is :players                    # number of players in race
 
-        byte       :player_id, :length => 32           # all PLIDs in new order
+        array      :player_ids, :type => :byte,   # all PLIDs in new order
+                   :initial_length => 32
       end
 
 
@@ -406,18 +408,33 @@ module LFS
 
 
       #  // Node and Lap Packet - variable size
+      #  // 4 + NumP * 6 (PLUS 2 if needed to make it a multiple of 4)
       define_packet :NLP do   # TODO variable size
         first_byte_is :players                    # number of players in race
 
         array :nodes, :type => :node_lap,         # node and lap of each player, 1 to 32 of these (NumP)
-              :initial_length => lambda { first_byte } # TODO
+              :read_unil => lambda { p index; true } # TODO
+
+        def packet_size
+          # TODO
+          size = Header::SIZE + players * 6
+          p "#{size}: size % 4 == 0 // #{players}"
+          size += 2 unless size % 4 == 0
+          p size
+          size
+        end
       end
 
       #  // Multi Car Info - if more than 8 in race then more than one of these is sent
+      #  // 4 + NumP * 28
       define_packet :MCI do
         first_byte_is :number_comp_cars           # number of valid CompCar structs in this packet
 
-        array :cars, :type => :comp_car, :initial_length => lambda { first_byte } # TODO
+        array :cars, :type => :comp_car, :initial_length => lambda { number_comp_cars }
+
+        def packet_size
+          number_comp_cars
+        end
       end
 
 

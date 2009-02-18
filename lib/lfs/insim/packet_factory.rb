@@ -46,11 +46,13 @@ module LFS
         @packet_classes[enum]
       end
 
+      def self.each_packet_class(&block)
+        @packet_classes.each(&block)
+      end
+
       def self.create(packet_type, args={})
         packet_class = lookup(packet_type) or raise "unknown #{packet_type}(#{args.inspect})"
-        packet = packet_class.new
-        packet.prepare_to_write(args)
-        packet
+        packet_class.create(args)
       end
     end
   end

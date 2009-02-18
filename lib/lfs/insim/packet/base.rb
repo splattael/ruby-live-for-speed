@@ -1,6 +1,8 @@
 module LFS
   module Parser
     module Packet
+
+      # defines a packet class
       def self.define_packet(type, size = nil, &block)
         klass = Class.new(Base) do
           def self.name
@@ -27,7 +29,15 @@ module LFS
 
         end
 
+        def self.create(args={})
+          packet = new
+          packet.prepare_to_write(args)
+          packet
+        end
+
         def write(io)
+          # reevaluate packet_size
+          header.packet_size = self.class.packet_size || packet_size
           header.write(io)
           super(io)
         end
@@ -42,9 +52,9 @@ module LFS
 
         def prepare_to_write(args={})
           self.header = Header.new
-          self.header.packet_size = self.class.packet_size
-          self.header.packet_type = ::LFS::Parser::Enum::PacketType[self.class.packet_type].to_i
-          self.header.request = args[:request] || 1
+          header.packet_size = self.class.packet_size || packet_size
+          header.packet_type = ::LFS::Parser::Enum::PacketType[self.class.packet_type].to_i
+          header.request = args[:request] || 1
           propagate_values(args)
         end
 

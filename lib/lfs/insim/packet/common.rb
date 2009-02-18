@@ -14,7 +14,7 @@ module LFS
           end
 
           def first_byte_is(name)
-            (class << self; self; end).class_eval do
+            class_eval do
               define_method name do
                 first_byte
               end

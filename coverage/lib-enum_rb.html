@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Mon Feb 16 16:16:32 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Wed Feb 18 19:10:36 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -598,119 +598,119 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="inferred1"><a name="line1"></a>  1 # Represents a C# style enumeration of known values.
-</span><span class="inferred0"><a name="line2"></a>  2 #
-</span><span class="inferred1"><a name="line3"></a>  3 # Usage:
-</span><span class="inferred0"><a name="line4"></a>  4 #   Color = Enum.new(:Red, :Green, :Blue)
-</span><span class="inferred1"><a name="line5"></a>  5 #   Color.is_a?(Enum) # =&gt; true
-</span><span class="inferred0"><a name="line6"></a>  6 #   Color::Red.inspect # =&gt; &quot;Color::Red&quot; 
-</span><span class="inferred1"><a name="line7"></a>  7 #   Color::Green.is_a?(Color) # =&gt; true
-</span><span class="inferred0"><a name="line8"></a>  8 #   Color::Green.is_a?(Enum::Member) # =&gt; true
-</span><span class="inferred1"><a name="line9"></a>  9 #   Color::Green.index # =&gt; 1
-</span><span class="inferred0"><a name="line10"></a> 10 #   Color::Blue.enum # =&gt; Color
-</span><span class="inferred1"><a name="line11"></a> 11 #   values = [[255, 0, 0], [0, 255, 0], [0, 0, 255]]
-</span><span class="inferred0"><a name="line12"></a> 12 #   values[Color::Green] # =&gt; [0, 255, 0]
-</span><span class="inferred1"><a name="line13"></a> 13 #   Color[0] # =&gt; Color::Red
-</span><span class="inferred0"><a name="line14"></a> 14 #   Color.size # =&gt; 3
-</span><span class="inferred1"><a name="line15"></a> 15 #
-</span><span class="inferred0"><a name="line16"></a> 16 # Enums are enumerable. Enum::Members are comparable.
-</span><span class="marked1"><a name="line17"></a> 17 class Enum &lt; Module
-</span><span class="marked0"><a name="line18"></a> 18   class Member &lt; Module
-</span><span class="marked1"><a name="line19"></a> 19     attr_reader :enum, :index, :symbol
-</span><span class="inferred0"><a name="line20"></a> 20 
-</span><span class="marked1"><a name="line21"></a> 21     def initialize(enum, index, symbol)
-</span><span class="marked0"><a name="line22"></a> 22       @enum, @index, @symbol = enum, index, symbol
-</span><span class="inferred1"><a name="line23"></a> 23       # Allow Color::Red.is_a?(Color)
-</span><span class="marked0"><a name="line24"></a> 24       extend enum
-</span><span class="inferred1"><a name="line25"></a> 25     end
-</span><span class="inferred0"><a name="line26"></a> 26 
-</span><span class="inferred1"><a name="line27"></a> 27     # Allow use of enum members as array indices
-</span><span class="marked0"><a name="line28"></a> 28     alias :to_int :index
-</span><span class="marked1"><a name="line29"></a> 29     alias :to_i :index
-</span><span class="inferred0"><a name="line30"></a> 30 
-</span><span class="inferred1"><a name="line31"></a> 31     # Allow comparison by index
-</span><span class="marked0"><a name="line32"></a> 32     def &lt;=&gt;(other)
-</span><span class="uncovered1"><a name="line33"></a> 33       @index &lt;=&gt; other.index
-</span><span class="uncovered0"><a name="line34"></a> 34     end
-</span><span class="inferred1"><a name="line35"></a> 35 
-</span><span class="marked0"><a name="line36"></a> 36     def ===(index_or_symbol)
-</span><span class="uncovered1"><a name="line37"></a> 37       index_or_symbol == case index_or_symbol
-</span><span class="uncovered0"><a name="line38"></a> 38       when Enum: self
-</span><span class="uncovered1"><a name="line39"></a> 39       when Numeric: index
-</span><span class="uncovered0"><a name="line40"></a> 40       when Symbol:  symbol
-</span><span class="uncovered1"><a name="line41"></a> 41       else
-</span><span class="uncovered0"><a name="line42"></a> 42         raise ArgumentError, &quot;#{index_or_symbol.class} not supported&quot;
-</span><span class="uncovered1"><a name="line43"></a> 43       end
-</span><span class="uncovered0"><a name="line44"></a> 44 
-</span><span class="uncovered1"><a name="line45"></a> 45     end
-</span><span class="inferred0"><a name="line46"></a> 46 
-</span><span class="marked1"><a name="line47"></a> 47     include Comparable
-</span><span class="inferred0"><a name="line48"></a> 48   end
-</span><span class="inferred1"><a name="line49"></a> 49 
-</span><span class="marked0"><a name="line50"></a> 50   def initialize(*symbols, &amp;block)
-</span><span class="marked1"><a name="line51"></a> 51     @members = []
-</span><span class="marked0"><a name="line52"></a> 52     add(0, *symbols)
-</span><span class="marked1"><a name="line53"></a> 53     super(&amp;block)
-</span><span class="inferred0"><a name="line54"></a> 54   end
-</span><span class="inferred1"><a name="line55"></a> 55 
-</span><span class="marked0"><a name="line56"></a> 56   def add(start_index, *symbols)
-</span><span class="marked1"><a name="line57"></a> 57     symbols.each_with_index do |symbol, index|
-</span><span class="marked0"><a name="line58"></a> 58       index = start_index + index_modifier(index)
-</span><span class="inferred1"><a name="line59"></a> 59       # Allow Enum.new(:foo)
-</span><span class="marked0"><a name="line60"></a> 60       symbol = symbol.to_s.sub(/^[a-z]/) { |letter| letter.upcase }.to_sym
-</span><span class="marked1"><a name="line61"></a> 61       member = Enum::Member.new(self, index, symbol)
-</span><span class="marked0"><a name="line62"></a> 62       const_set(symbol, member)
-</span><span class="marked1"><a name="line63"></a> 63       @members &lt;&lt; member
-</span><span class="inferred0"><a name="line64"></a> 64     end
-</span><span class="marked1"><a name="line65"></a> 65     self
-</span><span class="inferred0"><a name="line66"></a> 66   end
-</span><span class="inferred1"><a name="line67"></a> 67 
-</span><span class="marked0"><a name="line68"></a> 68   def [](index_or_symbol)
-</span><span class="marked1"><a name="line69"></a> 69     case index_or_symbol
-</span><span class="marked0"><a name="line70"></a> 70     when Enum: index_or_symbol
-</span><span class="marked1"><a name="line71"></a> 71     when Numeric: @members.detect {|m| m.index == index_or_symbol }
-</span><span class="marked0"><a name="line72"></a> 72     when Symbol:  @members.detect {|m| m.symbol == index_or_symbol }
-</span><span class="uncovered1"><a name="line73"></a> 73     else
-</span><span class="uncovered0"><a name="line74"></a> 74       raise ArgumentError, &quot;#{index_or_symbol.class} not supported&quot;
-</span><span class="uncovered1"><a name="line75"></a> 75     end
-</span><span class="marked0"><a name="line76"></a> 76   end
-</span><span class="marked1"><a name="line77"></a> 77   def values(index) @members.select {|m| m.index == index } end
-</span><span class="marked0"><a name="line78"></a> 78   def size() @members.size end
-</span><span class="marked1"><a name="line79"></a> 79   alias :length :size
-</span><span class="inferred0"><a name="line80"></a> 80 
-</span><span class="marked1"><a name="line81"></a> 81   def first(*args) @members.first(*args) end
-</span><span class="marked0"><a name="line82"></a> 82   def last(*args) @members.last(*args) end
-</span><span class="inferred1"><a name="line83"></a> 83 
-</span><span class="marked0"><a name="line84"></a> 84   def each(&amp;block) @members.each(&amp;block) end
-</span><span class="marked1"><a name="line85"></a> 85   include Enumerable
-</span><span class="inferred0"><a name="line86"></a> 86 
-</span><span class="marked1"><a name="line87"></a> 87   protected
-</span><span class="marked0"><a name="line88"></a> 88     def index_modifier(index)
-</span><span class="marked1"><a name="line89"></a> 89       index
-</span><span class="marked0"><a name="line90"></a> 90     end
-</span><span class="inferred1"><a name="line91"></a> 91 end
-</span><span class="inferred0"><a name="line92"></a> 92 
-</span><span class="marked1"><a name="line93"></a> 93 class BitEnum &lt; Enum
-</span><span class="marked0"><a name="line94"></a> 94   class ::Enum::Member &lt; Module
-</span><span class="marked1"><a name="line95"></a> 95     def |(other)
-</span><span class="uncovered0"><a name="line96"></a> 96       index | (other ? other.index : 0)
-</span><span class="uncovered1"><a name="line97"></a> 97     end
-</span><span class="uncovered0"><a name="line98"></a> 98   end
-</span><span class="inferred1"><a name="line99"></a> 99 
-</span><span class="marked0"><a name="line100"></a>100   def index_modifier(index)
-</span><span class="marked1"><a name="line101"></a>101     2 ** index
-</span><span class="marked0"><a name="line102"></a>102   end
-</span><span class="inferred1"><a name="line103"></a>103 
-</span><span class="marked0"><a name="line104"></a>104   def values(index) @members.select {|m| m.index &amp; index == m.index } end
-</span><span class="inferred1"><a name="line105"></a>105 
-</span><span class="marked0"><a name="line106"></a>106   def |(*members)
-</span><span class="uncovered1"><a name="line107"></a>107     members.flatten.compact.inject(0) {|sum, member| sum |= member.index }
-</span><span class="uncovered0"><a name="line108"></a>108   end
-</span><span class="inferred1"><a name="line109"></a>109 
-</span><span class="marked0"><a name="line110"></a>110   def empty
-</span><span class="uncovered1"><a name="line111"></a>111     @empty ||= Enum::Member.new(self, 0, :NONE)
-</span><span class="uncovered0"><a name="line112"></a>112   end
-</span><span class="uncovered1"><a name="line113"></a>113 end
+<pre><span class="inferred0"><a name="line1"></a>  1 # Represents a C# style enumeration of known values.
+</span><span class="inferred1"><a name="line2"></a>  2 #
+</span><span class="inferred0"><a name="line3"></a>  3 # Usage:
+</span><span class="inferred1"><a name="line4"></a>  4 #   Color = Enum.new(:Red, :Green, :Blue)
+</span><span class="inferred0"><a name="line5"></a>  5 #   Color.is_a?(Enum) # =&gt; true
+</span><span class="inferred1"><a name="line6"></a>  6 #   Color::Red.inspect # =&gt; &quot;Color::Red&quot; 
+</span><span class="inferred0"><a name="line7"></a>  7 #   Color::Green.is_a?(Color) # =&gt; true
+</span><span class="inferred1"><a name="line8"></a>  8 #   Color::Green.is_a?(Enum::Member) # =&gt; true
+</span><span class="inferred0"><a name="line9"></a>  9 #   Color::Green.index # =&gt; 1
+</span><span class="inferred1"><a name="line10"></a> 10 #   Color::Blue.enum # =&gt; Color
+</span><span class="inferred0"><a name="line11"></a> 11 #   values = [[255, 0, 0], [0, 255, 0], [0, 0, 255]]
+</span><span class="inferred1"><a name="line12"></a> 12 #   values[Color::Green] # =&gt; [0, 255, 0]
+</span><span class="inferred0"><a name="line13"></a> 13 #   Color[0] # =&gt; Color::Red
+</span><span class="inferred1"><a name="line14"></a> 14 #   Color.size # =&gt; 3
+</span><span class="inferred0"><a name="line15"></a> 15 #
+</span><span class="inferred1"><a name="line16"></a> 16 # Enums are enumerable. Enum::Members are comparable.
+</span><span class="marked0"><a name="line17"></a> 17 class Enum &lt; Module
+</span><span class="marked1"><a name="line18"></a> 18   class Member &lt; Module
+</span><span class="marked0"><a name="line19"></a> 19     attr_reader :enum, :index, :symbol
+</span><span class="inferred1"><a name="line20"></a> 20 
+</span><span class="marked0"><a name="line21"></a> 21     def initialize(enum, index, symbol)
+</span><span class="marked1"><a name="line22"></a> 22       @enum, @index, @symbol = enum, index, symbol
+</span><span class="inferred0"><a name="line23"></a> 23       # Allow Color::Red.is_a?(Color)
+</span><span class="marked1"><a name="line24"></a> 24       extend enum
+</span><span class="inferred0"><a name="line25"></a> 25     end
+</span><span class="inferred1"><a name="line26"></a> 26 
+</span><span class="inferred0"><a name="line27"></a> 27     # Allow use of enum members as array indices
+</span><span class="marked1"><a name="line28"></a> 28     alias :to_int :index
+</span><span class="marked0"><a name="line29"></a> 29     alias :to_i :index
+</span><span class="inferred1"><a name="line30"></a> 30 
+</span><span class="inferred0"><a name="line31"></a> 31     # Allow comparison by index
+</span><span class="marked1"><a name="line32"></a> 32     def &lt;=&gt;(other)
+</span><span class="uncovered0"><a name="line33"></a> 33       @index &lt;=&gt; other.index
+</span><span class="uncovered1"><a name="line34"></a> 34     end
+</span><span class="inferred0"><a name="line35"></a> 35 
+</span><span class="marked1"><a name="line36"></a> 36     def ===(index_or_symbol)
+</span><span class="uncovered0"><a name="line37"></a> 37       index_or_symbol == case index_or_symbol
+</span><span class="uncovered1"><a name="line38"></a> 38       when Enum: self
+</span><span class="uncovered0"><a name="line39"></a> 39       when Numeric: index
+</span><span class="uncovered1"><a name="line40"></a> 40       when Symbol:  symbol
+</span><span class="uncovered0"><a name="line41"></a> 41       else
+</span><span class="uncovered1"><a name="line42"></a> 42         raise ArgumentError, &quot;#{index_or_symbol.class} not supported&quot;
+</span><span class="uncovered0"><a name="line43"></a> 43       end
+</span><span class="uncovered1"><a name="line44"></a> 44 
+</span><span class="uncovered0"><a name="line45"></a> 45     end
+</span><span class="inferred1"><a name="line46"></a> 46 
+</span><span class="marked0"><a name="line47"></a> 47     include Comparable
+</span><span class="inferred1"><a name="line48"></a> 48   end
+</span><span class="inferred0"><a name="line49"></a> 49 
+</span><span class="marked1"><a name="line50"></a> 50   def initialize(*symbols, &amp;block)
+</span><span class="marked0"><a name="line51"></a> 51     @members = []
+</span><span class="marked1"><a name="line52"></a> 52     add(0, *symbols)
+</span><span class="marked0"><a name="line53"></a> 53     super(&amp;block)
+</span><span class="inferred1"><a name="line54"></a> 54   end
+</span><span class="inferred0"><a name="line55"></a> 55 
+</span><span class="marked1"><a name="line56"></a> 56   def add(start_index, *symbols)
+</span><span class="marked0"><a name="line57"></a> 57     symbols.each_with_index do |symbol, index|
+</span><span class="marked1"><a name="line58"></a> 58       index = start_index + index_modifier(index)
+</span><span class="inferred0"><a name="line59"></a> 59       # Allow Enum.new(:foo)
+</span><span class="marked1"><a name="line60"></a> 60       symbol = symbol.to_s.sub(/^[a-z]/) { |letter| letter.upcase }.to_sym
+</span><span class="marked0"><a name="line61"></a> 61       member = Enum::Member.new(self, index, symbol)
+</span><span class="marked1"><a name="line62"></a> 62       const_set(symbol, member)
+</span><span class="marked0"><a name="line63"></a> 63       @members &lt;&lt; member
+</span><span class="inferred1"><a name="line64"></a> 64     end
+</span><span class="marked0"><a name="line65"></a> 65     self
+</span><span class="inferred1"><a name="line66"></a> 66   end
+</span><span class="inferred0"><a name="line67"></a> 67 
+</span><span class="marked1"><a name="line68"></a> 68   def [](index_or_symbol)
+</span><span class="marked0"><a name="line69"></a> 69     case index_or_symbol
+</span><span class="marked1"><a name="line70"></a> 70     when Enum: index_or_symbol
+</span><span class="marked0"><a name="line71"></a> 71     when Numeric: @members.detect {|m| m.index == index_or_symbol }
+</span><span class="marked1"><a name="line72"></a> 72     when Symbol:  @members.detect {|m| m.symbol == index_or_symbol }
+</span><span class="uncovered0"><a name="line73"></a> 73     else
+</span><span class="uncovered1"><a name="line74"></a> 74       raise ArgumentError, &quot;#{index_or_symbol.class} not supported&quot;
+</span><span class="uncovered0"><a name="line75"></a> 75     end
+</span><span class="marked1"><a name="line76"></a> 76   end
+</span><span class="marked0"><a name="line77"></a> 77   def values(index) @members.select {|m| m.index == index } end
+</span><span class="marked1"><a name="line78"></a> 78   def size() @members.size end
+</span><span class="marked0"><a name="line79"></a> 79   alias :length :size
+</span><span class="inferred1"><a name="line80"></a> 80 
+</span><span class="marked0"><a name="line81"></a> 81   def first(*args) @members.first(*args) end
+</span><span class="marked1"><a name="line82"></a> 82   def last(*args) @members.last(*args) end
+</span><span class="inferred0"><a name="line83"></a> 83 
+</span><span class="marked1"><a name="line84"></a> 84   def each(&amp;block) @members.each(&amp;block) end
+</span><span class="marked0"><a name="line85"></a> 85   include Enumerable
+</span><span class="inferred1"><a name="line86"></a> 86 
+</span><span class="marked0"><a name="line87"></a> 87   protected
+</span><span class="marked1"><a name="line88"></a> 88     def index_modifier(index)
+</span><span class="marked0"><a name="line89"></a> 89       index
+</span><span class="marked1"><a name="line90"></a> 90     end
+</span><span class="inferred0"><a name="line91"></a> 91 end
+</span><span class="inferred1"><a name="line92"></a> 92 
+</span><span class="marked0"><a name="line93"></a> 93 class BitEnum &lt; Enum
+</span><span class="marked1"><a name="line94"></a> 94   class ::Enum::Member &lt; Module
+</span><span class="marked0"><a name="line95"></a> 95     def |(other)
+</span><span class="uncovered1"><a name="line96"></a> 96       index | (other ? other.index : 0)
+</span><span class="uncovered0"><a name="line97"></a> 97     end
+</span><span class="uncovered1"><a name="line98"></a> 98   end
+</span><span class="inferred0"><a name="line99"></a> 99 
+</span><span class="marked1"><a name="line100"></a>100   def index_modifier(index)
+</span><span class="marked0"><a name="line101"></a>101     2 ** index
+</span><span class="marked1"><a name="line102"></a>102   end
+</span><span class="inferred0"><a name="line103"></a>103 
+</span><span class="marked1"><a name="line104"></a>104   def values(index) @members.select {|m| m.index &amp; index == m.index } end
+</span><span class="inferred0"><a name="line105"></a>105 
+</span><span class="marked1"><a name="line106"></a>106   def |(*members)
+</span><span class="uncovered0"><a name="line107"></a>107     members.flatten.compact.inject(0) {|sum, member| sum |= member.index }
+</span><span class="uncovered1"><a name="line108"></a>108   end
+</span><span class="inferred0"><a name="line109"></a>109 
+</span><span class="marked1"><a name="line110"></a>110   def empty
+</span><span class="uncovered0"><a name="line111"></a>111     @empty ||= Enum::Member.new(self, 0, :NONE)
+</span><span class="uncovered1"><a name="line112"></a>112   end
+</span><span class="uncovered0"><a name="line113"></a>113 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>
