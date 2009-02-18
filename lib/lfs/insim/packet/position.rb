@@ -7,15 +7,19 @@ module LFS
 
         word :node
         word :lap
+
         byte :player_id
         byte :position
         byte :info
         byte spare
+
         int  :x
         int  :y
         int  :z
+
         word :speed
         word :direction
+
         word :heading
         short :angle_vel
       end

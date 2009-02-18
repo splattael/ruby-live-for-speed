@@ -10,8 +10,10 @@ module LFS
         include PlayerId
         time :lap_time
         time :total_time
+
         word :laps_done
         word :flags # TODO
+
         byte spare
         byte :penalty # TODO
         byte :pit_stops
@@ -22,6 +24,7 @@ module LFS
         include PlayerId
         time :lap_time
         time :total_time
+
         byte :split
         byte :penalty # TODO
         byte :pit_stops
