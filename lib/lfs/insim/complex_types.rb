@@ -14,17 +14,25 @@ module LFS
         alias :inspect :to_s
 
         private
-        def human_time(time, show_sign=false)
-          return "-" unless time
 
-          sign = "-" if time < 0
-          sign = "+" if time > 0 && show_sign
+        def human_time(time, show_sign=false)
+          # TODO refactor
+          return "" unless time
+
+          sign = time < 0 ? "-" : time > 0 && show_sign ? "+" : ""
           time = time.abs
-          if (time / 1000) / 60 > 59 then
-            "#{sign}%02d:%02d:%02d.%03d" % [ (time / 1000) / 60 / 60, (time / 1000) / 60 % 60, (time / 1000) % 60, time % 1000 ]
-          else
-            "#{sign}%02d:%02d.%03d" % [ (time / 1000) / 60, (time / 1000) % 60, time % 1000 ]
-          end
+
+          times = []
+          times << [ "%03d",  time % 1000 ] # milli
+          time /= 1000
+          times << [ "%02d.", time % 60 ]   # seconds
+          time /= 60
+          times << [ "%02d:", time % 60 ]   # minutes
+          time /= 60
+          times << [ "%02d:", time ] if time > 0 # bigger than an hour?
+          times << [ "%s", sign ]
+
+          times.map {|format, digit| format % digit }.reverse.join("")
         end
 
         class Tyres < ::BinData::MultiValue
