@@ -135,9 +135,8 @@ module LFS
         session.send(:HLR, :request => 23)
         loop do
           packet = session.parse_packet
-          # p packet
           break if packet.request == 23
-          hosts << packet.host_infos.map {|i| i }
+          hosts << packet.host_infos
         end
       end
       hosts.flatten.compact
