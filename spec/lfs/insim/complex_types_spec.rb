@@ -42,37 +42,18 @@ describe LFS::Parser::Types do
       @human_time.call(nil).should == ""
     end
 
-    describe "displaying times" do
-      before do
-        @display = {
-          "1"           =>  "00:00.001",
-          "1s1"         =>  "00:01.001",
-          "1m1s1"       =>  "01:01.001",
-          "1h1m1s1"     =>  "01:01:01.001",
-          "24h 3s 354"  =>  "24:00:03.354",
-        }
+    it "displays human time" do
+      display = {
+        "0"           =>  "00:00.000",
+        "1"           =>  "00:00.001",
+        "1s1"         =>  "00:01.001",
+        "1m1s1"       =>  "01:01.001",
+        "1h1m1s1"     =>  "01:01:01.001",
+        "24h 3s 354"  =>  "24:00:03.354",
+      }
+      display.each do |input, expected|
+        @human_time.call(input.duration).should == expected
       end
-
-      it "displays human time" do
-        @human_time.call(0).should == "00:00.000"
-        @display.each do |input, expected|
-          @human_time.call(input.duration).should == expected
-        end
-      end
-
-      it "displays human time with positive sign" do
-        @human_time.call(0, true).should == "00:00.000"
-        @display.each do |input, expected|
-          @human_time.call(input.duration, true).should == "+#{expected}"
-        end
-      end
-
-      it "displays human time with negative sign" do
-        @display.each do |input, expected|
-          @human_time.call(-input.duration, true).should == "-#{expected}"
-        end
-      end
-
     end
 
   end

@@ -15,12 +15,9 @@ module LFS
 
         private
 
-        def human_time(time, show_sign=false)
+        def human_time(time)
           # TODO refactor
           return "" unless time
-
-          sign = time < 0 ? "-" : time > 0 && show_sign ? "+" : ""
-          time = time.abs
 
           times = []
           times << [ "%03d",  time % 1000 ] # milli
@@ -30,7 +27,6 @@ module LFS
           times << [ "%02d:", time % 60 ]   # minutes
           time /= 60
           times << [ "%02d:", time ] if time > 0 # bigger than an hour?
-          times << [ "%s", sign ]
 
           times.map {|format, digit| format % digit }.reverse.join("")
         end
