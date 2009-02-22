@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Wed Feb 18 19:10:36 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Sun Feb 22 20:28:53 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,24 +571,24 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='lib-lfs-session_rb.html'>lib/lfs/session.rb</a>
         </td>
-      <td class='lines_total'><tt>147</tt>
+      <td class='lines_total'><tt>153</tt>
         </td>
-      <td class='lines_code'><tt>118</tt>
+      <td class='lines_code'><tt>125</tt>
         </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>42.2%</tt>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>40.5%</tt>
               &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='42'/>
-                  <td class='uncovered' width='58'/>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='41'/>
+                  <td class='uncovered' width='59'/>
                   </tr>
                 </table>
               </td>
             </tr>
           </table>
         </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>29.7%</tt>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>28.0%</tt>
               &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='30'/>
-                  <td class='uncovered' width='70'/>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='28'/>
+                  <td class='uncovered' width='72'/>
                   </tr>
                 </table>
               </td>
@@ -624,7 +624,7 @@ span.run100 {
 </span><span class="uncovered1"><a name="line24"></a> 24     end
 </span><span class="inferred0"><a name="line25"></a> 25 
 </span><span class="marked1"><a name="line26"></a> 26     def self.connect(options={}, &amp;block)
-</span><span class="uncovered0"><a name="line27"></a> 27       hostname, port = options.delete(:hostname), options.delete(:port)
+</span><span class="uncovered0"><a name="line27"></a> 27       hostname, port = options.delete(&quot;hostname&quot;), options.delete(&quot;port&quot;)
 </span><span class="uncovered1"><a name="line28"></a> 28       new(hostname, port, options).connect(options, &amp;block)
 </span><span class="uncovered0"><a name="line29"></a> 29     end
 </span><span class="inferred1"><a name="line30"></a> 30 
@@ -674,77 +674,83 @@ span.run100 {
 </span><span class="inferred1"><a name="line74"></a> 74 
 </span><span class="marked0"><a name="line75"></a> 75     alias :stop :close
 </span><span class="inferred1"><a name="line76"></a> 76 
-</span><span class="marked0"><a name="line77"></a> 77     def send(packet_type, options = {})
-</span><span class="uncovered1"><a name="line78"></a> 78       packet = packet_type.to_packet(options)
-</span><span class="uncovered0"><a name="line79"></a> 79       puts &quot;&lt;&lt;&lt; #{packet.inspect}&quot; if $DEBUG
-</span><span class="uncovered1"><a name="line80"></a> 80       packet.write(@socket)
-</span><span class="uncovered0"><a name="line81"></a> 81     end
-</span><span class="inferred1"><a name="line82"></a> 82 
-</span><span class="marked0"><a name="line83"></a> 83     def break_loop
-</span><span class="uncovered1"><a name="line84"></a> 84       throw :break
-</span><span class="uncovered0"><a name="line85"></a> 85     end
-</span><span class="inferred1"><a name="line86"></a> 86 
-</span><span class="marked0"><a name="line87"></a> 87     def descriptor
-</span><span class="inferred1"><a name="line88"></a> 88       @socket
-</span><span class="inferred0"><a name="line89"></a> 89     end
-</span><span class="inferred1"><a name="line90"></a> 90     
-</span><span class="marked0"><a name="line91"></a> 91     def parse_packet
-</span><span class="uncovered1"><a name="line92"></a> 92       @packet_factory.read(@socket)
-</span><span class="uncovered0"><a name="line93"></a> 93     end
-</span><span class="inferred1"><a name="line94"></a> 94 
-</span><span class="marked0"><a name="line95"></a> 95     def parse(&amp;block)
-</span><span class="uncovered1"><a name="line96"></a> 96       loop do
-</span><span class="uncovered0"><a name="line97"></a> 97         packet = parse_packet
-</span><span class="uncovered1"><a name="line98"></a> 98         break_loop unless packet
-</span><span class="uncovered0"><a name="line99"></a> 99         yield(packet) if block_given?
-</span><span class="uncovered1"><a name="line100"></a>100       end
-</span><span class="uncovered0"><a name="line101"></a>101     end
-</span><span class="inferred1"><a name="line102"></a>102 
-</span><span class="marked0"><a name="line103"></a>103     def now
-</span><span class="uncovered1"><a name="line104"></a>104       @now || (Time.now.to_f * 1000).to_i
-</span><span class="uncovered0"><a name="line105"></a>105     end
-</span><span class="inferred1"><a name="line106"></a>106 
-</span><span class="marked0"><a name="line107"></a>107     def log(*msg)
-</span><span class="inferred1"><a name="line108"></a>108       $stderr.puts &quot;[%s] %s&quot; % [ Time.now.strftime(&quot;%Y-%m-%dT%T&quot;), msg.join(' ') ]
-</span><span class="inferred0"><a name="line109"></a>109     end
-</span><span class="inferred1"><a name="line110"></a>110   end
-</span><span class="inferred0"><a name="line111"></a>111 
-</span><span class="marked1"><a name="line112"></a>112   class RelayedSession &lt; Session
-</span><span class="marked0"><a name="line113"></a>113     RELAY_HOST = &quot;isrelay.lfs.net&quot;
-</span><span class="marked1"><a name="line114"></a>114     RELAY_PORT = 47474
-</span><span class="inferred0"><a name="line115"></a>115 
-</span><span class="marked1"><a name="line116"></a>116     def initialize(host=RELAY_HOST, port=RELAY_PORT, &amp;block)
-</span><span class="uncovered0"><a name="line117"></a>117       super(host, port)
-</span><span class="uncovered1"><a name="line118"></a>118     end
-</span><span class="inferred0"><a name="line119"></a>119 
-</span><span class="marked1"><a name="line120"></a>120     def self.connect(options={}, &amp;block)
-</span><span class="uncovered0"><a name="line121"></a>121       new.connect(options, &amp;block)
-</span><span class="uncovered1"><a name="line122"></a>122     end
-</span><span class="inferred0"><a name="line123"></a>123 
-</span><span class="marked1"><a name="line124"></a>124     def connect(options={}, &amp;block)
-</span><span class="uncovered0"><a name="line125"></a>125       send(:SEL, options)
-</span><span class="uncovered1"><a name="line126"></a>126       yield(self) if block_given?
-</span><span class="uncovered0"><a name="line127"></a>127     ensure
-</span><span class="uncovered1"><a name="line128"></a>128       close
+</span><span class="marked0"><a name="line77"></a> 77     def send(packet, options = {})
+</span><span class="uncovered1"><a name="line78"></a> 78       packet = case packet
+</span><span class="uncovered0"><a name="line79"></a> 79       when Symbol
+</span><span class="uncovered1"><a name="line80"></a> 80         packet.to_packet(options)
+</span><span class="uncovered0"><a name="line81"></a> 81       when ::LFS::Parser::Packet::Base
+</span><span class="uncovered1"><a name="line82"></a> 82         packet
+</span><span class="uncovered0"><a name="line83"></a> 83       else
+</span><span class="uncovered1"><a name="line84"></a> 84         raise &quot;unknown packet #{packet.inspect}&quot;
+</span><span class="uncovered0"><a name="line85"></a> 85       end
+</span><span class="uncovered1"><a name="line86"></a> 86       puts &quot;&lt;&lt;&lt; #{packet.inspect}&quot; if $DEBUG
+</span><span class="uncovered0"><a name="line87"></a> 87       packet.write(@socket)
+</span><span class="uncovered1"><a name="line88"></a> 88     end
+</span><span class="inferred0"><a name="line89"></a> 89 
+</span><span class="marked1"><a name="line90"></a> 90     def break_loop
+</span><span class="uncovered0"><a name="line91"></a> 91       throw :break
+</span><span class="uncovered1"><a name="line92"></a> 92     end
+</span><span class="inferred0"><a name="line93"></a> 93 
+</span><span class="marked1"><a name="line94"></a> 94     def descriptor
+</span><span class="inferred0"><a name="line95"></a> 95       @socket
+</span><span class="inferred1"><a name="line96"></a> 96     end
+</span><span class="inferred0"><a name="line97"></a> 97     
+</span><span class="marked1"><a name="line98"></a> 98     def parse_packet
+</span><span class="uncovered0"><a name="line99"></a> 99       @packet_factory.read(@socket)
+</span><span class="uncovered1"><a name="line100"></a>100     end
+</span><span class="inferred0"><a name="line101"></a>101 
+</span><span class="marked1"><a name="line102"></a>102     def parse(&amp;block)
+</span><span class="uncovered0"><a name="line103"></a>103       loop do
+</span><span class="uncovered1"><a name="line104"></a>104         packet = parse_packet
+</span><span class="uncovered0"><a name="line105"></a>105         break_loop unless packet
+</span><span class="uncovered1"><a name="line106"></a>106         yield(packet) if block_given?
+</span><span class="uncovered0"><a name="line107"></a>107       end
+</span><span class="uncovered1"><a name="line108"></a>108     end
+</span><span class="inferred0"><a name="line109"></a>109 
+</span><span class="marked1"><a name="line110"></a>110     def now
+</span><span class="uncovered0"><a name="line111"></a>111       @now || (Time.now.to_f * 1000).to_i
+</span><span class="uncovered1"><a name="line112"></a>112     end
+</span><span class="inferred0"><a name="line113"></a>113 
+</span><span class="marked1"><a name="line114"></a>114     def log(*msg)
+</span><span class="inferred0"><a name="line115"></a>115       $stderr.puts &quot;[%s] %s&quot; % [ Time.now.strftime(&quot;%Y-%m-%dT%T&quot;), msg.join(' ') ]
+</span><span class="inferred1"><a name="line116"></a>116     end
+</span><span class="inferred0"><a name="line117"></a>117   end
+</span><span class="inferred1"><a name="line118"></a>118 
+</span><span class="marked0"><a name="line119"></a>119   class RelayedSession &lt; Session
+</span><span class="marked1"><a name="line120"></a>120     RELAY_HOST = &quot;isrelay.lfs.net&quot;
+</span><span class="marked0"><a name="line121"></a>121     RELAY_PORT = 47474
+</span><span class="inferred1"><a name="line122"></a>122 
+</span><span class="marked0"><a name="line123"></a>123     def initialize(host=RELAY_HOST, port=RELAY_PORT, &amp;block)
+</span><span class="uncovered1"><a name="line124"></a>124       super(host, port, &amp;block)
+</span><span class="uncovered0"><a name="line125"></a>125     end
+</span><span class="inferred1"><a name="line126"></a>126 
+</span><span class="marked0"><a name="line127"></a>127     def self.connect(options={}, &amp;block)
+</span><span class="uncovered1"><a name="line128"></a>128       new.connect(options, &amp;block)
 </span><span class="uncovered0"><a name="line129"></a>129     end
 </span><span class="inferred1"><a name="line130"></a>130 
-</span><span class="marked0"><a name="line131"></a>131     def self.hostlist
-</span><span class="uncovered1"><a name="line132"></a>132       hosts = []
-</span><span class="uncovered0"><a name="line133"></a>133       new do |session|
-</span><span class="uncovered1"><a name="line134"></a>134         session.send(:HLR)
-</span><span class="uncovered0"><a name="line135"></a>135         session.send(:HLR, :request =&gt; 23)
-</span><span class="uncovered1"><a name="line136"></a>136         loop do
-</span><span class="uncovered0"><a name="line137"></a>137           packet = session.parse_packet
-</span><span class="uncovered1"><a name="line138"></a>138           # p packet
-</span><span class="uncovered0"><a name="line139"></a>139           break if packet.request == 23
-</span><span class="uncovered1"><a name="line140"></a>140           hosts &lt;&lt; packet.host_infos.map {|i| i }
-</span><span class="uncovered0"><a name="line141"></a>141         end
-</span><span class="uncovered1"><a name="line142"></a>142       end
-</span><span class="uncovered0"><a name="line143"></a>143       hosts.flatten.compact
-</span><span class="uncovered1"><a name="line144"></a>144     ensure
-</span><span class="uncovered0"><a name="line145"></a>145     end
-</span><span class="uncovered1"><a name="line146"></a>146   end
-</span><span class="uncovered0"><a name="line147"></a>147 end
+</span><span class="marked0"><a name="line131"></a>131     def connect(options={}, &amp;block)
+</span><span class="uncovered1"><a name="line132"></a>132       send(:SEL, options)
+</span><span class="uncovered0"><a name="line133"></a>133       yield(self) if block_given?
+</span><span class="uncovered1"><a name="line134"></a>134     ensure
+</span><span class="uncovered0"><a name="line135"></a>135       close
+</span><span class="uncovered1"><a name="line136"></a>136     end
+</span><span class="inferred0"><a name="line137"></a>137 
+</span><span class="marked1"><a name="line138"></a>138     def self.hostlist
+</span><span class="uncovered0"><a name="line139"></a>139       hosts = []
+</span><span class="uncovered1"><a name="line140"></a>140       new do |session|
+</span><span class="uncovered0"><a name="line141"></a>141         session.send(:HLR)
+</span><span class="uncovered1"><a name="line142"></a>142         session.send(:HLR, :request =&gt; 23)
+</span><span class="uncovered0"><a name="line143"></a>143         loop do
+</span><span class="uncovered1"><a name="line144"></a>144           packet = session.parse_packet
+</span><span class="uncovered0"><a name="line145"></a>145           break if packet.request == 23
+</span><span class="uncovered1"><a name="line146"></a>146           hosts &lt;&lt; packet.host_infos.dup
+</span><span class="uncovered0"><a name="line147"></a>147         end
+</span><span class="uncovered1"><a name="line148"></a>148       end
+</span><span class="uncovered0"><a name="line149"></a>149       hosts.flatten.compact
+</span><span class="uncovered1"><a name="line150"></a>150     ensure
+</span><span class="uncovered0"><a name="line151"></a>151     end
+</span><span class="uncovered1"><a name="line152"></a>152   end
+</span><span class="uncovered0"><a name="line153"></a>153 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

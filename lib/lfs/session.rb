@@ -24,7 +24,7 @@ module LFS
     end
 
     def self.connect(options={}, &block)
-      hostname, port = options.delete(:hostname), options.delete(:port)
+      hostname, port = options.delete("hostname") || options.delete(:hostname), options.delete("port") || options.delete(:port)
       new(hostname, port, options).connect(options, &block)
     end
 
@@ -74,8 +74,15 @@ module LFS
 
     alias :stop :close
 
-    def send(packet_type, options = {})
-      packet = packet_type.to_packet(options)
+    def send(packet, options = {})
+      packet = case packet
+      when Symbol
+        packet.to_packet(options)
+      when ::LFS::Parser::Packet::Base
+        packet
+      else
+        raise "unknown packet #{packet.inspect}"
+      end
       puts "<<< #{packet.inspect}" if $DEBUG
       packet.write(@socket)
     end
@@ -114,7 +121,7 @@ module LFS
     RELAY_PORT = 47474
 
     def initialize(host=RELAY_HOST, port=RELAY_PORT, &block)
-      super(host, port)
+      super(host, port, &block)
     end
 
     def self.connect(options={}, &block)
@@ -136,7 +143,7 @@ module LFS
         loop do
           packet = session.parse_packet
           break if packet.request == 23
-          hosts << packet.host_infos
+          hosts << packet.host_infos.dup
         end
       end
       hosts.flatten.compact
