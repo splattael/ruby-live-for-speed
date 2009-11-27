@@ -2,7 +2,7 @@ module LFS
   module Parser
     module Types
       # Complex
-      class Time < ::BinData::SingleValue
+      class Time < ::BinData::Record
         unsigned :milliseconds
 
         def get; self.milliseconds end
@@ -31,7 +31,7 @@ module LFS
           times.map {|format, digit| format % digit }.reverse.join("")
         end
 
-        class Tyres < ::BinData::MultiValue
+        class Tyres < ::BinData::Record
           byte :rear_left
           byte :rear_right
           byte :front_left
@@ -40,7 +40,7 @@ module LFS
       end # Time
 
       #  // Car info in 28 bytes - there is an array of these in the MCI (below)
-      class CompCar < ::BinData::MultiValue
+      class CompCar < ::BinData::Record
         include ::LFS::Parser::Packet::Helper
 
         word       :node                          # current path node
@@ -60,7 +60,7 @@ module LFS
 
 
       #  // Car info in 6 bytes - there is an array of these in the NLP (below)
-      class NodeLap < ::BinData::MultiValue
+      class NodeLap < ::BinData::Record
         include ::LFS::Parser::Packet::Helper
 
         word       :node                          # current path node
@@ -70,7 +70,7 @@ module LFS
       end
 
       #
-      class OutSimPack < ::BinData::MultiValue
+      class OutSimPack < ::BinData::Record
         include ::LFS::Parser::Packet::Helper
 
         time       :time                          # time in milliseconds (to check order)
@@ -86,11 +86,11 @@ module LFS
 
 
       # 
-      class OutGaugePack < ::BinData::MultiValue
+      class OutGaugePack < ::BinData::Record
         include ::LFS::Parser::Packet::Helper
 
         time       :time                          # time in milliseconds (to check order)
-        char       :car, :length => 4             # Car name
+        char       :car, :len => 4                # Car name
         word       :flags                         # OG_FLAGS (see below)
         byte       :gear                          # Reverse:0, Neutral:1, First:2...
         byte       spare
@@ -106,8 +106,8 @@ module LFS
         float      :throttle                      # 0 to 1
         float      :brake                         # 0 to 1
         float      :clutch                        # 0 to 1
-        char       :display1, :length => 16       # Usually Fuel
-        char       :display2, :length => 16       # Usually Settings
+        char       :display1, :len => 16       # Usually Fuel
+        char       :display2, :len => 16       # Usually Settings
         int        :out_gauge_id                  # optional - only if OutGauge ID is specified
       end
 

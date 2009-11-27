@@ -17,7 +17,7 @@ module LFS
       end
 
       # Base
-      class Base < ::BinData::MultiValue
+      class Base < ::BinData::Record
         include Helper
 
         attr_accessor :header
@@ -96,7 +96,7 @@ module LFS
         end
       end
 
-      class Header < ::BinData::MultiValue
+      class Header < ::BinData::Record
         SIZE = 4
 
         byte :packet_size

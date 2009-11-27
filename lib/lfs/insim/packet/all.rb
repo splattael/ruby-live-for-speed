@@ -9,15 +9,15 @@ module LFS
         byte       spare
         byte       :prefix                        # Special host message prefix character
         word       :interval                      # Time in ms between NLP or MCI (0 = none)
-        char       :admin, :length => 16          # Admin password (if set in LFS)
-        char       :iname, :length => 16          # A short name for your program
+        char       :admin, :len => 16          # Admin password (if set in LFS)
+        char       :iname, :len => 16          # A short name for your program
       end
 
 
       #  // VERsion
       define_packet :VER, 20 do
-        char       :version, :length => 8         # LFS version, e.g. 0.3G
-        char       :product, :length => 6         # Product : DEMO or S1
+        char       :version, :len => 8         # LFS version, e.g. 0.3G
+        char       :product, :len => 6         # Product : DEMO or S1
         word       :insim_version                 # InSim Version : increased when InSim packets change
       end
 
@@ -36,7 +36,7 @@ module LFS
         byte       :race_laps                     # see "RaceLaps" near the top of this document
         byte       spare
         byte       spare
-        char       :track, :length => 6           # short name for track e.g. FE2R
+        char       :track, :len => 6           # short name for track e.g. FE2R
         byte       :weather                       # 0,1,2...
         byte       :wind                          # 0=off 1=weak 2=strong
       end
@@ -65,7 +65,7 @@ module LFS
         byte       :player_id                     # player's unique id (if zero, use UCID)
         byte       :usertype                      # set if typed by a user (see User Values below) 
         byte       :textstart                     # first character of the actual text (after player name)
-        char       :msg, :length => 128           # 
+        char       :msg, :len => 128           # 
       end
 
 
@@ -75,19 +75,19 @@ module LFS
         byte       :player_id                     # player's unique id (if zero, use UCID)
         byte       spare
         byte       spare
-        char       :msg, :length => 64            # 
+        char       :msg, :len => 64            # 
       end
 
 
       #  // MSg Type - send to LFS to type message or command
       define_packet :MST, 68 do
-        char       :msg, :length => 64            # last byte must be zero
+        char       :msg, :len => 64            # last byte must be zero
       end
 
 
       #  // MSg eXtended - like MST but longer (not for commands)
       define_packet :MSX, 100 do
-        char       :msg, :length => 96            # last byte must be zero
+        char       :msg, :len => 96            # last byte must be zero
       end
 
 
@@ -95,7 +95,7 @@ module LFS
       define_packet :MSL, 132 do
         first_byte_is :sound
 
-        char       :msg, :length => 128           # last byte must be zero
+        char       :msg, :len => 128           # last byte must be zero
       end
 
 
@@ -105,7 +105,7 @@ module LFS
         byte       :player_id                     # player's unique id (if zero, use UCID)
         byte       spare
         byte       spare
-        char       :msg, :length => 64            # last byte must be zero
+        char       :msg, :len => 64            # last byte must be zero
       end
 
 
@@ -124,7 +124,7 @@ module LFS
         byte       spare
         byte       spare
         byte       spare
-        char       :hostname, :length => 32       # the name of the host joined or started
+        char       :hostname, :len => 32       # the name of the host joined or started
       end
 
 
@@ -143,7 +143,7 @@ module LFS
         byte       :qual_mins                     # 0 if race
         byte       :players                       # number of players in race
         byte       spare
-        char       :track, :length => 6           # short track name
+        char       :track, :len => 6           # short track name
         byte       :weather                       # 
         byte       :wind                          # 
         word       :flags                         # race flags (must pit, can reset, etc - see below)
@@ -159,8 +159,8 @@ module LFS
       define_packet :NCN, 56 do
         first_byte_is :connection_id
 
-        char       :username, :length => 24       # username
-        char       :nickname, :length => 24       # nickname
+        char       :username, :len => 24       # username
+        char       :nickname, :len => 24       # nickname
         byte       :admin                         # 1 if admin
         byte       :connections                   # number of connections including host
         byte       :flags                         # bit 2 : remote
@@ -183,8 +183,8 @@ module LFS
       define_packet :CPR, 36 do
         first_byte_is :connection_id
 
-        char       :nickname, :length => 24       # new nickname
-        char       :plate, :length => 8           # number plate - NO ZERO AT END!
+        char       :nickname, :len => 24       # new nickname
+        char       :plate, :len => 8           # number plate - NO ZERO AT END!
       end
 
 
@@ -194,10 +194,10 @@ module LFS
         byte       :connection_id                 # connection's unique id
         byte       :ptype                         # bit 0 : female / bit 1 : AI / bit 2 : remote
         word       :flags                         # player flags
-        char       :nickname, :length => 24       # nickname
-        char       :plate, :length => 8           # number plate - NO ZERO AT END!
-        char       :car, :length => 4             # car name
-        char       :skin, :length => 16           # skin name - MAX_CAR_TEX_NAME
+        char       :nickname, :len => 24       # nickname
+        char       :plate, :len => 8           # number plate - NO ZERO AT END!
+        char       :car, :len => 4             # car name
+        char       :skin, :len => 16           # skin name - MAX_CAR_TEX_NAME
         tyres      :tyres
         byte       :h_mass                        # added mass (kg)
         byte       :h_tres                        # intake restriction
@@ -365,10 +365,10 @@ module LFS
       define_packet :RES, 84 do
         first_byte_is :player_id                  # player's unique id (0 = player left before result was sent)
 
-        char       :username, :length => 24       # username
-        char       :nickname, :length => 24       # nickname
-        char       :plate, :length => 8           # number plate - NO ZERO AT END!
-        char       :skin, :length => 4            # skin prefix
+        char       :username, :len => 24       # username
+        char       :nickname, :len => 24       # nickname
+        char       :plate, :len => 8           # number plate - NO ZERO AT END!
+        char       :skin, :len => 4            # skin prefix
         time       :total_time                    # race time (ms)
         time       :best_lap_time                 # best lap (ms)
         byte       spare
@@ -397,7 +397,7 @@ module LFS
         byte       :axstart                       # autocross start position
         byte       :checkpoints                   # number of checkpoints
         word       :object                        # number of objects
-        char       :layout_name, :length => 32    # the name of the layout last loaded (if loaded locally)
+        char       :layout_name, :len => 32    # the name of the layout last loaded (if loaded locally)
       end
 
 
@@ -484,7 +484,7 @@ module LFS
         byte       :w                             # width  : 0 - 200
         byte       :h                             # height : 0 - 200
         char       :text,
-                   :read_length => lambda { header.packet_size - 12 } # TODO
+                   :len => lambda { header.packet_size - 12 } # TODO
       end
 
 
@@ -507,7 +507,7 @@ module LFS
         byte       :inst                          # used internally by InSim
         byte       :max_size                      # from original button specification
         byte       spare
-        char       :text, :length => 96           # typed text, zero to TypeIn specified in IS_BTN
+        char       :text, :len => 96           # typed text, zero to TypeIn specified in IS_BTN
       end
 
     end # Packet

@@ -3,19 +3,19 @@ module LFS
     # Mimic types defined in LFS InSim.txt
     module Type
       # Char type. Variable length, value w/o null byte padding
-      class Char < ::BinData::SingleValue
+      class Char < ::BinData::Record
         string :char, :trim_value => true, :length => :length
 
-        bindata_mandatory_parameter :length
+        mandatory_parameter :len
 
-        def length; @params[:length] end
+        def length; @params[:len] end
 
         def get; self.char end
         def set(v); self.char = v end
       end
 
       # Byte type
-      class Byte < ::BinData::SingleValue
+      class Byte < ::BinData::Record
         endian :little
         uint8 :byte
 
@@ -24,7 +24,7 @@ module LFS
       end
 
       # Word type
-      class Word < ::BinData::SingleValue
+      class Word < ::BinData::Record
         endian :little
         uint16 :word
 
@@ -33,7 +33,7 @@ module LFS
       end
 
       # Short type
-      class Short < ::BinData::SingleValue
+      class Short < ::BinData::Record
         endian :little
         int16 :short
 
@@ -42,7 +42,7 @@ module LFS
       end
     
       # Unsigned type
-      class Unsigned < ::BinData::SingleValue
+      class Unsigned < ::BinData::Record
         endian :little
         uint32 :unsigned, :length => 1
 
@@ -51,7 +51,7 @@ module LFS
       end
 
       # Int type
-      class Int < ::BinData::SingleValue
+      class Int < ::BinData::Record
         endian :little
         int32 :int, :length => 1
 
@@ -60,7 +60,7 @@ module LFS
       end
 
       # Float
-      class Float < ::BinData::SingleValue
+      class Float < ::BinData::Record
         float_le :float, :length => 1
 
         def get; self.float end
@@ -68,14 +68,14 @@ module LFS
       end
 
       # Float Vector
-      class FloatVec < ::BinData::MultiValue
+      class FloatVec < ::BinData::Record
         float :x
         float :y
         float :z
       end
 
       # Int Vector
-      class IntVec < ::BinData::MultiValue
+      class IntVec < ::BinData::Record
         int :x
         int :y
         int :z

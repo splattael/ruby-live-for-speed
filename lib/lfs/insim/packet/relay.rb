@@ -3,9 +3,9 @@ module LFS
     module Packet
 
       # relay
-      class HostInfo < ::BinData::MultiValue
-        char :hostname, :length => 32
-        char :track, :length => 6
+      class HostInfo < ::BinData::Record
+        char :hostname, :len => 32
+        char :track, :len => 6
         byte :flags # TODO
         byte :connections
       end

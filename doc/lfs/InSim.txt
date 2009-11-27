@@ -127,7 +127,7 @@ struct IS_ISI // InSim Init - packet to initialise the InSim system
 // ENUMERATIONS FOR PACKET TYPES
 // =============================
 
-enum // the second byte in all packets is one of these
+enum // the second byte of any packet is one of these
 {
 	ISP_NONE,		//  0					: not used
 	ISP_ISI,		//  1 - instruction		: insim initialise
@@ -177,11 +177,13 @@ enum // the second byte in all packets is one of these
 	ISP_BTN,		// 45 - instruction		: show a button on local or remote screen
 	ISP_BTC,		// 46 - info			: sent when a user clicks a button
 	ISP_BTT,		// 47 - info			: sent after typing into a button
+	ISP_RIP,		// 48 - both ways		: replay information packet
+	ISP_SSH,		// 49 - both ways		: screenshot
 };
 
-enum // the fourth byte of IS_TINY packets is one of these
+enum // the fourth byte of an IS_TINY packet is one of these
 {
-	TINY_NONE,		//  0					: see "maintaining the connection"
+	TINY_NONE,		//  0 - keep alive		: see "maintaining the connection"
 	TINY_VER,		//  1 - info request	: get version
 	TINY_CLOSE,		//  2 - instruction		: close insim
 	TINY_PING,		//  3 - ping request	: external progam requesting a reply
@@ -194,18 +196,19 @@ enum // the fourth byte of IS_TINY packets is one of these
 	TINY_ISM,		// 10 - info request	: get multiplayer info (i.e. ISP_ISM)
 	TINY_REN,		// 11 - info			: race end (return to game setup screen)
 	TINY_CLR,		// 12 - info			: all players cleared from race
-	TINY_NCN,		// 13 - info			: get all connections
-	TINY_NPL,		// 14 - info			: get all players
-	TINY_RES,		// 15 - info			: get all results
+	TINY_NCN,		// 13 - info request	: get all connections
+	TINY_NPL,		// 14 - info request	: get all players
+	TINY_RES,		// 15 - info request	: get all results
 	TINY_NLP,		// 16 - info request	: send an IS_NLP
 	TINY_MCI,		// 17 - info request	: send an IS_MCI
 	TINY_REO,		// 18 - info request	: send an IS_REO
 	TINY_RST,		// 19 - info request	: send an IS_RST
-	TINY_AXI,		// 20 - info request	: send an IS_AXI
+	TINY_AXI,		// 20 - info request	: send an IS_AXI - AutoX Info
 	TINY_AXC,		// 21 - info			: autocross cleared
+	TINY_RIP,		// 22 - info request	: send an IS_RIP - Replay Information Packet
 };
 
-enum // the fourth byte of IS_SMALL packets is one of these
+enum // the fourth byte of an IS_SMALL packet is one of these
 {
 	SMALL_NONE,		//  0					: not used
 	SMALL_SSP,		//  1 - instruction		: start sending positions
@@ -528,19 +531,6 @@ struct IS_MTC // Msg To Connection - hosts only - send to a connection or a play
 	char	Msg[64];	// last byte must be zero
 };
 
-struct IS_SCH // Single CHaracter - send to simulate single character
-{
-	byte	Size;		// 8
-	byte	Type;		// ISP_SCH
-	byte	ReqI;		// 0
-	byte	Zero;
-
-	byte	CharB;		// key to press
-	byte	Flags;		// bit 0 : SHIFT / bit 1 : CTRL
-	byte	Spare2;
-	byte	Spare3;
-};
-
 // Message Sounds (for Sound byte)
 
 enum
@@ -551,6 +541,24 @@ enum
 	SND_INVALIDKEY,
 	SND_ERROR,
 	SND_NUM
+};
+
+// You can send individual key presses to LFS with the IS_SCH packet.
+// For standard keys (e.g. V and H) you should send a capital letter.
+// This does not work with some keys like F keys, arrows or CTRL keys.
+// You can also use IS_MST with the /press /shift /ctrl /alt commands.
+
+struct IS_SCH // Single CHaracter
+{
+	byte	Size;		// 8
+	byte	Type;		// ISP_SCH
+	byte	ReqI;		// 0
+	byte	Zero;
+
+	byte	CharB;		// key to press
+	byte	Flags;		// bit 0 : SHIFT / bit 1 : CTRL
+	byte	Spare2;
+	byte	Spare3;
 };
 
 
@@ -663,6 +671,7 @@ struct IS_VTN // VoTe Notify
 // ReqI : 0
 // SubT : TINY_VTC		(VoTe Cancel)
 
+// The following packets are sent when the relevant events take place :
 
 struct IS_RST // Race STart
 {
@@ -758,7 +767,7 @@ struct IS_NPL // New PLayer joining race (if PLID already exists, then leaving p
 
 	int		Spare;
 
-	byte	Sp0;
+	byte	SetF;		// setup flags (see below)
 	byte	NumP;		// number in race (same when leaving pits, 1 more if new)
 	byte	Sp2;
 	byte	Sp3;
@@ -766,6 +775,14 @@ struct IS_NPL // New PLayer joining race (if PLID already exists, then leaving p
 
 // NOTE : PType bit 0 (female) is not reported on dedicated host as humans are not loaded
 // You can use the driver model byte instead if required (and to force the use of helmets)
+
+// Setup flags (for SetF byte)
+
+#define SETF_SYMM_WHEELS	1
+#define SETF_TC_ENABLE		2
+#define SETF_ABS_ENABLE		4
+
+// More...
 
 struct IS_PLP // PLayer Pits (go to settings - stays in player list)
 {
@@ -1299,7 +1316,7 @@ struct CompCar // Car info in 28 bytes - there is an array of these in the MCI (
 
 struct IS_MCI // Multi Car Info - if more than 8 in race then more than one of these is sent
 {
-	byte	Size;		// 4 + NumP * 28
+	byte	Size;		// 4 + NumC * 28
 	byte	Type;		// ISP_MCI
 	byte	ReqI;		// 0 unless this is a reply to an TINY_MCI request
 	byte	NumC;		// number of valid CompCar structs in this packet
@@ -1461,12 +1478,6 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR SHIFT+U mode)
 // TIME CONTROL
 // ============
 
-// You can Stop or Start Time in LFS and while it is stopped you can make LFS move
-// in time steps in multiples of 100th of a second.  Warning : unlike pausing, this
-// is a "trick" to LFS and the program is unaware of time passing, so you must not
-// leave it stopped because LFS is unusable in that state.  You must never use this
-// packet in multiplayer mode.
-
 // Request the current time at any point with this IS_TINY :
 
 // ReqI : non-zero		(returned in the reply)
@@ -1477,6 +1488,12 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR SHIFT+U mode)
 // ReqI : non-zero		(as received in the request packet)
 // SubT : SMALL_RTP		(Race Time Packet)
 // UVal	: Time			(hundredths of a second since start of race or replay)
+
+// You can stop or start time in LFS and while it is stopped you can send packets to move
+// time in steps.  Time steps are specified in hundredths of a second.
+// Warning : unlike pausing, this is a "trick" to LFS and the program is unaware of time
+// passing so you must not leave it stopped because LFS is unusable in that state.
+// This packet is not available in live multiplayer mode.
 
 // Stop and Start with this IS_SMALL :
 
@@ -1489,6 +1506,98 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR SHIFT+U mode)
 // ReqI : 0
 // SubT : SMALL_STP		(STeP)
 // UVal : number		(number of hundredths of a second to update)
+
+
+// REPLAY CONTROL
+// ==============
+
+// You can load a replay or set the position in a replay with an IS_RIP packet.
+// Replay positions and lengths are specified in hundredths of a second.
+// LFS will reply with another IS_RIP packet when the request is completed.
+
+struct IS_RIP // Replay Information Packet
+{
+	byte	Size;		// 80
+	byte	Type;		// ISP_RIP
+	byte	ReqI;		// request : non-zero / reply : same value returned
+	byte	Error;		// 0 or 1 = OK / other values are listed below
+
+	byte	MPR;		// 0 = SPR / 1 = MPR
+	byte	Paused;		// request : pause on arrival / reply : paused state
+	byte	Options;	// various options - see below
+	byte	Sp3;
+
+	unsigned	CTime;	// (hundredths) request : destination / reply : position
+	unsigned	TTime;	// (hundredths) request : zero / reply : replay length
+
+	char	RName[64];	// zero or replay name - last byte must be zero
+};
+
+// NOTE about RName :
+// In a request, replay RName will be loaded.  If zero then the current replay is used.
+// In a reply, RName is the name of the current replay, or zero if no replay is loaded.
+
+// You can request an IS_RIP packet at any time with this IS_TINY :
+
+// ReqI : non-zero		(returned in the reply)
+// SubT : TINY_RIP		(Replay Information Packet)
+
+// Error codes returned in IS_RIP replies :
+
+enum
+{
+	RIP_OK,				//  0 - OK : completed instruction
+	RIP_ALREADY,		//  1 - OK : already at the destination
+	RIP_DEDICATED,		//  2 - can't run a replay - dedicated host
+	RIP_WRONG_MODE,		//  3 - can't start a replay - not in a suitable mode
+	RIP_NOT_REPLAY,		//  4 - RName is zero but no replay is currently loaded
+	RIP_CORRUPTED,		//  5 - IS_RIP corrupted (e.g. RName does not end with zero)
+	RIP_NOT_FOUND,		//  6 - the replay file was not found
+	RIP_UNLOADABLE,		//  7 - obsolete / future / corrupted
+	RIP_DEST_OOB,		//  8 - destination is beyond replay length
+	RIP_UNKNOWN,		//  9 - unknown error found starting replay
+	RIP_USER,			// 10 - replay search was terminated by user
+	RIP_OOS,			// 11 - can't reach destination - SPR is out of sync
+};
+
+// Options byte : some options
+
+#define RIPOPT_LOOP		1		// replay will loop if this bit is set
+#define RIPOPT_SKINS	2		// set this bit to download missing skins
+
+
+// SCREENSHOTS
+// ===========
+
+// You can instuct LFS to save a screenshot using the IS_SSH packet.
+// The screenshot will be saved as an uncompressed BMP in the data\shots folder.
+// BMP can be a filename (excluding .bmp) or zero - LFS will create a file name.
+// LFS will reply with another IS_SSH when the request is completed.
+
+struct IS_SSH // ScreenSHot
+{
+	byte	Size;		// 40
+	byte	Type;		// ISP_SSH
+	byte	ReqI;		// request : non-zero / reply : same value returned
+	byte	Error;		// 0 = OK / other values are listed below
+
+	byte	Sp0;		// 0
+	byte	Sp1;		// 0
+	byte	Sp2;		// 0
+	byte	Sp3;		// 0
+
+	char	BMP[32];	// name of screenshot file - last byte must be zero
+};
+
+// Error codes returned in IS_SSH replies :
+
+enum
+{
+	SSH_OK,				//  0 - OK : completed instruction
+	SSH_DEDICATED,		//  1 - can't save a screenshot - dedicated host
+	SSH_CORRUPTED,		//  2 - IS_SSH corrupted (e.g. BMP does not end with zero)
+	SSH_NO_SAVE,		//  3 - could not save the screenshot
+};
 
 
 // BUTTONS
@@ -1724,46 +1833,54 @@ struct OutSimPack
 
 struct OutGaugePack
 {
-	unsigned	Time;		// time in milliseconds (to check order)
+	unsigned	Time;			// time in milliseconds (to check order)
 
-	char	Car[4];			// Car name
-	word	Flags;			// OG_FLAGS (see below)
-	byte	Gear;			// Reverse:0, Neutral:1, First:2...
-	byte	SpareB;
-	float	Speed;			// M/S
-	float	RPM;			// RPM
-	float	Turbo;			// BAR
-	float	EngTemp;		// C
-	float	Fuel;			// 0 to 1
-	float	OilPress;		// BAR
-	float	Spare1;
-	float	Spare2;
-	float	Spare3;
-	float	Throttle;		// 0 to 1
-	float	Brake;			// 0 to 1
-	float	Clutch;			// 0 to 1
-	char	Display1[16];	// Usually Fuel
-	char	Display2[16];	// Usually Settings
+	char		Car[4];			// Car name
+	word		Flags;			// Info (see OG_x below)
+	byte		Gear;			// Reverse:0, Neutral:1, First:2...
+	byte		SpareB;
+	float		Speed;			// M/S
+	float		RPM;			// RPM
+	float		Turbo;			// BAR
+	float		EngTemp;		// C
+	float		Fuel;			// 0 to 1
+	float		OilPressure;	// BAR
+	float		OilTemp;		// C
+	unsigned	DashLights;		// Dash lights available (see DL_x below)
+	unsigned	ShowLights;		// Dash lights currently switched on
+	float		Throttle;		// 0 to 1
+	float		Brake;			// 0 to 1
+	float		Clutch;			// 0 to 1
+	char		Display1[16];	// Usually Fuel
+	char		Display2[16];	// Usually Settings
 
-	int		ID;				// optional - only if OutGauge ID is specified
+	int			ID;				// optional - only if OutGauge ID is specified
 };
 
-#define OG_SHIFTLIGHT	1
-#define OG_FULLBEAM		2
-#define OG_HANDBRAKE	4
-#define OG_PITSPEED		8
-#define OG_TC			16
-#define OG_HEADLIGHTS	32
-#define OG_SIGNAL_L		64
-#define OG_SIGNAL_R		128
-#define OG_REDLINE		256
-#define OG_OILWARN		512
-#define OG_1			1024
-#define OG_2			2048
-#define OG_3			4096
-#define OG_4			8192
-#define OG_KM			16384
-#define OG_BAR			32768
+// OG_x - bits for OutGaugePack Flags
+
+#define OG_TURBO		8192	// show turbo gauge
+#define OG_KM			16384	// if not set - user prefers MILES
+#define OG_BAR			32768	// if not set - user prefers PSI
+
+// DL_x - bits for OutGaugePack DashLights and ShowLights
+
+enum
+{
+	DL_SHIFT,			// bit 0	- shift light
+	DL_FULLBEAM,		// bit 1	- full beam
+	DL_HANDBRAKE,		// bit 2	- handbrake
+	DL_PITSPEED,		// bit 3	- pit speed limiter
+	DL_TC,				// bit 4	- TC active or switched off
+	DL_SIGNAL_L,		// bit 5	- left turn signal
+	DL_SIGNAL_R,		// bit 6	- right turn signal
+	DL_SIGNAL_ANY,		// bit 7	- shared turn signal
+	DL_OILWARN,			// bit 8	- oil pressure warning
+	DL_BATTERY,			// bit 9	- battery warning
+	DL_ABS,				// bit 10	- ABS active or switched off
+	DL_SPARE,			// bit 11
+	DL_NUM
+};
 
 //////
 #endif

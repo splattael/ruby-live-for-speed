@@ -92,7 +92,7 @@ class StructParser
     class Field < Struct.new(:type, :name, :length, :comment)
       def inspect
         n = name.inspect
-        n += length != 1 ? ", :length => #{length}" : ""
+        n += length != 1 ? ", :len => #{length}" : ""
         "%-10s %-30s # %s" % [ type, n, comment ]
       end
 

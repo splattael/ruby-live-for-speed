@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-class BinaryString < BinData::MultiValue
+class BinaryString < BinData::Record
   endian :little
 
   uint8 :len, :value => proc { data.length }
@@ -14,7 +14,7 @@ describe "A binary string" do
 
   describe "class" do
     it "should subclass BinData::Struct" do
-      BinaryString.superclass.should == BinData::MultiValue
+      BinaryString.superclass.should == BinData::Record
     end
   end
 

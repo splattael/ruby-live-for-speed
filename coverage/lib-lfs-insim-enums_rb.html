@@ -1,830 +1,1383 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>lib/lfs/insim/enums.rb - C0 code coverage information</title>
-    <style type='text/css'>body { background-color: rgb(240, 240, 245); }</style>
-    <style type='text/css'>span.cross-ref-title {
- font-size: 140%;
-}
-span.cross-ref a {
- text-decoration: none;
-}
-span.cross-ref {
- background-color:#f3f7fa;
- border: 1px dashed #333;
- margin: 1em;
- padding: 0.5em;
- overflow: hidden;
-}
-a.crossref-toggle {
- text-decoration: none;
-}
-span.marked0 {
- background-color: rgb(185, 210, 200);
- display: block;
-}
-span.marked1 {
- background-color: rgb(190, 215, 205);
- display: block;
-}
-span.inferred0 {
- background-color: rgb(175, 200, 200);
- display: block;
-}
-span.inferred1 {
- background-color: rgb(180, 205, 205);
- display: block;
-}
-span.uncovered0 {
- background-color: rgb(225, 110, 110);
- display: block;
-}
-span.uncovered1 {
- background-color: rgb(235, 120, 120);
- display: block;
-}
-span.overview {
- border-bottom: 8px solid black;
-}
-div.overview {
- border-bottom: 8px solid black;
-}
-body {
- font-family: verdana, arial, helvetica;
-}
-div.footer {
- font-size: 68%;
- margin-top: 1.5em;
-}
-h1, h2, h3, h4, h5, h6 {
- margin-bottom: 0.5em;
-}
-h5 {
- margin-top: 0.5em;
-}
-.hidden {
- display: none;
-}
-div.separator {
- height: 10px;
-}
-/* Commented out for better readability, esp. on IE */
-/*
-table tr td, table tr th {
- font-size: 68%;
-}
-td.value table tr td {
- font-size: 11px;
-}
-*/
-table.percent_graph {
- height: 12px;
- border: #808080 1px solid;
- empty-cells: show;
-}
-table.percent_graph td.covered {
- height: 10px;
- background: #00f000;
-}
-table.percent_graph td.uncovered {
- height: 10px;
- background: #e00000;
-}
-table.percent_graph td.NA {
- height: 10px;
- background: #eaeaea;
-}
-table.report {
- border-collapse: collapse;
- width: 100%;
-}
-table.report td.heading {
- background: #dcecff;
- border: #d0d0d0 1px solid;
- font-weight: bold;
- text-align: center;
-}
-table.report td.heading:hover {
- background: #c0ffc0;
-}
-table.report td.text {
- border: #d0d0d0 1px solid;
-}
-table.report td.value,
-table.report td.lines_total,
-table.report td.lines_code {
- text-align: right;
- border: #d0d0d0 1px solid;
-}
-table.report tr.light {
- background-color: rgb(240, 240, 245);
-}
-table.report tr.dark {
- background-color: rgb(230, 230, 235);
-}
-</style>
-    <script type='text/javascript'>
-// <![CDATA[
-  function toggleCode( id ) {
-    if ( document.getElementById )
-      elem = document.getElementById( id );
-    else if ( document.all )
-      elem = eval( "document.all." + id );
-    else
-      return false;
-
-    elemStyle = elem.style;
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>lib/lfs/insim/enums.rb</title>
+    <link href="screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="print.css" media="print" rel="stylesheet" type="text/css" />
     
-    if ( elemStyle.display != "block" ) {
-      elemStyle.display = "block"
-    } else {
-      elemStyle.display = "none"
-    }
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="rcov.js"></script>
+  </head>
+  <body>
+    <h1>Ruby Live For Speed C0 Coverage Information - RCov</h1>
+    <h2>lib/lfs/insim/enums.rb</h2>
 
-    return true;
-  }
-  
-  // Make cross-references hidden by default
-  document.writeln( "<style type=\"text/css\">span.cross-ref { display: none }</style>" )
-  // ]]>
-</script>
-    <style type='text/css'>span.run0 {
-  background-color: rgb(178, 204, 255);
-  display: block;
-}
-span.run1 {
-  background-color: rgb(178, 206, 255);
-  display: block;
-}
-span.run2 {
-  background-color: rgb(178, 209, 255);
-  display: block;
-}
-span.run3 {
-  background-color: rgb(178, 211, 255);
-  display: block;
-}
-span.run4 {
-  background-color: rgb(178, 214, 255);
-  display: block;
-}
-span.run5 {
-  background-color: rgb(178, 218, 255);
-  display: block;
-}
-span.run6 {
-  background-color: rgb(178, 220, 255);
-  display: block;
-}
-span.run7 {
-  background-color: rgb(178, 223, 255);
-  display: block;
-}
-span.run8 {
-  background-color: rgb(178, 225, 255);
-  display: block;
-}
-span.run9 {
-  background-color: rgb(178, 228, 255);
-  display: block;
-}
-span.run10 {
-  background-color: rgb(178, 232, 255);
-  display: block;
-}
-span.run11 {
-  background-color: rgb(178, 234, 255);
-  display: block;
-}
-span.run12 {
-  background-color: rgb(178, 237, 255);
-  display: block;
-}
-span.run13 {
-  background-color: rgb(178, 239, 255);
-  display: block;
-}
-span.run14 {
-  background-color: rgb(178, 242, 255);
-  display: block;
-}
-span.run15 {
-  background-color: rgb(178, 246, 255);
-  display: block;
-}
-span.run16 {
-  background-color: rgb(178, 248, 255);
-  display: block;
-}
-span.run17 {
-  background-color: rgb(178, 251, 255);
-  display: block;
-}
-span.run18 {
-  background-color: rgb(178, 253, 255);
-  display: block;
-}
-span.run19 {
-  background-color: rgb(178, 255, 253);
-  display: block;
-}
-span.run20 {
-  background-color: rgb(178, 255, 249);
-  display: block;
-}
-span.run21 {
-  background-color: rgb(178, 255, 247);
-  display: block;
-}
-span.run22 {
-  background-color: rgb(178, 255, 244);
-  display: block;
-}
-span.run23 {
-  background-color: rgb(178, 255, 242);
-  display: block;
-}
-span.run24 {
-  background-color: rgb(178, 255, 239);
-  display: block;
-}
-span.run25 {
-  background-color: rgb(178, 255, 235);
-  display: block;
-}
-span.run26 {
-  background-color: rgb(178, 255, 233);
-  display: block;
-}
-span.run27 {
-  background-color: rgb(178, 255, 230);
-  display: block;
-}
-span.run28 {
-  background-color: rgb(178, 255, 228);
-  display: block;
-}
-span.run29 {
-  background-color: rgb(178, 255, 225);
-  display: block;
-}
-span.run30 {
-  background-color: rgb(178, 255, 221);
-  display: block;
-}
-span.run31 {
-  background-color: rgb(178, 255, 219);
-  display: block;
-}
-span.run32 {
-  background-color: rgb(178, 255, 216);
-  display: block;
-}
-span.run33 {
-  background-color: rgb(178, 255, 214);
-  display: block;
-}
-span.run34 {
-  background-color: rgb(178, 255, 211);
-  display: block;
-}
-span.run35 {
-  background-color: rgb(178, 255, 207);
-  display: block;
-}
-span.run36 {
-  background-color: rgb(178, 255, 205);
-  display: block;
-}
-span.run37 {
-  background-color: rgb(178, 255, 202);
-  display: block;
-}
-span.run38 {
-  background-color: rgb(178, 255, 200);
-  display: block;
-}
-span.run39 {
-  background-color: rgb(178, 255, 197);
-  display: block;
-}
-span.run40 {
-  background-color: rgb(178, 255, 193);
-  display: block;
-}
-span.run41 {
-  background-color: rgb(178, 255, 191);
-  display: block;
-}
-span.run42 {
-  background-color: rgb(178, 255, 188);
-  display: block;
-}
-span.run43 {
-  background-color: rgb(178, 255, 186);
-  display: block;
-}
-span.run44 {
-  background-color: rgb(178, 255, 183);
-  display: block;
-}
-span.run45 {
-  background-color: rgb(178, 255, 179);
-  display: block;
-}
-span.run46 {
-  background-color: rgb(179, 255, 178);
-  display: block;
-}
-span.run47 {
-  background-color: rgb(182, 255, 178);
-  display: block;
-}
-span.run48 {
-  background-color: rgb(184, 255, 178);
-  display: block;
-}
-span.run49 {
-  background-color: rgb(187, 255, 178);
-  display: block;
-}
-span.run50 {
-  background-color: rgb(191, 255, 178);
-  display: block;
-}
-span.run51 {
-  background-color: rgb(193, 255, 178);
-  display: block;
-}
-span.run52 {
-  background-color: rgb(196, 255, 178);
-  display: block;
-}
-span.run53 {
-  background-color: rgb(198, 255, 178);
-  display: block;
-}
-span.run54 {
-  background-color: rgb(201, 255, 178);
-  display: block;
-}
-span.run55 {
-  background-color: rgb(205, 255, 178);
-  display: block;
-}
-span.run56 {
-  background-color: rgb(207, 255, 178);
-  display: block;
-}
-span.run57 {
-  background-color: rgb(210, 255, 178);
-  display: block;
-}
-span.run58 {
-  background-color: rgb(212, 255, 178);
-  display: block;
-}
-span.run59 {
-  background-color: rgb(215, 255, 178);
-  display: block;
-}
-span.run60 {
-  background-color: rgb(219, 255, 178);
-  display: block;
-}
-span.run61 {
-  background-color: rgb(221, 255, 178);
-  display: block;
-}
-span.run62 {
-  background-color: rgb(224, 255, 178);
-  display: block;
-}
-span.run63 {
-  background-color: rgb(226, 255, 178);
-  display: block;
-}
-span.run64 {
-  background-color: rgb(229, 255, 178);
-  display: block;
-}
-span.run65 {
-  background-color: rgb(233, 255, 178);
-  display: block;
-}
-span.run66 {
-  background-color: rgb(235, 255, 178);
-  display: block;
-}
-span.run67 {
-  background-color: rgb(238, 255, 178);
-  display: block;
-}
-span.run68 {
-  background-color: rgb(240, 255, 178);
-  display: block;
-}
-span.run69 {
-  background-color: rgb(243, 255, 178);
-  display: block;
-}
-span.run70 {
-  background-color: rgb(247, 255, 178);
-  display: block;
-}
-span.run71 {
-  background-color: rgb(249, 255, 178);
-  display: block;
-}
-span.run72 {
-  background-color: rgb(252, 255, 178);
-  display: block;
-}
-span.run73 {
-  background-color: rgb(255, 255, 178);
-  display: block;
-}
-span.run74 {
-  background-color: rgb(255, 252, 178);
-  display: block;
-}
-span.run75 {
-  background-color: rgb(255, 248, 178);
-  display: block;
-}
-span.run76 {
-  background-color: rgb(255, 246, 178);
-  display: block;
-}
-span.run77 {
-  background-color: rgb(255, 243, 178);
-  display: block;
-}
-span.run78 {
-  background-color: rgb(255, 240, 178);
-  display: block;
-}
-span.run79 {
-  background-color: rgb(255, 238, 178);
-  display: block;
-}
-span.run80 {
-  background-color: rgb(255, 234, 178);
-  display: block;
-}
-span.run81 {
-  background-color: rgb(255, 232, 178);
-  display: block;
-}
-span.run82 {
-  background-color: rgb(255, 229, 178);
-  display: block;
-}
-span.run83 {
-  background-color: rgb(255, 226, 178);
-  display: block;
-}
-span.run84 {
-  background-color: rgb(255, 224, 178);
-  display: block;
-}
-span.run85 {
-  background-color: rgb(255, 220, 178);
-  display: block;
-}
-span.run86 {
-  background-color: rgb(255, 218, 178);
-  display: block;
-}
-span.run87 {
-  background-color: rgb(255, 215, 178);
-  display: block;
-}
-span.run88 {
-  background-color: rgb(255, 212, 178);
-  display: block;
-}
-span.run89 {
-  background-color: rgb(255, 210, 178);
-  display: block;
-}
-span.run90 {
-  background-color: rgb(255, 206, 178);
-  display: block;
-}
-span.run91 {
-  background-color: rgb(255, 204, 178);
-  display: block;
-}
-span.run92 {
-  background-color: rgb(255, 201, 178);
-  display: block;
-}
-span.run93 {
-  background-color: rgb(255, 198, 178);
-  display: block;
-}
-span.run94 {
-  background-color: rgb(255, 196, 178);
-  display: block;
-}
-span.run95 {
-  background-color: rgb(255, 192, 178);
-  display: block;
-}
-span.run96 {
-  background-color: rgb(255, 189, 178);
-  display: block;
-}
-span.run97 {
-  background-color: rgb(255, 187, 178);
-  display: block;
-}
-span.run98 {
-  background-color: rgb(255, 184, 178);
-  display: block;
-}
-span.run99 {
-  background-color: rgb(255, 182, 178);
-  display: block;
-}
-span.run100 {
-  background-color: rgb(255, 178, 178);
-  display: block;
-}
-</style>
-    </head>
-  <body><h3>C0 code coverage information</h3>
-    <p>Generated on Sun Feb 22 20:28:53 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
-      </p>
-    <hr/>
-    <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
-</span><span class='marked1'>and this: this line is also marked as covered.
-</span><span class='inferred0'>Lines considered as run by rcov, but not reported by Ruby, look like this,
-</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).
-</span><span class='uncovered0'>Finally, here&apos;s a line marked as not executed.
-</span></pre>                       
-<table class='report'><thead><tr><td class='heading'>Name</td>
-      <td class='heading'>Total lines</td>
-      <td class='heading'>Lines of code</td>
-      <td class='heading'>Total coverage</td>
-      <td class='heading'>Code coverage</td>
-      </tr>
-    </thead>
-  <tbody><tr class='light'><td><a href='lib-lfs-insim-enums_rb.html'>lib/lfs/insim/enums.rb</a>
-        </td>
-      <td class='lines_total'><tt>220</tt>
-        </td>
-      <td class='lines_code'><tt>214</tt>
-        </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>94.5%</tt>
-              &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='95'/>
-                  <td class='uncovered' width='5'/>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>95.3%</tt>
-              &nbsp;</td>
-            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='95'/>
-                  <td class='uncovered' width='5'/>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-<pre><span class="marked1"><a name="line1"></a>  1 require 'enum.rb'
-</span><span class="inferred0"><a name="line2"></a>  2 
-</span><span class="marked1"><a name="line3"></a>  3 module LFS
-</span><span class="marked0"><a name="line4"></a>  4   module Parser
-</span><span class="marked1"><a name="line5"></a>  5     module Enum
-</span><span class="marked0"><a name="line6"></a>  6       Penalty = ::Enum.new(
-</span><span class="inferred1"><a name="line7"></a>  7         :NONE,
-</span><span class="inferred0"><a name="line8"></a>  8         :DT,
-</span><span class="inferred1"><a name="line9"></a>  9         :DT_VALID,
-</span><span class="inferred0"><a name="line10"></a> 10         :SG,
-</span><span class="inferred1"><a name="line11"></a> 11         :SG_VALID,
-</span><span class="inferred0"><a name="line12"></a> 12         :P30,
-</span><span class="inferred1"><a name="line13"></a> 13         :P45,
-</span><span class="inferred0"><a name="line14"></a> 14         :NUM
-</span><span class="inferred1"><a name="line15"></a> 15       )
-</span><span class="marked0"><a name="line16"></a> 16       PenaltyReason = ::Enum.new(
-</span><span class="inferred1"><a name="line17"></a> 17         :UNKNOWN,   # 0 - unknown or cleared penalty
-</span><span class="inferred0"><a name="line18"></a> 18         :ADMIN,     # 1 - penalty given by admin
-</span><span class="inferred1"><a name="line19"></a> 19         :WRONG_WAY,   # 2 - wrong way driving
-</span><span class="inferred0"><a name="line20"></a> 20         :FALSE_START, # 3 - starting before green light
-</span><span class="inferred1"><a name="line21"></a> 21         :SPEEDING,    # 4 - speeding in pit lane
-</span><span class="inferred0"><a name="line22"></a> 22         :STOP_SHORT,  # 5 - stop-go pit stop too short
-</span><span class="inferred1"><a name="line23"></a> 23         :STOP_LATE,   # 6 - compulsory stop is too late
-</span><span class="inferred0"><a name="line24"></a> 24         :NUM
-</span><span class="inferred1"><a name="line25"></a> 25       )
-</span><span class="marked0"><a name="line26"></a> 26       PitlaneReason = ::Enum.new(
-</span><span class="inferred1"><a name="line27"></a> 27         :EXIT,   # 0 - left pit lane
-</span><span class="inferred0"><a name="line28"></a> 28         :ENTER,    # 1 - entered pit lane
-</span><span class="inferred1"><a name="line29"></a> 29         :NO_PURPOSE, # 2 - entered for no purpose
-</span><span class="inferred0"><a name="line30"></a> 30         :DT,     # 3 - entered for drive-through
-</span><span class="inferred1"><a name="line31"></a> 31         :SG,     # 4 - entered for stop-go
-</span><span class="inferred0"><a name="line32"></a> 32         :NUM
-</span><span class="inferred1"><a name="line33"></a> 33       )
-</span><span class="marked0"><a name="line34"></a> 34       Pitwork = ::BitEnum.new(
-</span><span class="inferred1"><a name="line35"></a> 35         :NOTHING,    # bit 0 (1)
-</span><span class="inferred0"><a name="line36"></a> 36         :STOP,     # bit 1 (2)
-</span><span class="inferred1"><a name="line37"></a> 37         :FR_DAM,     # bit 2 (4)
-</span><span class="inferred0"><a name="line38"></a> 38         :FR_WHL,     # etc...
-</span><span class="inferred1"><a name="line39"></a> 39         :LE_FR_DAM,
-</span><span class="inferred0"><a name="line40"></a> 40         :LE_FR_WHL,
-</span><span class="inferred1"><a name="line41"></a> 41         :RI_FR_DAM,
-</span><span class="inferred0"><a name="line42"></a> 42         :RI_FR_WHL,
-</span><span class="inferred1"><a name="line43"></a> 43         :RE_DAM,
-</span><span class="inferred0"><a name="line44"></a> 44         :RE_WHL,
-</span><span class="inferred1"><a name="line45"></a> 45         :LE_RE_DAM,
-</span><span class="inferred0"><a name="line46"></a> 46         :LE_RE_WHL,
-</span><span class="inferred1"><a name="line47"></a> 47         :RI_RE_DAM,
-</span><span class="inferred0"><a name="line48"></a> 48         :RI_RE_WHL,
-</span><span class="inferred1"><a name="line49"></a> 49         :BODY_MINOR,
-</span><span class="inferred0"><a name="line50"></a> 50         :BODY_MAJOR,
-</span><span class="inferred1"><a name="line51"></a> 51         :SETUP,
-</span><span class="inferred0"><a name="line52"></a> 52         :REFUEL
-</span><span class="inferred1"><a name="line53"></a> 53       )
-</span><span class="marked0"><a name="line54"></a> 54       Tyre = ::Enum.new(
-</span><span class="inferred1"><a name="line55"></a> 55         :R1,      # 0
-</span><span class="inferred0"><a name="line56"></a> 56         :R2,      # 1
-</span><span class="inferred1"><a name="line57"></a> 57         :R3,      # 2
-</span><span class="inferred0"><a name="line58"></a> 58         :R4,      # 3
-</span><span class="inferred1"><a name="line59"></a> 59         :ROAD_SUPER,  # 4
-</span><span class="inferred0"><a name="line60"></a> 60         :ROAD_NORMAL, # 5
-</span><span class="inferred1"><a name="line61"></a> 61         :HYBRID,    # 6
-</span><span class="inferred0"><a name="line62"></a> 62         :KNOBBLY,   # 7
-</span><span class="inferred1"><a name="line63"></a> 63         :NUM
-</span><span class="inferred0"><a name="line64"></a> 64       )
-</span><span class="marked1"><a name="line65"></a> 65       PlayerFlags = ::BitEnum.new(
-</span><span class="inferred0"><a name="line66"></a> 66         :SWAPSIDE,
-</span><span class="inferred1"><a name="line67"></a> 67         :GC_CUT,
-</span><span class="inferred0"><a name="line68"></a> 68         :GC_BLIP,
-</span><span class="inferred1"><a name="line69"></a> 69         :AUTOGEARS,
-</span><span class="inferred0"><a name="line70"></a> 70         :SHIFTER,
-</span><span class="inferred1"><a name="line71"></a> 71         :RESERVED,
-</span><span class="inferred0"><a name="line72"></a> 72         :HELP_B,
-</span><span class="inferred1"><a name="line73"></a> 73         :AXIS_CLUTCH,
-</span><span class="inferred0"><a name="line74"></a> 74         :INPITS,
-</span><span class="inferred1"><a name="line75"></a> 75         :AUTOCLUTCH,
-</span><span class="inferred0"><a name="line76"></a> 76         :MOUSE,
-</span><span class="inferred1"><a name="line77"></a> 77         :KB_NO_HELP,
-</span><span class="inferred0"><a name="line78"></a> 78         :KB_STABILISED,
-</span><span class="inferred1"><a name="line79"></a> 79         :CUSTOM_VIEW
-</span><span class="inferred0"><a name="line80"></a> 80       )
-</span><span class="marked1"><a name="line81"></a> 81       MsgType = ::Enum.new(
-</span><span class="inferred0"><a name="line82"></a> 82         :SYSTEM,     # 0 - system message
-</span><span class="inferred1"><a name="line83"></a> 83         :USER,     # 1 - normal visible user message
-</span><span class="inferred0"><a name="line84"></a> 84         :PREFIX,     # 2 - hidden message starting with special prefix (see ISI)
-</span><span class="inferred1"><a name="line85"></a> 85         :O,        # 3 - hidden message typed on local pc with /o command
-</span><span class="inferred0"><a name="line86"></a> 86         :NUM
-</span><span class="inferred1"><a name="line87"></a> 87       )
-</span><span class="marked0"><a name="line88"></a> 88       Camera = ::Enum.new(
-</span><span class="inferred1"><a name="line89"></a> 89         :FOLLOW,  # 0 - arcade
-</span><span class="inferred0"><a name="line90"></a> 90         :HELI,    # 1 - helicopter
-</span><span class="inferred1"><a name="line91"></a> 91         :CAM,   # 2 - tv camera
-</span><span class="inferred0"><a name="line92"></a> 92         :DRIVER,  # 3 - cockpit
-</span><span class="inferred1"><a name="line93"></a> 93         :CUSTOM,  # 4 - custom
-</span><span class="inferred0"><a name="line94"></a> 94         :MAX
-</span><span class="inferred1"><a name="line95"></a> 95       )
-</span><span class="marked0"><a name="line96"></a> 96       StateFlag = ::BitEnum.new(
-</span><span class="inferred1"><a name="line97"></a> 97         :GAME, #      1   // in game (or MPR)
-</span><span class="inferred0"><a name="line98"></a> 98         :REPLAY, #      2   // in SPR
-</span><span class="inferred1"><a name="line99"></a> 99         :PAUSED, #     4   // paused
-</span><span class="inferred0"><a name="line100"></a>100         :SHIFTU, #      8   // SHIFT+U mode
-</span><span class="inferred1"><a name="line101"></a>101         :SHIFTU_HIGH, #   16    // HIGH view
-</span><span class="inferred0"><a name="line102"></a>102         :SHIFTU_FOLLOW,# 32    // following car
-</span><span class="inferred1"><a name="line103"></a>103         :SHIFTU_NO_OPT,# 64    // SHIFT+U buttons hidden
-</span><span class="inferred0"><a name="line104"></a>104         :SHOW_2D,#     128   // showing 2d display
-</span><span class="inferred1"><a name="line105"></a>105         :FRONT_END,#   256   // entry screen
-</span><span class="inferred0"><a name="line106"></a>106         :MULTI,#     512   // multiplayer mode
-</span><span class="inferred1"><a name="line107"></a>107         :MPSPEEDUP,#   1024  // multiplayer speedup option
-</span><span class="inferred0"><a name="line108"></a>108         :WINDOWED,#    2048  // LFS is running in a window
-</span><span class="inferred1"><a name="line109"></a>109         :SOUND_MUTE,#    4096  // sound is switched off
-</span><span class="inferred0"><a name="line110"></a>110         :VIEW_OVERRIDE,# 8192  // override user view
-</span><span class="inferred1"><a name="line111"></a>111         :VISIBLE#     16384 // InSim buttons visible
-</span><span class="inferred0"><a name="line112"></a>112       )
-</span><span class="marked1"><a name="line113"></a>113       RelayError = ::Enum.new(
-</span><span class="inferred0"><a name="line114"></a>114         :NONE,
-</span><span class="inferred1"><a name="line115"></a>115         :PACKET, #       1   // Invalid packet sent by client (wrong structure / length)
-</span><span class="inferred0"><a name="line116"></a>116         :PACKET2, # 		2	// Invalid packet sent by client (packet was not allowed to be forwarded to host)
-</span><span class="inferred1"><a name="line117"></a>117         :HOSTNAME, # 	3	// Wrong hostname given by client
-</span><span class="inferred0"><a name="line118"></a>118         :ADMIN, # 		4	// Wrong admin pass given by client
-</span><span class="inferred1"><a name="line119"></a>119         :SPEC # 		5	// Wrong spec pass given by client
-</span><span class="inferred0"><a name="line120"></a>120       )
-</span><span class="marked1"><a name="line121"></a>121       PacketType = ::Enum.new(
-</span><span class="inferred0"><a name="line122"></a>122         :NONE,   #  0         : not used
-</span><span class="inferred1"><a name="line123"></a>123         :ISI,    #  1 - instruction   : insim initialise
-</span><span class="inferred0"><a name="line124"></a>124         :VER,    #  2 - info      : version info
-</span><span class="inferred1"><a name="line125"></a>125         :TINY,   #  3 - both ways   : multi purpose
-</span><span class="inferred0"><a name="line126"></a>126         :SMALL,    #  4 - both ways   : multi purpose
-</span><span class="inferred1"><a name="line127"></a>127         :STA,    #  5 - info      : state info
-</span><span class="inferred0"><a name="line128"></a>128         :SCH,    #  6 - instruction   : single character
-</span><span class="inferred1"><a name="line129"></a>129         :SFP,    #  7 - instruction   : state flags pack
-</span><span class="inferred0"><a name="line130"></a>130         :SCC,    #  8 - instruction   : set car camera
-</span><span class="inferred1"><a name="line131"></a>131         :CPP,    #  9 - both ways   : cam pos pack
-</span><span class="inferred0"><a name="line132"></a>132         :ISM,    # 10 - info      : start multiplayer
-</span><span class="inferred1"><a name="line133"></a>133         :MSO,    # 11 - info      : message out
-</span><span class="inferred0"><a name="line134"></a>134         :III,    # 12 - info      : hidden /i message
-</span><span class="inferred1"><a name="line135"></a>135         :MST,    # 13 - instruction   : type message or /command
-</span><span class="inferred0"><a name="line136"></a>136         :MTC,    # 14 - instruction   : message to a connection
-</span><span class="inferred1"><a name="line137"></a>137         :MOD,    # 15 - instruction   : set screen mode
-</span><span class="inferred0"><a name="line138"></a>138         :VTN,    # 16 - info      : vote notification
-</span><span class="inferred1"><a name="line139"></a>139         :RST,    # 17 - info      : race start
-</span><span class="inferred0"><a name="line140"></a>140         :NCN,    # 18 - info      : new connection
-</span><span class="inferred1"><a name="line141"></a>141         :CNL,    # 19 - info      : connection left
-</span><span class="inferred0"><a name="line142"></a>142         :CPR,    # 20 - info      : connection renamed
-</span><span class="inferred1"><a name="line143"></a>143         :NPL,    # 21 - info      : new player (joined race)
-</span><span class="inferred0"><a name="line144"></a>144         :PLP,    # 22 - info      : player pit (keeps slot in race)
-</span><span class="inferred1"><a name="line145"></a>145         :PLL,    # 23 - info      : player leave (spectate - loses slot)
-</span><span class="inferred0"><a name="line146"></a>146         :LAP,    # 24 - info      : lap time
-</span><span class="inferred1"><a name="line147"></a>147         :SPX,    # 25 - info      : split x time
-</span><span class="inferred0"><a name="line148"></a>148         :PIT,    # 26 - info      : pit stop start
-</span><span class="inferred1"><a name="line149"></a>149         :PSF,    # 27 - info      : pit stop finish
-</span><span class="inferred0"><a name="line150"></a>150         :PLA,    # 28 - info      : pit lane enter / leave
-</span><span class="inferred1"><a name="line151"></a>151         :CCH,    # 29 - info      : camera changed
-</span><span class="inferred0"><a name="line152"></a>152         :PEN,    # 30 - info      : penalty given or cleared
-</span><span class="inferred1"><a name="line153"></a>153         :TOC,    # 31 - info      : take over car
-</span><span class="inferred0"><a name="line154"></a>154         :FLG,    # 32 - info      : flag (yellow or blue)
-</span><span class="inferred1"><a name="line155"></a>155         :PFL,    # 33 - info      : player flags (help flags)
-</span><span class="inferred0"><a name="line156"></a>156         :FIN,    # 34 - info      : finished race
-</span><span class="inferred1"><a name="line157"></a>157         :RES,    # 35 - info      : result confirmed
-</span><span class="inferred0"><a name="line158"></a>158         :REO,    # 36 - both ways   : reorder (info or instruction)
-</span><span class="inferred1"><a name="line159"></a>159         :NLP,    # 37 - info      : node and lap packet
-</span><span class="inferred0"><a name="line160"></a>160         :MCI,    # 38 - info      : multi car info
-</span><span class="inferred1"><a name="line161"></a>161         :MSX,    # 39 - instruction   : type message
-</span><span class="inferred0"><a name="line162"></a>162         :MSL,    # 40 - instruction   : message to local computer
-</span><span class="inferred1"><a name="line163"></a>163         :CRS,    # 41 - info      : car reset
-</span><span class="inferred0"><a name="line164"></a>164         :BFN,    # 42 - both ways   : delete buttons / receive button requests
-</span><span class="inferred1"><a name="line165"></a>165         :AXI,    # 43 - info			: autocross layout information
-</span><span class="inferred0"><a name="line166"></a>166         :AXO,    # 44 - info			: hit an autocross object
-</span><span class="inferred1"><a name="line167"></a>167         :BTN,    # 45 - instruction   : show a button on local or remote screen
-</span><span class="inferred0"><a name="line168"></a>168         :BTC,    # 46 - info      : sent when a user clicks a button
-</span><span class="inferred1"><a name="line169"></a>169         :BTT     # 47 - info      : sent after typing into a button
-</span><span class="uncovered0"><a name="line170"></a>170       ).
-</span><span class="uncovered1"><a name="line171"></a>171       # Test
-</span><span class="uncovered0"><a name="line172"></a>172       add(150, :TEST).
-</span><span class="uncovered1"><a name="line173"></a>173       add(151, :UNKN).
-</span><span class="uncovered0"><a name="line174"></a>174       # relay
-</span><span class="uncovered1"><a name="line175"></a>175       add(252,
-</span><span class="uncovered0"><a name="line176"></a>176         :HLR,    # 252 # Send : To request a hostlist
-</span><span class="uncovered1"><a name="line177"></a>177         :HOS,    # 253 # Receive : Hostlist info
-</span><span class="uncovered0"><a name="line178"></a>178         :SEL,    # 254 # Send : To select a host
-</span><span class="uncovered1"><a name="line179"></a>179         :ERR     # 255  # Receive : An error number
-</span><span class="uncovered0"><a name="line180"></a>180       )
-</span><span class="uncovered1"><a name="line181"></a>181     end # Enum
-</span><span class="inferred0"><a name="line182"></a>182 
-</span><span class="marked1"><a name="line183"></a>183     Tiny = ::Enum.new(
-</span><span class="inferred0"><a name="line184"></a>184       :NONE,		#  0					: see &quot;maintaining the connection&quot;
-</span><span class="inferred1"><a name="line185"></a>185       :VER,		#  1 - info request	: get version
-</span><span class="inferred0"><a name="line186"></a>186       :CLOSE,		#  2 - instruction		: close insim
-</span><span class="inferred1"><a name="line187"></a>187       :PING,		#  3 - ping request	: external progam requesting a reply
-</span><span class="inferred0"><a name="line188"></a>188       :REPLY,		#  4 - ping reply		: reply to a ping request
-</span><span class="inferred1"><a name="line189"></a>189       :VTC,		#  5 - info			: vote cancelled
-</span><span class="inferred0"><a name="line190"></a>190       :SCP,		#  6 - info request	: send camera pos
-</span><span class="inferred1"><a name="line191"></a>191       :SST,		#  7 - info request	: send state info
-</span><span class="inferred0"><a name="line192"></a>192       :GTH,		#  8 - info request	: get time in hundredths (i.e. SMALL_RTP)
-</span><span class="inferred1"><a name="line193"></a>193       :MPE,		#  9 - info			: multi player end
-</span><span class="inferred0"><a name="line194"></a>194       :ISM,		# 10 - info request	: get multiplayer info (i.e. ISP_ISM)
-</span><span class="inferred1"><a name="line195"></a>195       :REN,		# 11 - info			: race end (return to game setup screen)
-</span><span class="inferred0"><a name="line196"></a>196       :CLR,		# 12 - info			: all players cleared from race
-</span><span class="inferred1"><a name="line197"></a>197       :NCN,		# 13 - info			: get all connections
-</span><span class="inferred0"><a name="line198"></a>198       :NPL,		# 14 - info			: get all players
-</span><span class="inferred1"><a name="line199"></a>199       :RES,		# 15 - info			: get all results
-</span><span class="inferred0"><a name="line200"></a>200       :NLP,		# 16 - info request	: send an IS_NLP
-</span><span class="inferred1"><a name="line201"></a>201       :MCI,		# 17 - info request	: send an IS_MCI
-</span><span class="inferred0"><a name="line202"></a>202       :REO,		# 18 - info request	: send an IS_REO
-</span><span class="inferred1"><a name="line203"></a>203       :RST,		# 19 - info request	: send an IS_RST
-</span><span class="inferred0"><a name="line204"></a>204       :AXI,		# 20 - info request	: send an IS_AXI
-</span><span class="inferred1"><a name="line205"></a>205       :AXC		# 21 - info			: autocross cleared
-</span><span class="inferred0"><a name="line206"></a>206     )
-</span><span class="inferred1"><a name="line207"></a>207 
-</span><span class="marked0"><a name="line208"></a>208     Small = ::Enum.new(
-</span><span class="inferred1"><a name="line209"></a>209       :NONE,	#  0					: not used
-</span><span class="inferred0"><a name="line210"></a>210       :SSP,		#  1 - instruction		: start sending positions
-</span><span class="inferred1"><a name="line211"></a>211       :SSG,		#  2 - instruction		: start sending gauges
-</span><span class="inferred0"><a name="line212"></a>212       :VTA,		#  3 - report			: vote action
-</span><span class="inferred1"><a name="line213"></a>213       :TMS,		#  4 - instruction		: time stop
-</span><span class="inferred0"><a name="line214"></a>214       :STP,		#  5 - instruction		: time step
-</span><span class="inferred1"><a name="line215"></a>215       :RTP,		#  6 - info			: race time packet (reply to GTH)
-</span><span class="inferred0"><a name="line216"></a>216       :NLI		#  7 - instruction		: set node lap interval
-</span><span class="inferred1"><a name="line217"></a>217     )
-</span><span class="inferred0"><a name="line218"></a>218 
-</span><span class="inferred1"><a name="line219"></a>219   end
-</span><span class="inferred0"><a name="line220"></a>220 end
-</span></pre><hr/>
-    <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
-   version 0.8.1.2.</p>
-<p><a href='http://validator.w3.org/check/referer'><img src='http://www.w3.org/Icons/valid-xhtml10' height='31' alt='Valid XHTML 1.0!' width='88'/>
-        </a>
-      <a href='http://jigsaw.w3.org/css-validator/check/referer'><img src='http://jigsaw.w3.org/css-validator/images/vcss' alt='Valid CSS!' style='border:0;width:88px;height:31px'/>
-        </a>
-      </p>
-    </body>
-  </html>
+    
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="lib-lfs-insim-enums_rb.html">lib/lfs/insim/enums.rb</a></td>
+            <td class='right_align'><tt>220</tt></td>
+            <td class='right_align'><tt>214</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>94.55%</tt></div>
+          <div class="percent_graph">
+            <div class="covered" style="width:95px"></div>
+            <div class="uncovered" style="width:5px"></div>
+          </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>95.33%</tt></div>
+          <div class="percent_graph">
+            <div class="covered" style="width:95px"></div>
+            <div class="uncovered" style="width:5px"></div>
+          </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h3>Key</h3>
+    
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line1">1</a> require 'enum.rb'</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line2">2</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line3">3</a> module LFS</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line4">4</a>   module Parser</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line5">5</a>     module Enum</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line6">6</a>       Penalty = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line7">7</a>         :NONE,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line8">8</a>         :DT,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line9">9</a>         :DT_VALID,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line10">10</a>         :SG,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line11">11</a>         :SG_VALID,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line12">12</a>         :P30,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line13">13</a>         :P45,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line14">14</a>         :NUM</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line15">15</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line16">16</a>       PenaltyReason = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line17">17</a>         :UNKNOWN,   # 0 - unknown or cleared penalty</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line18">18</a>         :ADMIN,     # 1 - penalty given by admin</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line19">19</a>         :WRONG_WAY,   # 2 - wrong way driving</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line20">20</a>         :FALSE_START, # 3 - starting before green light</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line21">21</a>         :SPEEDING,    # 4 - speeding in pit lane</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line22">22</a>         :STOP_SHORT,  # 5 - stop-go pit stop too short</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line23">23</a>         :STOP_LATE,   # 6 - compulsory stop is too late</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line24">24</a>         :NUM</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line25">25</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line26">26</a>       PitlaneReason = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line27">27</a>         :EXIT,   # 0 - left pit lane</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line28">28</a>         :ENTER,    # 1 - entered pit lane</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line29">29</a>         :NO_PURPOSE, # 2 - entered for no purpose</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line30">30</a>         :DT,     # 3 - entered for drive-through</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line31">31</a>         :SG,     # 4 - entered for stop-go</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line32">32</a>         :NUM</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line33">33</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line34">34</a>       Pitwork = ::BitEnum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line35">35</a>         :NOTHING,    # bit 0 (1)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line36">36</a>         :STOP,     # bit 1 (2)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line37">37</a>         :FR_DAM,     # bit 2 (4)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line38">38</a>         :FR_WHL,     # etc...</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line39">39</a>         :LE_FR_DAM,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line40">40</a>         :LE_FR_WHL,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line41">41</a>         :RI_FR_DAM,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line42">42</a>         :RI_FR_WHL,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line43">43</a>         :RE_DAM,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line44">44</a>         :RE_WHL,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line45">45</a>         :LE_RE_DAM,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line46">46</a>         :LE_RE_WHL,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line47">47</a>         :RI_RE_DAM,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line48">48</a>         :RI_RE_WHL,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line49">49</a>         :BODY_MINOR,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line50">50</a>         :BODY_MAJOR,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line51">51</a>         :SETUP,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line52">52</a>         :REFUEL</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line53">53</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line54">54</a>       Tyre = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line55">55</a>         :R1,      # 0</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line56">56</a>         :R2,      # 1</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line57">57</a>         :R3,      # 2</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line58">58</a>         :R4,      # 3</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line59">59</a>         :ROAD_SUPER,  # 4</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line60">60</a>         :ROAD_NORMAL, # 5</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line61">61</a>         :HYBRID,    # 6</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line62">62</a>         :KNOBBLY,   # 7</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line63">63</a>         :NUM</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line64">64</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line65">65</a>       PlayerFlags = ::BitEnum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line66">66</a>         :SWAPSIDE,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line67">67</a>         :GC_CUT,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line68">68</a>         :GC_BLIP,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line69">69</a>         :AUTOGEARS,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line70">70</a>         :SHIFTER,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line71">71</a>         :RESERVED,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line72">72</a>         :HELP_B,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line73">73</a>         :AXIS_CLUTCH,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line74">74</a>         :INPITS,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line75">75</a>         :AUTOCLUTCH,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line76">76</a>         :MOUSE,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line77">77</a>         :KB_NO_HELP,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line78">78</a>         :KB_STABILISED,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line79">79</a>         :CUSTOM_VIEW</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line80">80</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line81">81</a>       MsgType = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line82">82</a>         :SYSTEM,     # 0 - system message</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line83">83</a>         :USER,     # 1 - normal visible user message</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line84">84</a>         :PREFIX,     # 2 - hidden message starting with special prefix (see ISI)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line85">85</a>         :O,        # 3 - hidden message typed on local pc with /o command</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line86">86</a>         :NUM</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line87">87</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line88">88</a>       Camera = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line89">89</a>         :FOLLOW,  # 0 - arcade</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line90">90</a>         :HELI,    # 1 - helicopter</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line91">91</a>         :CAM,   # 2 - tv camera</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line92">92</a>         :DRIVER,  # 3 - cockpit</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line93">93</a>         :CUSTOM,  # 4 - custom</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line94">94</a>         :MAX</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line95">95</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line96">96</a>       StateFlag = ::BitEnum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line97">97</a>         :GAME, #      1   // in game (or MPR)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line98">98</a>         :REPLAY, #      2   // in SPR</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line99">99</a>         :PAUSED, #     4   // paused</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line100">100</a>         :SHIFTU, #      8   // SHIFT+U mode</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line101">101</a>         :SHIFTU_HIGH, #   16    // HIGH view</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line102">102</a>         :SHIFTU_FOLLOW,# 32    // following car</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line103">103</a>         :SHIFTU_NO_OPT,# 64    // SHIFT+U buttons hidden</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line104">104</a>         :SHOW_2D,#     128   // showing 2d display</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line105">105</a>         :FRONT_END,#   256   // entry screen</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line106">106</a>         :MULTI,#     512   // multiplayer mode</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line107">107</a>         :MPSPEEDUP,#   1024  // multiplayer speedup option</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line108">108</a>         :WINDOWED,#    2048  // LFS is running in a window</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line109">109</a>         :SOUND_MUTE,#    4096  // sound is switched off</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line110">110</a>         :VIEW_OVERRIDE,# 8192  // override user view</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line111">111</a>         :VISIBLE#     16384 // InSim buttons visible</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line112">112</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line113">113</a>       RelayError = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line114">114</a>         :NONE,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line115">115</a>         :PACKET, #       1   // Invalid packet sent by client (wrong structure / length)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line116">116</a>         :PACKET2, # 		2	// Invalid packet sent by client (packet was not allowed to be forwarded to host)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line117">117</a>         :HOSTNAME, # 	3	// Wrong hostname given by client</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line118">118</a>         :ADMIN, # 		4	// Wrong admin pass given by client</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line119">119</a>         :SPEC # 		5	// Wrong spec pass given by client</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line120">120</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line121">121</a>       PacketType = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line122">122</a>         :NONE,   #  0         : not used</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line123">123</a>         :ISI,    #  1 - instruction   : insim initialise</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line124">124</a>         :VER,    #  2 - info      : version info</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line125">125</a>         :TINY,   #  3 - both ways   : multi purpose</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line126">126</a>         :SMALL,    #  4 - both ways   : multi purpose</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line127">127</a>         :STA,    #  5 - info      : state info</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line128">128</a>         :SCH,    #  6 - instruction   : single character</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line129">129</a>         :SFP,    #  7 - instruction   : state flags pack</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line130">130</a>         :SCC,    #  8 - instruction   : set car camera</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line131">131</a>         :CPP,    #  9 - both ways   : cam pos pack</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line132">132</a>         :ISM,    # 10 - info      : start multiplayer</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line133">133</a>         :MSO,    # 11 - info      : message out</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line134">134</a>         :III,    # 12 - info      : hidden /i message</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line135">135</a>         :MST,    # 13 - instruction   : type message or /command</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line136">136</a>         :MTC,    # 14 - instruction   : message to a connection</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line137">137</a>         :MOD,    # 15 - instruction   : set screen mode</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line138">138</a>         :VTN,    # 16 - info      : vote notification</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line139">139</a>         :RST,    # 17 - info      : race start</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line140">140</a>         :NCN,    # 18 - info      : new connection</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line141">141</a>         :CNL,    # 19 - info      : connection left</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line142">142</a>         :CPR,    # 20 - info      : connection renamed</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line143">143</a>         :NPL,    # 21 - info      : new player (joined race)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line144">144</a>         :PLP,    # 22 - info      : player pit (keeps slot in race)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line145">145</a>         :PLL,    # 23 - info      : player leave (spectate - loses slot)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line146">146</a>         :LAP,    # 24 - info      : lap time</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line147">147</a>         :SPX,    # 25 - info      : split x time</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line148">148</a>         :PIT,    # 26 - info      : pit stop start</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line149">149</a>         :PSF,    # 27 - info      : pit stop finish</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line150">150</a>         :PLA,    # 28 - info      : pit lane enter / leave</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line151">151</a>         :CCH,    # 29 - info      : camera changed</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line152">152</a>         :PEN,    # 30 - info      : penalty given or cleared</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line153">153</a>         :TOC,    # 31 - info      : take over car</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line154">154</a>         :FLG,    # 32 - info      : flag (yellow or blue)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line155">155</a>         :PFL,    # 33 - info      : player flags (help flags)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line156">156</a>         :FIN,    # 34 - info      : finished race</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line157">157</a>         :RES,    # 35 - info      : result confirmed</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line158">158</a>         :REO,    # 36 - both ways   : reorder (info or instruction)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line159">159</a>         :NLP,    # 37 - info      : node and lap packet</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line160">160</a>         :MCI,    # 38 - info      : multi car info</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line161">161</a>         :MSX,    # 39 - instruction   : type message</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line162">162</a>         :MSL,    # 40 - instruction   : message to local computer</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line163">163</a>         :CRS,    # 41 - info      : car reset</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line164">164</a>         :BFN,    # 42 - both ways   : delete buttons / receive button requests</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line165">165</a>         :AXI,    # 43 - info			: autocross layout information</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line166">166</a>         :AXO,    # 44 - info			: hit an autocross object</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line167">167</a>         :BTN,    # 45 - instruction   : show a button on local or remote screen</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line168">168</a>         :BTC,    # 46 - info      : sent when a user clicks a button</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line169">169</a>         :BTT     # 47 - info      : sent after typing into a button</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line170">170</a>       ).</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line171">171</a>       # Test</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line172">172</a>       add(150, :TEST).</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line173">173</a>       add(151, :UNKN).</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line174">174</a>       # relay</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line175">175</a>       add(252,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line176">176</a>         :HLR,    # 252 # Send : To request a hostlist</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line177">177</a>         :HOS,    # 253 # Receive : Hostlist info</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line178">178</a>         :SEL,    # 254 # Send : To select a host</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line179">179</a>         :ERR     # 255  # Receive : An error number</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line180">180</a>       )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line181">181</a>     end # Enum</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line182">182</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line183">183</a>     Tiny = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line184">184</a>       :NONE,		#  0					: see &quot;maintaining the connection&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line185">185</a>       :VER,		#  1 - info request	: get version</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line186">186</a>       :CLOSE,		#  2 - instruction		: close insim</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line187">187</a>       :PING,		#  3 - ping request	: external progam requesting a reply</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line188">188</a>       :REPLY,		#  4 - ping reply		: reply to a ping request</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line189">189</a>       :VTC,		#  5 - info			: vote cancelled</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line190">190</a>       :SCP,		#  6 - info request	: send camera pos</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line191">191</a>       :SST,		#  7 - info request	: send state info</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line192">192</a>       :GTH,		#  8 - info request	: get time in hundredths (i.e. SMALL_RTP)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line193">193</a>       :MPE,		#  9 - info			: multi player end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line194">194</a>       :ISM,		# 10 - info request	: get multiplayer info (i.e. ISP_ISM)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line195">195</a>       :REN,		# 11 - info			: race end (return to game setup screen)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line196">196</a>       :CLR,		# 12 - info			: all players cleared from race</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line197">197</a>       :NCN,		# 13 - info			: get all connections</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line198">198</a>       :NPL,		# 14 - info			: get all players</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line199">199</a>       :RES,		# 15 - info			: get all results</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line200">200</a>       :NLP,		# 16 - info request	: send an IS_NLP</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line201">201</a>       :MCI,		# 17 - info request	: send an IS_MCI</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line202">202</a>       :REO,		# 18 - info request	: send an IS_REO</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line203">203</a>       :RST,		# 19 - info request	: send an IS_RST</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line204">204</a>       :AXI,		# 20 - info request	: send an IS_AXI</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line205">205</a>       :AXC		# 21 - info			: autocross cleared</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line206">206</a>     )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line207">207</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line208">208</a>     Small = ::Enum.new(</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line209">209</a>       :NONE,	#  0					: not used</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line210">210</a>       :SSP,		#  1 - instruction		: start sending positions</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line211">211</a>       :SSG,		#  2 - instruction		: start sending gauges</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line212">212</a>       :VTA,		#  3 - report			: vote action</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line213">213</a>       :TMS,		#  4 - instruction		: time stop</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line214">214</a>       :STP,		#  5 - instruction		: time step</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line215">215</a>       :RTP,		#  6 - info			: race time packet (reply to GTH)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line216">216</a>       :NLI		#  7 - instruction		: set node lap interval</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line217">217</a>     )</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line218">218</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line219">219</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line220">220</a> end</pre></td>
+          </tr>
+        
+      </tbody>
+    </table>
+
+    <p>Generated on Fri Nov 27 16:16:08 +0100 2009 with <a href="http://github.com/relevance/rcov">rcov 0.9.2.1</a></p>
+
+  </body>
+</html>
