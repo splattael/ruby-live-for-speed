@@ -35,6 +35,7 @@ class StructParser
     #   type varfieldname[123];
     # }
     @content.scan(/^struct\s+(\S+)(.*?)?\{(.*?)\}/m) do |packet_name, packet_comment, body|
+      packet_comment.gsub!('//', '')
       packet = Packet.new(packet_name, packet_comment.to_s.chomp)
       body.scan(%r{\s*(\S+)\s*(.*?)(?:\[(\d+)\])?\s*;#{COMMENT}}) do |type, name, length, comment|
         packet.fields << Packet::Field.new(type.downcase, name.downcase.snake_case.to_sym, length || 1, comment.to_s.chomp)

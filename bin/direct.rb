@@ -5,10 +5,12 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + "/../lib")
 require 'lfs'
 require 'lfs/application'
 
+raise "usage: #{$0} hostname port admin-password" unless ARGV.size == 3
+
 config do |c|
-  c.hostname = "78.111.71.32"
-  c.port = 29978
-  c.admin = "benuto"
+  c.hostname = ARGV.shift
+  c.port = ARGV.shift.to_i
+  c.admin = ARGV.shift
 end
 
 on :TINY do |context|
